@@ -1,20 +1,22 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
-
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mysql"
-  url      = "mysql://root:Mataneto17.11@localhost:3306/nodedb"
+  url      = env("DATABASE")
 }
 
 model User {
-   id           Int     @id @default(autoincrement())
+   id           Int      @id @default(autoincrement())
    name         String
-   companyId    Int
-   company      Company @relation(fields: [companyId], references: [id])
+   surname      String
+   money        Int
+   is_admin     Boolean  @default(false)
+   created_at   DateTime @default(now())
+   updated_at   DateTime @updatedAt @default(now())
+
 }
