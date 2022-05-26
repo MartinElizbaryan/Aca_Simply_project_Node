@@ -76,7 +76,7 @@ exports.completed = async function (req, res) {
     }
   })
 
-  res.send("completed")
+  res.send(`completed id=${req.params.id}`)
 
 }
 
