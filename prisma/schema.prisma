@@ -11,12 +11,44 @@ datasource db {
 }
 
 model User {
-   id           Int      @id @default(autoincrement())
-   name         String
-   surname      String
-   money        Int
-   is_admin     Boolean  @default(false)
-   created_at   DateTime @default(now())
-   updated_at   DateTime @updatedAt @default(now())
+  id            Int       @id @default(autoincrement())
+  name          String
+  surname       String
+  money         Int
+  is_admin      Boolean   @default(false)
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @default(now()) @updatedAt
+  items         Item[]
+  messages_from Message[] @relation("from")
+  messages_to   Message[] @relation("to")
+}
 
+model Item {
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  user        User     @relation(fields: [user_id], references: [id])
+  img         String?
+  type        Type     @default(LOST)
+  completed   Boolean  @default(false)
+  name        String
+  description String   @db.Text
+  adress      String?
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now()) @updatedAt
+}
+
+model Message {
+  id         Int      @id @default(autoincrement())
+  from_id    Int
+  from       User     @relation("from", fields: [from_id], references: [id])
+  to_id      Int
+  to         User     @relation("to", fields: [to_id], references: [id])
+  message    String   @db.Text
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+}
+
+enum Type {
+  LOST
+  FIND
 }
