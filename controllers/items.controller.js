@@ -1,6 +1,15 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
+exports.findAll = async function (req, res) {
+  const users = await prisma.item.findMany({
+    include: {
+      user: true
+    },
+  });
+  res.send(users);
+}
+
 exports.create = async function (req, res) {
   const {user_id, name, description, img, address, type} = req.body;
   // try{
@@ -20,15 +29,6 @@ exports.create = async function (req, res) {
   // }
 }
 
-exports.findAll = async function (req, res) {
-  const users = await prisma.item.findMany({
-    include: {
-      user: true
-    },
-  })
-  res.send(users)
-}
-
 exports.find = async function (req, res) {
   const item = await prisma.item.findFirst({
     where: {
@@ -41,44 +41,38 @@ exports.find = async function (req, res) {
   res.send(item)
 }
 
-exports.update = async function (req, res) {
-  // const item = await prisma.item.findFirst({
-  //   where: {
-  //     id: +req.params.id
-  //   }
-  // })
-  const {name, description, img, address, type} = req.body;
-  await prisma.item.updateMany({
-    data: {
-      name,
-      description,
-      img,
-      address,
-      type
-    },
-    where: {
-      id: +req.params.id
-    }
-  })
+// exports.update = async function (req, res) {
+//   const {name, description, img, address, type} = req.body;
+//   await prisma.item.update({
+//     data: {
+//       name,
+//       description,
+//       img,
+//       address,
+//       type
+//     },
+//     where: {
+//       id: +req.params.id
+//     }
+//   });
+//
+//   res.send("Updated");
+//
+// }
 
-  res.send("Updated")
-
-}
-
-exports.completed = async function (req, res) {
-  const {completed} = req.body;
-  await prisma.item.updateMany({
-    data: {
-      completed
-    },
-    where: {
-      id: +req.params.id
-    }
-  })
-
-  res.send(`completed id=${req.params.id}`)
-
-}
+// exports.completed = async function (req, res) {
+//   await prisma.item.updateMany({
+//     data: {
+//       completed: true
+//     },
+//     where: {
+//       id: +req.params.id
+//     }
+//   })
+//
+//   res.send(`completed id=${req.params.id}`)
+//
+// }
 
 exports.delete = async function (req, res) {
   await prisma.item.delete({

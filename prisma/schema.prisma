@@ -12,27 +12,29 @@ datasource db {
 
 model User {
   id            Int       @id @default(autoincrement())
-  name          String
-  surname       String
+  name          String    @db.VarChar(50)
+  surname       String    @db.VarChar(50)
   money         Int
   is_admin      Boolean   @default(false)
-  created_at    DateTime  @default(now())
-  updated_at    DateTime  @default(now()) @updatedAt
+  phone         String?
   items         Item[]
   messages_from Message[] @relation("from")
   messages_to   Message[] @relation("to")
+  created_at    DateTime  @default(now())
+  updated_at    DateTime  @default(now()) @updatedAt
 }
 
 model Item {
   id          Int      @id @default(autoincrement())
   user_id     Int
   user        User     @relation(fields: [user_id], references: [id])
-  img         String?
-  type        Type     @default(LOST)
-  completed   Boolean  @default(false)
-  name        String
+  name        String   @db.VarChar(50)
   description String   @db.Text
-  adress      String?
+  img         String?
+  address     String?
+  type        Type     @default(LOST)
+  trusted     Boolean  @default(false)
+  completed   Boolean  @default(false)
   created_at  DateTime @default(now())
   updated_at  DateTime @default(now()) @updatedAt
 }
@@ -46,6 +48,12 @@ model Message {
   message    String   @db.Text
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
+}
+
+model Faq {
+  id         Int      @id @default(autoincrement())
+  question   String
+  answer     String   @db.Text
 }
 
 enum Type {
