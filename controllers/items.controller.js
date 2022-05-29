@@ -6,6 +6,10 @@ exports.findAll = async function (req, res) {
     include: {
       user: true
     },
+    where: {
+      completed: false,
+      trusted: true
+    }
   });
   res.send(users);
 }
@@ -42,14 +46,13 @@ exports.find = async function (req, res) {
 }
 
 // exports.update = async function (req, res) {
-//   const {name, description, img, address, type} = req.body;
+//   const {name, description, img, address} = req.body;
 //   await prisma.item.update({
 //     data: {
 //       name,
 //       description,
 //       img,
 //       address,
-//       type
 //     },
 //     where: {
 //       id: +req.params.id
