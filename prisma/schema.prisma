@@ -11,30 +11,35 @@ datasource db {
 }
 
 model User {
-  id            Int       @id @default(autoincrement())
-  name          String
-  surname       String
-  money         Int
-  is_admin      Boolean   @default(false)
-  created_at    DateTime  @default(now())
-  updated_at    DateTime  @default(now()) @updatedAt
-  items         Item[]
-  messages_from Message[] @relation("from")
-  messages_to   Message[] @relation("to")
+  id             Int       @id @default(autoincrement())
+  name           String    @db.VarChar(50)
+  surname        String    @db.VarChar(50)
+  money          Int       @default(2000)
+  is_admin       Boolean   @default(false)
+  phone          String?
+  items          Item[]    @relation("user")
+  confirmedItems Item[]    @relation("confirmer")
+  messages_from  Message[] @relation("from")
+  messages_to    Message[] @relation("to")
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @default(now()) @updatedAt
 }
 
 model Item {
-  id          Int      @id @default(autoincrement())
-  user_id     Int
-  user        User     @relation(fields: [user_id], references: [id])
-  img         String?
-  type        Type     @default(LOST)
-  completed   Boolean  @default(false)
-  name        String
-  description String   @db.Text
-  adress      String?
-  created_at  DateTime @default(now())
-  updated_at  DateTime @default(now()) @updatedAt
+  id           Int      @id @default(autoincrement())
+  user_id      Int
+  user         User     @relation("user", fields: [user_id], references: [id])
+  confirmer_id Int?
+  confirmer    User?    @relation("confirmer", fields: [confirmer_id], references: [id])
+  name         String   @db.VarChar(50)
+  description  String   @db.Text
+  img          String?
+  address      String?
+  type         Type     @default(LOST)
+  trusted      Boolean  @default(false)
+  completed    Boolean  @default(false)
+  created_at   DateTime @default(now())
+  updated_at   DateTime @default(now()) @updatedAt
 }
 
 model Message {
@@ -46,6 +51,12 @@ model Message {
   message    String   @db.Text
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
+}
+
+model Faq {
+  id       Int    @id @default(autoincrement())
+  question String
+  answer   String @db.Text
 }
 
 enum Type {
