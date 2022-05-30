@@ -27,21 +27,16 @@ exports.findAll = async function (req, res) {
 exports.create = async function (req, res) {
     try{
         const message = await schema.validateAsync(req.body.message)
+        const newMessage = await prisma.item.create({
+            data: {
+                message,
+                from_id:2,
+                to_id:3
+            }
+        })
+        console.log('NewMessage')
+        res.send(newMessage)
     } catch(err){
         console.log(err.message)
     }
-    // console.log(value)
-  // try{
-    
-    //     data: {
-    //         message,
-    //         from_id:2,
-    //         to_id:3
-    //     }
-    // });
-    // res.send(newMessage)
-    // console.log("newMessage ------ ", newMessage)
-  // } catch (e) {
-  //   res.send(e)
-  // }
 }
