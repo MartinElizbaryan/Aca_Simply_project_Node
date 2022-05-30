@@ -10,5 +10,7 @@ router.get("/:id", itemsController.find);
 router.put("/:id", itemsController.update);
 router.delete("/:id", itemsController.delete);
 router.patch("/completed/:id", itemsController.completed);
+router.patch("/confirmed/:id", itemsController.confirmed);
+router.delete("/delete-confirmed/:id", itemsController.deleteConfirmed);
 
 module.exports = router;
