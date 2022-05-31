@@ -1,9 +1,10 @@
-import { Router } from 'express'
-import { validate } from '../../helpers/common.js'
-import validations from './validations.js'
-import { getAllPosts, getPostById, createPost, updatePost, updateConfirmed, updateCompleted, deleteConfirmed, deletePost } from './services.js'
+import { Router } from "express"
+// import { validate } from "../../helpers/common.js"
+// import validations from "./validations.js"
+// eslint-disable-next-line prettier/prettier
+import { getAllPosts, getPostById, createPost, updatePost, updateConfirmed, updateCompleted, deleteConfirmed, deletePost } from "./services.js"
 
-const { getCompanyByIdSchema } = validations
+// const { getCompanyByIdSchema } = validations
 
 const router = Router()
 

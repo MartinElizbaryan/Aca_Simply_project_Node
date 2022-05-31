@@ -1,6 +1,6 @@
-import { responseDataCreator } from '../../helpers/common.js'
-import { getAllUsersDB } from './db'
-import { createUserDb } from './db'
+import { responseDataCreator } from "../../helpers/common.js"
+import { getAllUsersDB } from "./db"
+import { createUserDb } from "./db"
 
 export const getAllUsers = async (req, res, next) => {
   try {
@@ -12,15 +12,14 @@ export const getAllUsers = async (req, res, next) => {
 }
 
 export const getUserById = async (req, res) => {
-  res.send('user')
+  res.send("user")
 }
 
 export const createUser = async (req, res, next) => {
   try {
     const user = await createUserDb(req.body)
     res.json(responseDataCreator(user))
-  }
-  catch(error) {
-    next(error);
+  } catch (error) {
+    next(error)
   }
 }

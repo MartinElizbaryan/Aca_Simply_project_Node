@@ -1,4 +1,4 @@
-import { prisma } from '../../services/Prisma.js'
+import { prisma } from "../../services/Prisma.js"
 
 const { post } = prisma
 
@@ -29,7 +29,7 @@ export const getPostByIdDB = async (id) => {
       error: null,
     }
   } catch (error) {
-    console.log('Error')
+    console.log("Error")
     return {
       data: null,
       error,
@@ -60,7 +60,7 @@ export const updatePostDB = async (data, id) => {
       where: {
         id: +id,
       },
-      data
+      data,
     })
     return {
       data: updatedPost,
