@@ -1,65 +1,38 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "mysql"
-  url      = env("DATABASE")
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(250)
+  address   String?  @db.Text
+  type      String   @default("any")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  users User[]
+}
+
+model Role {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(255)
+  user User[]
 }
 
 model User {
-  id             Int       @id @default(autoincrement())
-  name           String    @db.VarChar(50)
-  surname        String    @db.VarChar(50)
-  money          Int       @default(2000)
-  is_admin       Boolean   @default(false)
-  phone          String?
-  items          Item[]    @relation("user")
-  confirmedItems Item[]    @relation("confirmer")
-  messages_from  Message[] @relation("from")
-  messages_to    Message[] @relation("to")
-  created_at     DateTime  @default(now())
-  updated_at     DateTime  @default(now()) @updatedAt
-}
-
-model Item {
-  id           Int      @id @default(autoincrement())
-  user_id      Int
-  user         User     @relation("user", fields: [user_id], references: [id])
-  confirmer_id Int?
-  confirmer    User?    @relation("confirmer", fields: [confirmer_id], references: [id])
-  name         String   @db.VarChar(50)
-  description  String   @db.Text
-  img          String?
-  address      String?
-  type         Type     @default(LOST)
-  trusted      Boolean  @default(false)
-  completed    Boolean  @default(false)
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now()) @updatedAt
-}
-
-model Message {
-  id         Int      @id @default(autoincrement())
-  from_id    Int
-  from       User     @relation("from", fields: [from_id], references: [id])
-  to_id      Int
-  to         User     @relation("to", fields: [to_id], references: [id])
-  message    String   @db.Text
-  created_at DateTime @default(now())
-  updated_at DateTime @default(now()) @updatedAt
-}
-
-model Faq {
-  id       Int    @id @default(autoincrement())
-  question String
-  answer   String @db.Text
-}
-
-enum Type {
-  LOST
-  FIND
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  username  String   @db.VarChar(255)
+  password  String   @db.VarChar(255)
+  roleId    Int?
+  createAt  DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  company   Company? @relation(fields: [companyId], references: [id])
+  companyId Int?
+  role      Role?     @relation(fields: [roleId], references: [id])
 }
