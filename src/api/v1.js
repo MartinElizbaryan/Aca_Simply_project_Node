@@ -1,8 +1,8 @@
 import { Router } from 'express'
-import { companiesRoutes } from '../modules/companies/routes.js'
+import { postsRoutes } from '../modules/posts/routes.js'
 
 const router = Router()
 
-router.use('/companies', companiesRoutes)
+router.use('/posts', postsRoutes)
 
 export { router as v1 }
