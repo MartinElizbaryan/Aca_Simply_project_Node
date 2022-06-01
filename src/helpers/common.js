@@ -15,8 +15,3 @@ export const validate = (schema) => {
     }
   }
 }
-
-export const responseDataCreator = (data) => ({
-  data,
-  count: data.length,
-})

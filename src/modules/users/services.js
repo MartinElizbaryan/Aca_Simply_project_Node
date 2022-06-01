@@ -1,24 +1,27 @@
-import { responseDataCreator } from "../../helpers/common.js"
-import { getAllUsersDB } from "./db"
-import { createUserDb } from "./db"
+import * as db from "./db.js"
 
-export const getAllUsers = async (req, res, next) => {
+export const updateUser = async (req, res, next) => {
   try {
-    const users = await getAllUsersDB()
-    res.json(responseDataCreator(users))
+    const updatedUser = await db.updateUserDB(req.body, req.params.id)
+    res.json(updatedUser)
   } catch (error) {
     next(error)
   }
 }
 
-export const getUserById = async (req, res) => {
-  res.send("user")
+export const findUser = async (req, res, next) => {
+  try {
+    const foundUser = await db.findUserDB(req.params.id)
+    res.json(foundUser)
+  } catch (error) {
+    next(error)
+  }
 }
 
-export const createUser = async (req, res, next) => {
+export const addMoney = async (req, res, next) => {
   try {
-    const user = await createUserDb(req.body)
-    res.json(responseDataCreator(user))
+    const userMoney = await db.addMoneyDB(req.body, req.params.id)
+    res.json(userMoney)
   } catch (error) {
     next(error)
   }
