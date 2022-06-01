@@ -2,38 +2,69 @@ import { prisma } from "../../services/Prisma.js"
 
 const { user } = prisma
 
-export const getAllUsersDB = async () => {
+export const updateUserDB = async (data, id) => {
   try {
-    const users = await user.findMany()
+    const updatedUser = await user.update({
+      where: {
+        id: +id,
+      },
+      data,
+    })
     return {
-      data: users,
+      data: updatedUser,
       error: null,
     }
   } catch (error) {
     return {
       data: null,
-      error: error,
+      error,
     }
   }
 }
 
-export const getCompanyByIdDB = async () => {
-  // res.send('comp')
-}
-
-export const createUserDb = async (sentData) => {
+export const findUserDB = async (id) => {
   try {
-    const newUser = await user.create({
-      sentData,
+    const foundUser = user.findUnique({
+      where: {
+        id: +id,
+      },
+      include: {
+        posts: true,
+        confirmedPosts: true,
+      },
     })
     return {
-      data: newUser,
+      data: foundUser,
       error: null,
     }
   } catch (error) {
     return {
       data: null,
-      error: error,
+      error,
+    }
+  }
+}
+
+export const addMoneyDB = async (data, id) => {
+  try {
+    const userMoney = await user.update({
+      where: {
+        id: +id,
+      },
+      data: {
+        money: {
+          increment: data.money,
+        },
+      },
+    })
+    return {
+      data: userMoney,
+      error: null,
+    }
+  } catch (error) {
+    return {
+      data: null,
+      error,
     }
   }
 }

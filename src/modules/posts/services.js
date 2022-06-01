@@ -1,10 +1,9 @@
-import { responseDataCreator } from "../../helpers/common.js"
 import * as db from "./db.js"
 
 export const getAllPosts = async (req, res, next) => {
   try {
     const posts = await db.getAllPostsDB()
-    res.json(responseDataCreator(posts.data))
+    res.json(posts.data)
   } catch (error) {
     next(error)
   }

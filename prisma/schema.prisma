@@ -11,9 +11,11 @@ model User {
   id             Int       @id @default(autoincrement())
   name           String    @db.VarChar(50)
   surname        String    @db.VarChar(50)
+  email          String    @unique @db.VarChar(320)
+  password       String
+  phone          String?
   money          Int       @default(2000)
   is_admin       Boolean   @default(false)
-  phone          String?
   posts          Post[]    @relation("user")
   confirmedPosts Post[]    @relation("confirmer")
   messages_from  Message[] @relation("from")
@@ -30,7 +32,7 @@ model Post {
   confirmer    User?    @relation("confirmer", fields: [confirmer_id], references: [id])
   name         String   @db.VarChar(50)
   description  String   @db.Text
-  img          String?
+  images       Image[]
   address      String?
   type         Type     @default(LOST)
   trusted      Boolean  @default(false)
@@ -46,6 +48,15 @@ model Message {
   to_id      Int
   to         User     @relation("to", fields: [to_id], references: [id])
   message    String   @db.Text
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
+}
+
+model Image {
+  id         Int      @id @default(autoincrement())
+  src        String   @db.VarChar(255)
+  post_id    Int
+  post       Post     @relation(fields: [post_id], references: [id])
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 }
