@@ -20,7 +20,6 @@ export const getPostById = async (req, res, next) => {
 
 export const createPost = async (req, res, next) => {
   try {
-    console.log(req.body)
     const result = await db.createPostDB(req.body)
     res.json(result)
   } catch (error) {

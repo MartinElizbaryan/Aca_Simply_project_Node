@@ -15,7 +15,7 @@ export const createMessage = async (req, res, next) => {
     const message = await db.createMessageDb(req.body, req.params.id)
     console.log(message)
     res.json({
-      status: 200
+      status: 200,
     })
   } catch (error) {
     next(error)

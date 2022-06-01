@@ -38,9 +38,15 @@ export const getPostByIdDB = async (id) => {
 }
 
 export const createPostDB = async (data) => {
+  const { images, ...restData } = data
   try {
     const newPost = await post.create({
-      data,
+      data: {
+        ...restData,
+        images: {
+          create: images,
+        },
+      },
     })
     return {
       data: newPost,
