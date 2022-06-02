@@ -4,7 +4,9 @@ const { post } = prisma
 
 export const getAllPostsDB = async () => {
   try {
-    const posts = await post.findMany()
+    const posts = await post.findMany({
+      includes
+    })
     return {
       data: posts,
       error: null,
@@ -23,13 +25,42 @@ export const getPostByIdDB = async (id) => {
       where: {
         id: +id,
       },
+      include: {
+        user: true
+      }
     })
     return {
       data: onePost,
       error: null,
     }
   } catch (error) {
-    console.log("Error")
+    return {
+      data: null,
+      error,
+    }
+  }
+}
+
+export const getPostWithQuestionsByIdDB = async (id) => {
+  try {
+    const onePost = await post.findUnique({
+      where: {
+        id: +id,
+      },
+      include: {
+        questions: {
+          include: {
+            answers: true
+          }
+        }
+      }
+    })
+    // check auth.id from onePost.user_id
+    return {
+      data: onePost,
+      error: null,
+    }
+  } catch (error) {
     return {
       data: null,
       error,
@@ -38,13 +69,29 @@ export const getPostByIdDB = async (id) => {
 }
 
 export const createPostDB = async (data) => {
-  const { images, ...restData } = data
+  const { images, questions, ...restData } = data;
+
+  const questionsData = questions.map(item => {
+    const {answers, ...restData} = item;
+    return {
+      ...restData,
+      answers: {
+        create: answers
+      }
+    }
+  })
+
+  // image uploading in cloudinary
+
   try {
     const newPost = await post.create({
       data: {
         ...restData,
         images: {
           create: images,
+        },
+        questions: {
+          create: questionsData
         },
       },
     })
@@ -61,12 +108,20 @@ export const createPostDB = async (data) => {
 }
 
 export const updatePostDB = async (data, id) => {
+  const { deleted_images: deletedImages, images, questions, ...restData } = data;
+
   try {
     const updatedPost = await post.update({
       where: {
         id: +id,
       },
-      data,
+      data: {
+        ...restData,
+        images: {
+          create: images,
+          delete: deletedImages
+        },
+      },
     })
     return {
       data: updatedPost,

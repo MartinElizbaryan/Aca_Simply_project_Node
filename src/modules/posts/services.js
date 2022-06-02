@@ -18,13 +18,22 @@ export const getPostById = async (req, res, next) => {
   }
 }
 
-export const createPost = async (req, res, next) => {
+export const getPostWithQuestionsById = async (req, res, next) => {
   try {
-    const result = await db.createPostDB(req.body)
-    res.json(result)
+    const post = await db.getPostWithQuestionsByIdDB(req.params.id)
+    res.json(post)
   } catch (error) {
     next(error)
   }
+}
+
+export const createPost = async (req, res, next) => {
+  // try {
+    const result = await db.createPostDB(req.body)
+    res.json(result)
+  // } catch (error) {
+  //   next(error)
+  // }
 }
 
 export const updatePost = async (req, res, next) => {
