@@ -2,20 +2,21 @@ import { Router } from "express"
 // import { validate } from "../../helpers/common.js"
 // import validations from "./validations.js"
 // eslint-disable-next-line prettier/prettier
-import { getAllPosts, getPostById, createPost, updatePost, updateConfirmed, updateCompleted, deleteConfirmed, deletePost } from "./services.js"
+import * as service from "./services.js"
 
 // const { getCompanyByIdSchema } = validations
 
 const router = Router()
 
 // router.get('/:companyId', validate(getCompanyByIdSchema), getCompanyById)
-router.get("/", getAllPosts)
-router.post("/", createPost)
-router.get("/:id", getPostById)
-router.put("/:id", updatePost)
-router.delete("/:id", deletePost)
-router.patch("/completed/:id", updateCompleted)
-router.patch("/confirmed/:id", updateConfirmed)
-router.delete("/delete-confirmed/:id", deleteConfirmed)
+router.get("/", service.getAllPosts)
+router.post("/", service.createPost)
+router.get("/:id", service.getPostById)
+router.get("/:id/with-questions", service.getPostWithQuestionsById)
+router.put("/:id", service.updatePost)
+router.delete("/:id", service.deletePost)
+router.patch("/completed/:id", service.updateCompleted)
+router.patch("/confirmed/:id", service.updateConfirmed)
+router.delete("/delete-confirmed/:id", service.deleteConfirmed)
 
 export { router as postsRoutes }

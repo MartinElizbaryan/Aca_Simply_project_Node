@@ -7,10 +7,10 @@ export const getAllMessagesDB = async (id) => {
     const messages = await message.findMany({
       include: {
         from: true,
-        to: true
+        to: true,
       },
       where: {
-        OR:[
+        OR: [
           {
             from_id: 1,
             to_id: +id,
@@ -18,10 +18,10 @@ export const getAllMessagesDB = async (id) => {
           {
             from_id: +id,
             to_id: 1,
-          }
-        ]
-      }
-    });
+          },
+        ],
+      },
+    })
     return {
       data: messages,
       error: null,
@@ -41,8 +41,8 @@ export const createMessageDb = async (data, id) => {
       data: {
         message: data.message,
         from_id: 1, // here must be auth id,
-        to_id: +id
-      }
+        to_id: +id,
+      },
     })
     return {
       data: newMessage,
