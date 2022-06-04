@@ -3,12 +3,12 @@ import Joi from "joi"
 export default {
   findUserSchema: {
     params: Joi.object({
-      id: Joi.number().positive().required(),
+      id: Joi.number().integer().positive().required(),
     }),
   },
   updateUserSchema: {
     params: Joi.object({
-      id: Joi.number().positive().required(),
+      id: Joi.number().integer().positive().required(),
     }),
     body: Joi.object({
       name: Joi.string().min(3).max(50).pattern(/^[a-zA-Zա-ևԱ-Ֆ-]+$/),
@@ -18,7 +18,7 @@ export default {
   },
   addMoneySchema: {
     params: Joi.object({
-      id: Joi.number().positive().required(),
+      id: Joi.number().integer().positive().required(),
     }),
     body: Joi.object({
       money: Joi.number().positive().required()
