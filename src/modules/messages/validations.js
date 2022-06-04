@@ -1,9 +1,18 @@
 import Joi from "joi"
 
 export default {
-  getUserByIdSchema: {
+  getAllMessagesSchema: {
     params: Joi.object({
-      userId: Joi.number().integer().required(),
+      id: Joi.number().integer().required(),
+    }),
+  },
+
+  createMessageSchema: {
+    params: Joi.object({
+      id: Joi.number().integer().required(),
+    }),
+    body: Joi.object({
+      message: Joi.string().required(),
     }),
   },
 }

@@ -1,13 +1,13 @@
 import { Router } from "express"
-// import { validate } from "../../helpers/common.js"
-// import validations from "./validations.js"
+import { validate } from "../../helpers/common.js"
+import validations from "./validations.js"
 import { getAllMessages, createMessage } from "./services.js"
 
-// const { getUserByIdSchema } = validations
+const { getAllMessagesSchema, createMessageSchema } = validations
 
 const router = Router()
 
-router.get("/:id", getAllMessages)
-router.post("/:id", createMessage)
+router.get("/:id", validate(getAllMessagesSchema), getAllMessages)
+router.post("/:id", validate(createMessageSchema) ,createMessage)
 
 export { router as messagesRoutes }

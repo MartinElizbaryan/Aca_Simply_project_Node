@@ -12,7 +12,7 @@ export const getAllMessages = async (req, res, next) => {
 
 export const createMessage = async (req, res, next) => {
   try {
-    const message = await db.createMessageDb(req.body, req.params.id)
+    const message = await db.createMessageDB(req.body, req.params.id)
     console.log(message)
     res.json({
       status: 200,
