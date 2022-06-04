@@ -1,7 +1,6 @@
 import { Router } from "express"
 // import { validate } from "../../helpers/common.js"
 // import validations from "./validations.js"
-// eslint-disable-next-line prettier/prettier
 import * as service from "./services.js"
 
 // const { getCompanyByIdSchema } = validations
