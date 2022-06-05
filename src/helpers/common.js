@@ -1,5 +1,7 @@
+import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
+
 import { badRequestErrorCreator } from "./errors.js"
-// import { bcrypt } from "bcrypt"
 
 export const validate = (schema) => {
   if (typeof schema !== "object" || schema === null) throw new Error("Schema is not an object")
@@ -17,6 +19,28 @@ export const validate = (schema) => {
   }
 }
 
-// export async const hashPassword = (password) => {
+export const hashPassword = async (password) => {
+  return await bcrypt.hash(password, 12)
+}
 
-// }
+export const comparePassword = async (password, hash) => {
+  return await bcrypt.compare(password, hash)
+}
+
+export const generateToken = (payload) => {
+  const jwtSecret = process.env.JWT_SECRET || "simply"
+  const accessToken = jwt.sign(payload, jwtSecret, {
+    expiresIn: 1800,
+  })
+  return accessToken
+}
+
+export const verifyToken = (accessToken) => {
+  const jwtSecret = process.env.JWT_SECRET || "simply"
+  try {
+    const isTokenValid = jwt.verify(accessToken, jwtSecret)
+    return isTokenValid
+  } catch (error) {
+    return null
+  }
+}
