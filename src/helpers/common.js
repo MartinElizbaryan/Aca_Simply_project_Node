@@ -8,7 +8,6 @@ export const validate = (schema) => {
 
   return async (req, res, next) => {
     const { params, body } = req
-
     try {
       schema.params && (await schema.params.validateAsync(params))
       schema.body && (await schema.body.validateAsync(body))
@@ -30,7 +29,7 @@ export const comparePassword = async (password, hash) => {
 export const generateToken = (payload) => {
   const jwtSecret = process.env.JWT_SECRET || "simply"
   const accessToken = jwt.sign(payload, jwtSecret, {
-    expiresIn: 1800,
+    expiresIn: 30 * 60,
   })
   return accessToken
 }

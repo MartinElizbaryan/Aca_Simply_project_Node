@@ -14,15 +14,8 @@ export default {
         .pattern(/^[a-zA-Zա-ևԱ-Ֆ-]+$/)
         .required(),
       email: Joi.string().email().required(),
-      password: Joi.string()
-        .min(6)
-        .max(15)
-        .pattern(/^[a-zA-Z0-9]+$/)
-        .required(),
-      phone: Joi.string()
-        .min(10)
-        .max(30)
-        .pattern(/^[0-9+-]+$/),
+      password: Joi.string().min(6).max(15).alphanum().required(),
+      confirmedPassword: Joi.string().required().valid(Joi.ref("password")),
     }),
   },
   findUserSchema: {

@@ -14,7 +14,12 @@ const config = JSON.parse(configStr)[env]
 
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors())
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    credentials: true,
+  })
+)
 app.use(logger("dev" /*, { skip: (req, res) => res.statusCode < 400 }*/))
 
 app.set("port", process.env.PORT)

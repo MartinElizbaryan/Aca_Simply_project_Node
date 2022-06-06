@@ -5,9 +5,10 @@ const { user } = prisma
 export const createUserDB = async (data) => {
   try {
     const password = await hashPassword(data.password)
+    const { confirmedPassword, ...restData } = data
     const createdUser = await user.create({
       data: {
-        ...data,
+        ...restData,
         password,
       },
     })
