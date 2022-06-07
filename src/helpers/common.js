@@ -1,4 +1,5 @@
 import { badRequestErrorCreator } from "./errors.js"
+// import { bcrypt } from "bcrypt"
 
 export const validate = (schema) => {
   if (typeof schema !== "object" || schema === null) throw new Error("Schema is not an object")
@@ -15,3 +16,7 @@ export const validate = (schema) => {
     }
   }
 }
+
+// export async const hashPassword = (password) => {
+
+// }
