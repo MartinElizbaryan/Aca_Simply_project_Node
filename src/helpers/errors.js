@@ -19,3 +19,11 @@ export const badRequestErrorCreator = (details) => {
 
   return error
 }
+
+export const unAuthorizedErrorCreator = (details) => {
+  const error = new Error("Unauthorized Error")
+  error.status = 401
+  error.details = details
+
+  return error
+}

@@ -1,9 +1,9 @@
 import { PrismaClient } from "@prisma/client"
+import { hashPassword } from "../src/helpers/common.js"
 
-export const prisma = new PrismaClient()
+const prisma = new PrismaClient()
 
 async function main() {
-  const password = "qwerty"
   const messages = ["Hello", "Hi", "Barev"]
   const faq = [
     {
@@ -32,7 +32,7 @@ async function main() {
     update: {},
     create: {
       email: "brad@gmail.com",
-      password,
+      password: await hashPassword("qwerty"),
       name: "Brad",
       surname: "Gibson",
       phone: "+37493-65-65-65",
@@ -98,7 +98,7 @@ async function main() {
     update: {},
     create: {
       email: "ann@gmail.com",
-      password,
+      password: await hashPassword("qwerty"),
       name: "Ann",
       surname: "Brown",
       posts: {
@@ -139,7 +139,7 @@ async function main() {
     update: {},
     create: {
       email: "john@gmail.com",
-      password,
+      password: await hashPassword("qwerty"),
       name: "John",
       surname: "Smith",
       is_admin: true,
