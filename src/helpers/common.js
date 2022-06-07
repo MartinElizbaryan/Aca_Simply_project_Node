@@ -1,7 +1,8 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
-import { badRequestErrorCreator } from "./errors.js"
+import { badRequestErrorCreator, unAuthorizedErrorCreator} from "./errors.js"
+import { findUserDB } from "../modules/users/db.js";
 
 export const validate = (schema) => {
   if (typeof schema !== "object" || schema === null) throw new Error("Schema is not an object")
@@ -31,6 +32,7 @@ export const generateToken = (payload) => {
   const accessToken = jwt.sign(payload, jwtSecret, {
     expiresIn: 30 * 60,
   })
+  console.log(accessToken)
   return accessToken
 }
 
@@ -41,5 +43,19 @@ export const verifyToken = (accessToken) => {
     return isTokenValid
   } catch (error) {
     return null
+  }
+}
+
+export const checkAuth = async (req, res, next) => {
+  try {
+    const token = req.headers.authorization.split(" ")[1]
+    const answer = verifyToken(token)
+    const { id } = answer
+    if (id) {
+      req.auth = { id }
+      return next()
+    }
+  } catch (error) {
+    next(unAuthorizedErrorCreator(error.details))
   }
 }
