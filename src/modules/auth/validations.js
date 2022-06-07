@@ -15,7 +15,7 @@ export default {
         .required(),
       email: Joi.string().email().required(),
       password: Joi.string().min(6).max(15).alphanum().required(),
-      confirmedPassword: Joi.string().required().valid(Joi.ref("password")),
+      confirmPassword: Joi.string().required().valid(Joi.ref("password")),
     }),
   },
   findUserSchema: {

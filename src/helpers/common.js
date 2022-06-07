@@ -1,8 +1,7 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
 
-import { badRequestErrorCreator, unAuthorizedErrorCreator} from "./errors.js"
-import { findUserDB } from "../modules/users/db.js";
+import { badRequestErrorCreator, unAuthorizedErrorCreator } from "./errors.js"
 
 export const validate = (schema) => {
   if (typeof schema !== "object" || schema === null) throw new Error("Schema is not an object")
@@ -27,19 +26,18 @@ export const comparePassword = async (password, hash) => {
   return await bcrypt.compare(password, hash)
 }
 
-export const generateToken = (payload) => {
+export const generateToken = (payload, expiresIn) => {
   const jwtSecret = process.env.JWT_SECRET || "simply"
-  const accessToken = jwt.sign(payload, jwtSecret, {
-    expiresIn: 30 * 60,
+  const token = jwt.sign(payload, jwtSecret, {
+    expiresIn,
   })
-  console.log(accessToken)
-  return accessToken
+  return token
 }
 
-export const verifyToken = (accessToken) => {
+export const verifyToken = (token) => {
   const jwtSecret = process.env.JWT_SECRET || "simply"
   try {
-    const isTokenValid = jwt.verify(accessToken, jwtSecret)
+    const isTokenValid = jwt.verify(token, jwtSecret)
     return isTokenValid
   } catch (error) {
     return null
