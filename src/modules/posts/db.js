@@ -5,7 +5,9 @@ const { post } = prisma
 export const getAllPostsDB = async () => {
   try {
     const posts = await post.findMany({
-      includes
+      include: {
+        user: true,
+      },
     })
     return {
       data: posts,
@@ -26,8 +28,8 @@ export const getPostByIdDB = async (id) => {
         id: +id,
       },
       include: {
-        user: true
-      }
+        user: true,
+      },
     })
     return {
       data: onePost,
@@ -50,10 +52,10 @@ export const getPostWithQuestionsByIdDB = async (id) => {
       include: {
         questions: {
           include: {
-            answers: true
-          }
-        }
-      }
+            answers: true,
+          },
+        },
+      },
     })
     // check auth.id from onePost.user_id
     return {
@@ -69,15 +71,15 @@ export const getPostWithQuestionsByIdDB = async (id) => {
 }
 
 export const createPostDB = async (data) => {
-  const { images, questions, ...restData } = data;
+  const { images, questions, ...restData } = data
 
-  const questionsData = questions.map(item => {
-    const {answers, ...restData} = item;
+  const questionsData = questions.map((item) => {
+    const { answers, ...restData } = item
     return {
       ...restData,
       answers: {
-        create: answers
-      }
+        create: answers,
+      },
     }
   })
 
@@ -91,7 +93,7 @@ export const createPostDB = async (data) => {
           create: images,
         },
         questions: {
-          create: questionsData
+          create: questionsData,
         },
       },
     })
@@ -108,7 +110,7 @@ export const createPostDB = async (data) => {
 }
 
 export const updatePostDB = async (data, id) => {
-  const { deleted_images: deletedImages, images, questions, ...restData } = data;
+  const { deleted_images: deletedImages, images, questions, ...restData } = data
 
   try {
     const updatedPost = await post.update({
@@ -119,7 +121,7 @@ export const updatePostDB = async (data, id) => {
         ...restData,
         images: {
           create: images,
-          delete: deletedImages
+          delete: deletedImages,
         },
       },
     })

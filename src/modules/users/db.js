@@ -24,7 +24,7 @@ export const updateUserDB = async (data, id) => {
 
 export const findUserDB = async (id) => {
   try {
-    const foundUser = user.findUnique({
+    const foundUser = await user.findUnique({
       where: {
         id: +id,
       },

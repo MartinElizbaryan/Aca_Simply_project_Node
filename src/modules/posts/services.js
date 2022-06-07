@@ -28,19 +28,18 @@ export const getPostWithQuestionsById = async (req, res, next) => {
 }
 
 export const createPost = async (req, res, next) => {
-  // try {
+  try {
     const result = await db.createPostDB(req.body)
     res.json(result)
-  // } catch (error) {
-  //   next(error)
-  // }
+  } catch (error) {
+    next(error)
+  }
 }
 
 export const updatePost = async (req, res, next) => {
   try {
     const result = await db.updatePostDB(req.body, req.params.id)
     res.json(result)
-    // if(!result.error) res.json({status:200,message:"Your post has been updated!"})
   } catch (error) {
     next(error)
   }

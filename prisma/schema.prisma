@@ -25,41 +25,41 @@ model User {
 }
 
 model Post {
-  id           Int      @id @default(autoincrement())
+  id           Int        @id @default(autoincrement())
   user_id      Int
-  user         User     @relation("user", fields: [user_id], references: [id])
+  user         User       @relation("user", fields: [user_id], references: [id])
   confirmer_id Int?
-  confirmer    User?    @relation("confirmer", fields: [confirmer_id], references: [id])
-  name         String   @db.VarChar(50)
-  description  String   @db.Text
+  confirmer    User?      @relation("confirmer", fields: [confirmer_id], references: [id])
+  name         String     @db.VarChar(50)
+  description  String     @db.Text
   images       Image[]
   questions    Question[]
   address      String?
-  type         Type     @default(LOST)
-  trusted      Boolean  @default(false)
-  completed    Boolean  @default(false)
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now()) @updatedAt
+  type         Type       @default(LOST)
+  trusted      Boolean    @default(false)
+  completed    Boolean    @default(false)
+  created_at   DateTime   @default(now())
+  updated_at   DateTime   @default(now()) @updatedAt
 }
 
 model Question {
-  id           Int      @id @default(autoincrement())
-  title        String   @db.VarChar(255)
-  post_id      Int
-  post         Post     @relation(fields: [post_id], references: [id], onDelete: Cascade)
-  answers      Answer[]
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now()) @updatedAt
+  id         Int      @id @default(autoincrement())
+  title      String   @db.VarChar(255)
+  post_id    Int
+  post       Post     @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  answers    Answer[]
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
 }
 
 model Answer {
-  id           Int      @id @default(autoincrement())
-  title        String   @db.VarChar(255)
-  question_id  Int
-  question     Question @relation(fields: [question_id], references: [id], onDelete: Cascade)
-  status       Boolean  @default(false)
-  created_at   DateTime @default(now())
-  updated_at   DateTime @default(now()) @updatedAt
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  question_id Int
+  question    Question @relation(fields: [question_id], references: [id], onDelete: Cascade)
+  status      Boolean  @default(false)
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now()) @updatedAt
 
 }
 
