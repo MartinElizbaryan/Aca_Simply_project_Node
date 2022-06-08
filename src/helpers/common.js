@@ -1,5 +1,8 @@
 import bcrypt from "bcrypt"
+import {promises as fs} from "fs"
+import path from "path"
 import jwt from "jsonwebtoken"
+import { transporter } from "../services/MailService.js"
 
 import { badRequestErrorCreator, unAuthorizedErrorCreator } from "./errors.js"
 
@@ -55,5 +58,25 @@ export const checkAuth = async (req, res, next) => {
     }
   } catch (error) {
     next(unAuthorizedErrorCreator(error.details))
+  }
+}
+
+export const sendActivationMail = async (to, link) => {
+  try {
+    const file = await fs.readFile(`${path.resolve()}/public/message.html`, "utf-8")
+    const html = file.replace("verification-link", link)
+    await transporter.sendMail({
+      from: {
+        name: "Lost & Found",
+        address: process.env.SMTP_USER,
+      },
+      to,
+      subject: "Verify your email address",
+      html,
+    })
+    console.log("email send")
+  } catch (error) {
+    console.log("email not sent")
+    console.log(error)
   }
 }

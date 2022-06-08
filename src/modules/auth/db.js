@@ -1,19 +1,28 @@
-import { hashPassword, comparePassword, generateToken } from "../../helpers/common.js"
+import {
+  hashPassword,
+  comparePassword,
+  generateToken,
+  sendActivationMail,
+} from "../../helpers/common.js"
 import { prisma } from "../../services/Prisma.js"
 const { user, token } = prisma
 
 export const createUserDB = async (data) => {
   try {
-    const password = await hashPassword(data.password)
-    const { name, surname, email } = data
+    const { name, surname, email, password } = data
+    const hash = await hashPassword(password)
     const createdUser = await user.create({
       data: {
         name,
         surname,
         email,
-        password,
+        password: hash,
       },
     })
+    await sendActivationMail(
+      email,
+      `${process.env.SERVER_BASE_URL}/auth/verify/${createdUser.id}/${hash}`
+    )
     return {
       user: createdUser,
     }
@@ -85,6 +94,27 @@ export const deleteTokenDB = async (token) => {
     await token.delete({
       where: {
         token,
+      },
+    })
+    return {
+      error: null,
+    }
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
+
+export const updateVerifiedDB = async (id) => {
+  try {
+    console.log(id)
+    await user.update({
+      where: {
+        id: +id,
+      },
+      data: {
+        is_verified: true,
       },
     })
     return {

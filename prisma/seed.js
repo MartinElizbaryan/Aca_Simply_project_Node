@@ -36,6 +36,7 @@ async function main() {
       name: "Brad",
       surname: "Gibson",
       phone: "+37493-65-65-65",
+      is_verified: true,
       posts: {
         create: {
           name: "Phone",
@@ -101,6 +102,7 @@ async function main() {
       password: await hashPassword("qwerty"),
       name: "Ann",
       surname: "Brown",
+      is_verified: true,
       posts: {
         create: {
           name: "Bag",
@@ -143,6 +145,7 @@ async function main() {
       name: "John",
       surname: "Smith",
       is_admin: true,
+      is_verified: true,
     },
   })
   messages.forEach(async (message) => {

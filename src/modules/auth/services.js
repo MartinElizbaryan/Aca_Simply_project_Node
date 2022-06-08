@@ -1,4 +1,5 @@
 import * as db from "./db.js"
+import path from "path"
 
 export const signUp = async (req, res, next) => {
   try {
@@ -51,6 +52,15 @@ export const signOut = async (req, res, next) => {
     res.json({
       auth: false,
     })
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const verifyUser = async (req, res, next) => {
+  try {
+    await db.updateVerifiedDB(req.params.id)
+    res.sendFile(`${path.resolve()}/public/verified.html`)
   } catch (error) {
     next(error)
   }

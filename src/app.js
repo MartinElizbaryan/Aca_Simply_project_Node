@@ -8,7 +8,7 @@ import cookieParser from "cookie-parser"
 const app = express()
 
 const env = process.env.NODE_ENV || "development"
-
+console.log(path.resolve() + "/public")
 const configStr = fs.readFileSync(path.resolve("src/config.json"), "utf-8")
 const config = JSON.parse(configStr)[env]
 
@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(cookieParser())
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: [process.env.CLIENT_URL],
     credentials: true,
   })
 )
