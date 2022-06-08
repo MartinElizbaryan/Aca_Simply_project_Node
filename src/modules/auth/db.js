@@ -96,3 +96,20 @@ export const deleteTokenDB = async (token) => {
     }
   }
 }
+
+export const deleteTokenWithOutYourDB = async ({ token, id }) => {
+  try {
+    await token.delete({
+      where: {
+        user_id: id,
+        NOT: {
+          token,
+        },
+      },
+    })
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
