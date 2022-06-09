@@ -62,7 +62,7 @@ export const checkAuth = async (req, res, next) => {
   }
 }
 
-export const checkIsAdmin = async (req, res, next) => {
+export const checkAdmin = async (req, res, next) => {
   const { is_admin } = req.auth
   if (is_admin) return next()
   else next(forbiddenErrorCreator("You don't have permission to access this resource."))
