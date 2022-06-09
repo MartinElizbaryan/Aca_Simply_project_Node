@@ -73,7 +73,7 @@ export const getPostWithQuestionsByIdDB = async (id) => {
 export const createPostDB = async (data) => {
   const { images, questions, ...restData } = data
 
-  const questionsData = questions.map((item) => {
+  const questionsData = questions?.map( item => {
     const { answers, ...restData } = item
     return {
       ...restData,

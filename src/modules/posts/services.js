@@ -29,7 +29,7 @@ export const getPostWithQuestionsById = async (req, res, next) => {
 
 export const createPost = async (req, res, next) => {
   try {
-    const result = await db.createPostDB(req.body)
+    const result = await db.createPostDB({ ...req.body, user_id: 1 })
     res.json(result)
   } catch (error) {
     next(error)
