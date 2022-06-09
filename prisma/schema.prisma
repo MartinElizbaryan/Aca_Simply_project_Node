@@ -74,7 +74,7 @@ model Answer {
 
 model Image {
   id         Int      @id @default(autoincrement())
-  src        String   @db.VarChar(255)
+  src        String   @db.Text
   post_id    Int
   post       Post     @relation(fields: [post_id], references: [id], onDelete: Cascade)
   created_at DateTime @default(now())

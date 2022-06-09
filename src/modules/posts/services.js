@@ -1,4 +1,5 @@
 import * as db from "./db.js"
+import cloudinary from "../../services/Cloudinary.js"
 
 export const getAllPosts = async (req, res, next) => {
   try {
@@ -29,9 +30,17 @@ export const getPostWithQuestionsById = async (req, res, next) => {
 
 export const createPost = async (req, res, next) => {
   try {
-    const result = await db.createPostDB(req.body)
+    const { images } = req.body
+
+    for await (const image of images) {
+      const uploadedResponse = await cloudinary.uploader.upload(image.src)
+      image.src = uploadedResponse.public_id
+    }
+
+    const result = await db.createPostDB({ ...req.body, user_id: 1 })
     res.json(result)
   } catch (error) {
+    console.log(error)
     next(error)
   }
 }
