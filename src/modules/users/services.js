@@ -18,6 +18,15 @@ export const findUser = async (req, res, next) => {
   }
 }
 
+export const findMe = async (req, res, next) => {
+  try {
+    const foundUser = await db.findUserDB(req.auth.id)
+    res.json(foundUser)
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const addMoney = async (req, res, next) => {
   try {
     const userMoney = await db.addMoneyDB(req.body, req.params.id)

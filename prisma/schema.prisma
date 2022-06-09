@@ -16,12 +16,21 @@ model User {
   phone          String?
   money          Int       @default(2000)
   is_admin       Boolean   @default(false)
+  is_verified    Boolean   @default(false)
+  token          Token[]
   posts          Post[]    @relation("user")
   confirmedPosts Post[]    @relation("confirmer")
   messages_from  Message[] @relation("from")
   messages_to    Message[] @relation("to")
   created_at     DateTime  @default(now())
   updated_at     DateTime  @default(now()) @updatedAt
+}
+
+model Token {
+  id      Int    @id @default(autoincrement())
+  user_id Int
+  user    User   @relation(fields: [user_id], references: [id])
+  token   String
 }
 
 model Post {

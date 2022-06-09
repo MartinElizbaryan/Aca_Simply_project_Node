@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Lost & Found</title>
+    <link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
+    <style>
+      .wrapper {
+        text-align: center;
+        margin: 100px;
+        font-family: "Roboto", sans-serif;
+      }
+      .text {
+        font-size: 30px;
+        margin: 30px;
+      }
+      .checkmark {
+        display: inline-block;
+        border-radius: 50%;
+        background-color: green;
+        width: 100px;
+        height: 100px;
+        -ms-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg);
+      }
+      .checkmark_stem {
+        position: absolute;
+        width: 15px;
+        height: 52px;
+        background-color: #ccc;
+        left: 49px;
+        top: 20px;
+      }
+      .checkmark_kick {
+        position: absolute;
+        width: 25px;
+        height: 15px;
+        background-color: #ccc;
+        left: 30px;
+        top: 57px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div>
+        <span class="checkmark">
+          <div class="checkmark_stem"></div>
+          <div class="checkmark_kick"></div>
+        </span>
+      </div>
+      <div class="text">Your account is verified! You can already sign in.</div>
+    </div>
+    <script>
+      setTimeout(function () {
+        window.close()
+      }, 2000)
+    </script>
+  </body>
+</html>
