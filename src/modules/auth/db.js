@@ -1,9 +1,4 @@
-import {
-  hashPassword,
-  comparePassword,
-  generateToken,
-  sendActivationMail,
-} from "../../helpers/common.js"
+import { hashPassword, comparePassword, generateToken } from "../../helpers/common.js"
 import { prisma } from "../../services/Prisma.js"
 const { user, token } = prisma
 
@@ -19,10 +14,6 @@ export const createUserDB = async (data) => {
         password: hash,
       },
     })
-    await sendActivationMail(
-      email,
-      `${process.env.SERVER_BASE_URL}/auth/verify/${createdUser.id}/${hash}`
-    )
     return {
       user: createdUser,
     }
@@ -54,9 +45,18 @@ export const findUserDB = async ({ email, password }) => {
         message: "Invalid username/password!",
       }
     }
+    if (!foundUser.is_verified) {
+      return {
+        auth: false,
+        message: "Please, confirm your email address first!",
+      }
+    }
     return {
       auth: true,
-      id: foundUser.id,
+      payload: {
+        id: foundUser.id,
+        is_admin: foundUser.is_admin,
+      },
       error: null,
     }
   } catch (error) {
@@ -69,8 +69,8 @@ export const findUserDB = async ({ email, password }) => {
 
 export const createTokenDB = async (payload) => {
   try {
-    const accessToken = generateToken(payload, process.env.ACCESS_TOKEN_EXPIRE_TIME)
-    const refreshToken = generateToken(payload, process.env.REFRESH_TOKEN_EXPIRE_TIME)
+    const accessToken = generateToken(payload, "access")
+    const refreshToken = generateToken(payload, "refresh")
     await token.create({
       data: {
         user_id: payload.id,
@@ -108,7 +108,6 @@ export const deleteTokenDB = async (token) => {
 
 export const updateVerifiedDB = async (id) => {
   try {
-    console.log(id)
     await user.update({
       where: {
         id: +id,
@@ -120,6 +119,22 @@ export const updateVerifiedDB = async (id) => {
     return {
       error: null,
     }
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
+export const deleteTokenWithOutYourDB = async ({ token, id }) => {
+  try {
+    await token.delete({
+      where: {
+        user_id: id,
+        NOT: {
+          token,
+        },
+      },
+    })
   } catch (error) {
     return {
       error,
