@@ -1,10 +1,9 @@
 import * as db from "./db.js"
-import cloudinary from "../../services/Cloudinary.js"
 
 export const getAllPosts = async (req, res, next) => {
   try {
-    const posts = await db.getAllPostsDB()
-    res.json(posts.data)
+    const result = await db.getAllPostsDB()
+    res.json(result)
   } catch (error) {
     next(error)
   }
@@ -12,8 +11,8 @@ export const getAllPosts = async (req, res, next) => {
 
 export const getPostById = async (req, res, next) => {
   try {
-    const post = await db.getPostByIdDB(req.params.id)
-    res.json(post)
+    const result = await db.getPostByIdDB(req.params.id)
+    res.json(result)
   } catch (error) {
     next(error)
   }
@@ -21,8 +20,8 @@ export const getPostById = async (req, res, next) => {
 
 export const getPostWithQuestionsById = async (req, res, next) => {
   try {
-    const post = await db.getPostWithQuestionsByIdDB(req.params.id)
-    res.json(post)
+    const result = await db.getPostWithQuestionsByIdDB(req.params.id)
+    res.json(result)
   } catch (error) {
     next(error)
   }
@@ -30,14 +29,7 @@ export const getPostWithQuestionsById = async (req, res, next) => {
 
 export const createPost = async (req, res, next) => {
   try {
-    const { images } = req.body
-
-    for await (const image of images) {
-      const uploadedResponse = await cloudinary.uploader.upload(image.src)
-      image.src = uploadedResponse.public_id
-    }
-
-    const result = await db.createPostDB({ ...req.body, user_id: 1 })
+    const result = await db.createPostDB({ ...req.body, user_id: req.auth.id })
     res.json(result)
   } catch (error) {
     console.log(error)

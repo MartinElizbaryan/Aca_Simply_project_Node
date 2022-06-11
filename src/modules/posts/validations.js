@@ -12,7 +12,7 @@ export default {
       name: Joi.string().min(3).max(50).required(),
       description: Joi.string(),
       address: Joi.string(),
-      type: Joi.string().valid('LOST', 'FOUND'),
+      type: Joi.string().valid("LOST", "FOUND"),
       images: Joi.array().items(
         Joi.object({
           src: Joi.string(),
@@ -24,14 +24,14 @@ export default {
           answers: Joi.array().items(
             Joi.object({
               title: Joi.string().min(2).max(50).required(),
-              status: Joi.boolean().required()
+              status: Joi.boolean().required(),
             })
-          )
+          ),
         })
       ),
-    })
+    }),
   },
-  
+
   deletePostSchema: {
     params: Joi.object({
       id: Joi.number().integer().positive().required(),

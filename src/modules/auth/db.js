@@ -18,6 +18,7 @@ export const createUserDB = async (data) => {
       user: createdUser,
     }
   } catch (error) {
+    console.log(error.message)
     return {
       data: null,
       error,
@@ -125,7 +126,7 @@ export const updateVerifiedDB = async (id) => {
     }
   }
 }
-export const deleteTokenWithOutYourDB = async ({ token, id }) => {
+export const deleteTokenWithoutYourDB = async ({ token, id }) => {
   try {
     await token.delete({
       where: {

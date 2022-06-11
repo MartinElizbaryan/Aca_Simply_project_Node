@@ -1,15 +1,16 @@
 import { Router } from "express"
-import { checkAuth, validate } from "../../helpers/common.js"
+import * as service from "./services.js"
+import auth from "../../middlewares/auth.middleware.js"
+import validate from "../../middlewares/validate.middleware.js"
 import validations from "./validations.js"
-import { findUser, updateUser, addMoney, findMe } from "./services.js"
 
 const { findUserSchema, updateUserSchema, addMoneySchema } = validations
 
 const router = Router()
 
-router.get("/me", checkAuth, findMe)
-router.get("/:id", checkAuth, validate(findUserSchema), findUser)
-router.put("/:id", validate(updateUserSchema), updateUser)
-router.patch("/:id/add-money", validate(addMoneySchema), addMoney)
+router.get("/me", auth, service.findMe)
+router.get("/:id", auth, validate(findUserSchema), service.findUser)
+router.put("/:id", auth, validate(updateUserSchema), service.updateUser)
+router.patch("/add-money", auth, validate(addMoneySchema), service.addMoney)
 
 export { router as usersRoutes }

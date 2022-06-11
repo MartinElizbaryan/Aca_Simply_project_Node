@@ -1,3 +1,4 @@
+import cloudinary from "../../services/Cloudinary.js"
 import { prisma } from "../../services/Prisma.js"
 
 const { post } = prisma
@@ -10,20 +11,18 @@ export const getAllPostsDB = async () => {
       },
     })
     return {
-      data: posts,
-      error: null,
+      posts,
     }
   } catch (error) {
     return {
-      data: null,
-      error: error,
+      error,
     }
   }
 }
 
 export const getPostByIdDB = async (id) => {
   try {
-    const onePost = await post.findUnique({
+    const foundPost = await post.findUnique({
       where: {
         id: +id,
       },
@@ -32,12 +31,10 @@ export const getPostByIdDB = async (id) => {
       },
     })
     return {
-      data: onePost,
-      error: null,
+      post: foundPost,
     }
   } catch (error) {
     return {
-      data: null,
       error,
     }
   }
@@ -45,7 +42,7 @@ export const getPostByIdDB = async (id) => {
 
 export const getPostWithQuestionsByIdDB = async (id) => {
   try {
-    const onePost = await post.findUnique({
+    const foundPost = await post.findUnique({
       where: {
         id: +id,
       },
@@ -57,52 +54,55 @@ export const getPostWithQuestionsByIdDB = async (id) => {
         },
       },
     })
-    // check auth.id from onePost.user_id
     return {
-      data: onePost,
-      error: null,
+      post: foundPost,
     }
   } catch (error) {
     return {
-      data: null,
       error,
     }
   }
 }
 
 export const createPostDB = async (data) => {
-  const { images, questions, ...restData } = data
-  const questionsData = questions?.map((item) => {
-    const { answers, ...restData } = item
-    return {
-      ...restData,
-      answers: {
-        create: answers,
-      },
-    }
-  })
-
-  // image uploading in cloudinary
   try {
-    const newPost = await post.create({
-      data: {
-        ...restData,
-        images: {
-          create: images,
+    return await prisma.$transaction(async (post) => {
+      const { images, questions, ...restData } = data
+
+      for await (const image of images) {
+        const uploadedResponse = await cloudinary.uploader.upload(image.src)
+        image.src = uploadedResponse.public_id
+      }
+
+      const questionsData = questions?.map((item) => {
+        const { answers, ...restData } = item
+        return {
+          ...restData,
+          answers: {
+            create: answers,
+          },
+        }
+      })
+
+      await post.create({
+        data: {
+          ...restData,
+          images: {
+            create: images,
+          },
+          questions: {
+            create: questionsData,
+          },
         },
-        questions: {
-          create: questionsData,
-        },
-      },
+      })
+
+      return {
+        status: 200,
+      }
     })
-    return {
-      data: newPost,
-      error: null,
-    }
   } catch (error) {
     return {
-      data: null,
-      error: error,
+      error,
     }
   }
 }
@@ -124,12 +124,10 @@ export const updatePostDB = async (data, id) => {
       },
     })
     return {
-      data: updatedPost,
-      error: null,
+      status: 200,
     }
   } catch (error) {
     return {
-      data: null,
       error,
     }
   }
@@ -137,7 +135,7 @@ export const updatePostDB = async (data, id) => {
 
 export const confirmedPostDB = async (id) => {
   try {
-    const confirmedPost = await post.update({
+    await post.update({
       where: {
         id: +id,
       },
@@ -146,12 +144,10 @@ export const confirmedPostDB = async (id) => {
       },
     })
     return {
-      data: confirmedPost,
-      error: null,
+      status: 200,
     }
   } catch (error) {
     return {
-      data: null,
       error: error,
     }
   }
@@ -159,7 +155,7 @@ export const confirmedPostDB = async (id) => {
 
 export const deleteConfirmedDB = async (id) => {
   try {
-    const deleted = await post.update({
+    await post.update({
       where: {
         id: +id,
       },
@@ -168,12 +164,10 @@ export const deleteConfirmedDB = async (id) => {
       },
     })
     return {
-      data: deleted,
-      error: null,
+      status: 204,
     }
   } catch (error) {
     return {
-      data: null,
       error,
     }
   }
@@ -181,7 +175,7 @@ export const deleteConfirmedDB = async (id) => {
 
 export const completedPostDB = async (id) => {
   try {
-    const completedPost = await post.update({
+    await post.update({
       where: {
         id: +id,
       },
@@ -190,31 +184,27 @@ export const completedPostDB = async (id) => {
       },
     })
     return {
-      data: completedPost,
-      error: null,
+      status: 200,
     }
   } catch (error) {
     return {
-      data: null,
-      error: error,
+      error,
     }
   }
 }
 
 export const deletePostDB = async (id) => {
   try {
-    const deletedPost = await post.delete({
+    await post.delete({
       where: {
         id: +id,
       },
     })
     return {
-      data: deletedPost,
-      error: null,
+      status: 204,
     }
   } catch (error) {
     return {
-      data: null,
       error,
     }
   }

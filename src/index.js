@@ -9,6 +9,7 @@ API_VERSIONS.forEach((version) => app.use(`/api/${version}`, routes[version]))
 
 // handle 404 error
 app.use((req, res, next) => {
+  console.log(req.url)
   next(notFoundErrorCreator())
 })
 

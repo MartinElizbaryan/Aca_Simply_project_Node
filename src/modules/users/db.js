@@ -4,19 +4,17 @@ const { user } = prisma
 
 export const updateUserDB = async (data, id) => {
   try {
-    const updatedUser = await user.update({
+    await user.update({
       where: {
         id: +id,
       },
       data,
     })
     return {
-      data: updatedUser,
-      error: null,
+      status: 200,
     }
   } catch (error) {
     return {
-      data: null,
       error,
     }
   }
@@ -30,16 +28,30 @@ export const findUserDB = async (id) => {
       },
       include: {
         posts: true,
-        confirmedPosts: true,
       },
     })
     return {
-      data: foundUser,
-      error: null,
+      user: foundUser,
     }
   } catch (error) {
     return {
-      data: null,
+      error,
+    }
+  }
+}
+
+export const findMeDB = async (id) => {
+  try {
+    const foundUser = await user.findUnique({
+      where: {
+        id: +id,
+      },
+    })
+    return {
+      user: foundUser,
+    }
+  } catch (error) {
+    return {
       error,
     }
   }
@@ -47,7 +59,7 @@ export const findUserDB = async (id) => {
 
 export const addMoneyDB = async (data, id) => {
   try {
-    const userMoney = await user.update({
+    await user.update({
       where: {
         id: +id,
       },
@@ -58,12 +70,10 @@ export const addMoneyDB = async (data, id) => {
       },
     })
     return {
-      data: userMoney,
-      error: null,
+      status: 200,
     }
   } catch (error) {
     return {
-      data: null,
       error,
     }
   }

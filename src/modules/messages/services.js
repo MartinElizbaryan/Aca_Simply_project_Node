@@ -1,4 +1,3 @@
-// import { responseDataCreator } from "../../helpers/common.js"
 import * as db from "./db.js"
 
 export const getAllMessages = async (req, res, next) => {

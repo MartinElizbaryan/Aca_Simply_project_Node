@@ -1,6 +1,6 @@
-import * as db from "./db.js"
 import path from "path"
 import { v4 } from "uuid"
+import * as db from "./db.js"
 import { verifyToken, sendActivationMail } from "../../helpers/common.js"
 
 export const signUp = async (req, res, next) => {
@@ -10,7 +10,11 @@ export const signUp = async (req, res, next) => {
       user.email,
       `${process.env.SERVER_BASE_URL}/auth/verify/${user.id}/${v4()}`
     )
+    res.json({
+      status: 200,
+    })
   } catch (error) {
+    console.log(error.message)
     next(error)
   }
 }
@@ -24,7 +28,7 @@ export const signIn = async (req, res, next) => {
     if (error) res.json(error)
 
     res.cookie("refreshToken", refreshToken, {
-      maxAge: 2952000 * 1000,
+      maxAge: 60 * 60 * 24 * 30 * 1000,
       httpOnly: true,
     })
     res.json({
@@ -76,7 +80,7 @@ export const deleteRefreshToken = async (req, res, next) => {
     const { refreshToken } = req.cookies
     const { id } = verifyToken(refreshToken)
 
-    await db.deleteTokenWithOutYourDB({ refreshToken, id })
+    await db.deleteTokenWithoutYourDB({ refreshToken, id })
 
     res.json({
       auth: false,
@@ -86,8 +90,9 @@ export const deleteRefreshToken = async (req, res, next) => {
   }
 }
 
-export const verifyUser = async (req, res, next) => {
+export const updateVerified = async (req, res, next) => {
   try {
+    console.log(req.params.id)
     await db.updateVerifiedDB(req.params.id)
     res.sendFile(`${path.resolve()}/public/verified.html`)
   } catch (error) {

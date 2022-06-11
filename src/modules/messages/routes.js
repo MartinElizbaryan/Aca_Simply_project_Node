@@ -1,13 +1,14 @@
 import { Router } from "express"
-import { validate } from "../../helpers/common.js"
+import * as service from "./services.js"
+import auth from "../../middlewares/auth.middleware.js"
+import validate from "../../middlewares/validate.middleware.js"
 import validations from "./validations.js"
-import { getAllMessages, createMessage } from "./services.js"
 
 const { getAllMessagesSchema, createMessageSchema } = validations
 
 const router = Router()
 
-router.get("/:id", validate(getAllMessagesSchema), getAllMessages)
-router.post("/:id", validate(createMessageSchema) ,createMessage)
+router.get("/:id", validate(getAllMessagesSchema), service.getAllMessages)
+router.post("/:id", validate(createMessageSchema), service.createMessage)
 
 export { router as messagesRoutes }
