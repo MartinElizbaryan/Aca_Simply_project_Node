@@ -3,6 +3,7 @@ import path from "path"
 import jwt from "jsonwebtoken"
 import { promises as fs } from "fs"
 import { transporter } from "../services/Mail.js"
+import cloudinary from "../services/Cloudinary.js"
 
 export const hashPassword = async (password) => {
   return await bcrypt.hash(password, 12)
@@ -44,5 +45,50 @@ export const sendActivationMail = async (to, link) => {
     })
   } catch (error) {
     console.log(error)
+  }
+}
+
+export const uploadImagesToCloudinary = async (images) => {
+  for await (const image of images) {
+    console.log(image)
+    const uploadedResponse = await cloudinary.uploader.upload(image.src)
+    image.src = uploadedResponse.public_id
+  }
+}
+
+export const changeQuestionsDataStructure = async (questions) => {
+  return questions.map((question) => {
+    const { answers, ...restData } = question
+    return {
+      ...restData,
+      answers: {
+        create: answers,
+      },
+    }
+  })
+}
+
+export const verifyUser = async (password, user) => {
+  if (!user) {
+    return {
+      auth: false,
+      message: "User not found!",
+    }
+  }
+  const isPasswordCorrect = await comparePassword(password, user.password)
+  if (!isPasswordCorrect) {
+    return {
+      auth: false,
+      message: "Invalid username/password!",
+    }
+  }
+  if (!user.is_verified) {
+    return {
+      auth: false,
+      message: "Please, confirm your email address first!",
+    }
+  }
+  return {
+    auth: true,
   }
 }

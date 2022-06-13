@@ -1,3 +1,4 @@
+import { changeQuestionsDataStructure, uploadImagesToCloudinary } from "../../helpers/common.js"
 import * as db from "./db.js"
 
 export const getAllPosts = async (req, res, next) => {
@@ -29,17 +30,23 @@ export const getPostWithQuestionsById = async (req, res, next) => {
 
 export const createPost = async (req, res, next) => {
   try {
-    const result = await db.createPostDB({ ...req.body, user_id: req.auth.id })
+    const { images, questions } = req.body
+    await uploadImagesToCloudinary(images)
+    const questionsData = changeQuestionsDataStructure(questions)
+    const result = await db.createPostDB({
+      ...req.body,
+      questions: questionsData,
+      user_id: req.auth.id,
+    })
     res.json(result)
   } catch (error) {
-    console.log(error)
     next(error)
   }
 }
 
 export const updatePost = async (req, res, next) => {
   try {
-    const result = await db.updatePostDB(req.body, req.params.id)
+    const result = await db.updatePostDB(req.body, req.params.id, req.auth.id)
     res.json(result)
   } catch (error) {
     next(error)
@@ -48,7 +55,7 @@ export const updatePost = async (req, res, next) => {
 
 export const updateConfirmed = async (req, res, next) => {
   try {
-    const result = await db.confirmedPostDB(req.params.id)
+    const result = await db.confirmedPostDB(req.params.id, req.auth.id)
     res.json(result)
   } catch (error) {
     next(error)
@@ -57,7 +64,7 @@ export const updateConfirmed = async (req, res, next) => {
 
 export const deleteConfirmed = async (req, res, next) => {
   try {
-    const result = await db.deleteConfirmedDB(req.params.id)
+    const result = await db.deleteConfirmedDB(req.params.id, req.auth.id)
     res.json(result)
   } catch (error) {
     next(error)
@@ -66,7 +73,7 @@ export const deleteConfirmed = async (req, res, next) => {
 
 export const updateCompleted = async (req, res, next) => {
   try {
-    const result = await db.completedPostDB(req.params.id)
+    const result = await db.completedPostDB(req.params.id, req.auth.id)
     res.json(result)
   } catch (error) {
     next(error)
@@ -75,7 +82,7 @@ export const updateCompleted = async (req, res, next) => {
 
 export const deletePost = async (req, res, next) => {
   try {
-    const result = await db.deletePostDB(req.params.id)
+    const result = await db.deletePostDB(req.params.id, req.auth.id)
     res.json(result)
   } catch (error) {
     next(error)

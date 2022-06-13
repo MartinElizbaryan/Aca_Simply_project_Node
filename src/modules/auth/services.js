@@ -1,30 +1,30 @@
 import path from "path"
-import { v4 } from "uuid"
+import { verifyToken, verifyUser, generateToken } from "../../helpers/common.js"
 import * as db from "./db.js"
-import { verifyToken, sendActivationMail } from "../../helpers/common.js"
 
 export const signUp = async (req, res, next) => {
   try {
-    const { user } = await db.createUserDB(req.body)
-    await sendActivationMail(
-      user.email,
-      `${process.env.SERVER_BASE_URL}/auth/verify/${user.id}/${v4()}`
-    )
-    res.json({
-      status: 200,
-    })
+    const result = await db.createUserDB(req.body)
+    res.json(result)
   } catch (error) {
-    console.log(error.message)
     next(error)
   }
 }
 
 export const signIn = async (req, res, next) => {
   try {
-    const user = await db.findUserDB(req.body)
-    if (!user.auth) res.json(user)
+    const { email, password } = req.body
+    const { user } = await db.findUserDB(email)
+    const result = verifyUser(password, user)
+    if (!result.auth) res.json(result)
 
-    const { accessToken, refreshToken, error } = await db.createTokenDB(user.payload)
+    const payload = {
+      id: user.id,
+      is_admin: user.is_admin,
+    }
+    const accessToken = generateToken(payload, "access")
+    const refreshToken = generateToken(payload, "refresh")
+    const { error } = await db.createTokenDB(user.id, refreshToken)
     if (error) res.json(error)
 
     res.cookie("refreshToken", refreshToken, {
@@ -43,11 +43,9 @@ export const signIn = async (req, res, next) => {
 export const signOut = async (req, res, next) => {
   try {
     const { refreshToken } = req.cookies
-    await db.deleteTokenDB(refreshToken)
+    const result = await db.deleteTokenDB(refreshToken)
     res.clearCookie("refreshToken")
-    res.json({
-      auth: false,
-    })
+    res.json(result)
   } catch (error) {
     next(error)
   }
@@ -56,14 +54,20 @@ export const signOut = async (req, res, next) => {
 export const refreshToken = async (req, res, next) => {
   try {
     const refreshTokenFromCookies = req.cookies.refreshToken
-    const { id } = verifyToken(refreshTokenFromCookies)
+    const { id, is_admin } = verifyToken(refreshTokenFromCookies)
     await db.deleteTokenDB(refreshTokenFromCookies)
 
-    const { accessToken, refreshToken, error } = await db.createTokenDB({ id })
+    const payload = {
+      id,
+      is_admin,
+    }
+    const accessToken = generateToken(payload, "access")
+    const refreshToken = generateToken(payload, "refresh")
+    const { error } = await db.createTokenDB(id, refreshToken)
     if (error) res.json(error)
 
     res.cookie("refreshToken", refreshToken, {
-      maxAge: process.env.REFRESH_TOKEN_EXPIRE_TIME * 1000,
+      maxAge: 60 * 60 * 24 * 30 * 1000,
       httpOnly: true,
     })
     res.json({
@@ -92,8 +96,8 @@ export const deleteRefreshToken = async (req, res, next) => {
 
 export const updateVerified = async (req, res, next) => {
   try {
-    console.log(req.params.id)
-    await db.updateVerifiedDB(req.params.id)
+    const { error } = await db.updateVerifiedDB(req.params.id)
+    if (error) res.json(error) // add html file
     res.sendFile(`${path.resolve()}/public/verified.html`)
   } catch (error) {
     next(error)

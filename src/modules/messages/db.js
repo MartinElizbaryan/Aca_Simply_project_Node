@@ -2,7 +2,7 @@ import { prisma } from "../../services/Prisma.js"
 
 const { message } = prisma
 
-export const getAllMessagesDB = async (id) => {
+export const getAllMessagesDB = async (fromId, toId) => {
   try {
     const messages = await message.findMany({
       include: {
@@ -12,45 +12,41 @@ export const getAllMessagesDB = async (id) => {
       where: {
         OR: [
           {
-            from_id: 1,
-            to_id: +id,
+            from_id: +fromId,
+            to_id: +toId,
           },
           {
-            from_id: +id,
-            to_id: 1,
+            from_id: +toId,
+            to_id: +fromId,
           },
         ],
       },
     })
     return {
-      data: messages,
-      error: null,
+      messages,
     }
   } catch (error) {
     return {
-      data: null,
-      error: error,
+      error,
     }
   }
 }
 
-export const createMessageDB = async (data, id) => {
+export const createMessageDB = async (data, fromId, toId) => {
   try {
     const newMessage = await message.create({
       data: {
         message: data.message,
-        from_id: 1, // here must be auth id,
-        to_id: +id,
+        from_id: +fromId,
+        to_id: +toId,
       },
     })
     return {
-      data: newMessage,
-      error: null,
+      message: newMessage,
     }
   } catch (error) {
     return {
-      data: null,
-      error: error,
+      error,
     }
   }
 }

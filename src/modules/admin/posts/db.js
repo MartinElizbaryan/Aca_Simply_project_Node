@@ -4,7 +4,7 @@ const { post } = prisma
 
 export const trustedPostDB = async (id) => {
   try {
-    const trustedPost = await post.update({
+    await post.update({
       where: {
         id: +id,
       },
@@ -13,31 +13,27 @@ export const trustedPostDB = async (id) => {
       },
     })
     return {
-      data: trustedPost,
-      error: null,
+      status: 204,
     }
   } catch (error) {
     return {
-      data: null,
-      error: error,
+      error,
     }
   }
 }
 
 export const deletePostDB = async (id) => {
   try {
-    const deletedPost = await post.delete({
+    await post.delete({
       where: {
         id: +id,
       },
     })
     return {
-      data: deletedPost,
-      error: null,
+      status: 204,
     }
   } catch (error) {
     return {
-      data: null,
       error,
     }
   }

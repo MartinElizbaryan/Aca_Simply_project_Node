@@ -8,7 +8,7 @@ const { getAllMessagesSchema, createMessageSchema } = validations
 
 const router = Router()
 
-router.get("/:id", validate(getAllMessagesSchema), service.getAllMessages)
-router.post("/:id", validate(createMessageSchema), service.createMessage)
+router.get("/:id", auth, validate(getAllMessagesSchema), service.getAllMessages)
+router.post("/:id", auth, validate(createMessageSchema), service.createMessage)
 
 export { router as messagesRoutes }

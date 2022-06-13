@@ -1,4 +1,3 @@
-import cloudinary from "../../services/Cloudinary.js"
 import { prisma } from "../../services/Prisma.js"
 
 const { post } = prisma
@@ -6,6 +5,9 @@ const { post } = prisma
 export const getAllPostsDB = async () => {
   try {
     const posts = await post.findMany({
+      orderBy: {
+        id: "desc",
+      },
       include: {
         user: true,
       },
@@ -66,54 +68,39 @@ export const getPostWithQuestionsByIdDB = async (id) => {
 
 export const createPostDB = async (data) => {
   try {
-    return await prisma.$transaction(async (post) => {
-      const { images, questions, ...restData } = data
+    const { images, questions, ...restData } = data
 
-      for await (const image of images) {
-        const uploadedResponse = await cloudinary.uploader.upload(image.src)
-        image.src = uploadedResponse.public_id
-      }
-
-      const questionsData = questions?.map((item) => {
-        const { answers, ...restData } = item
-        return {
-          ...restData,
-          answers: {
-            create: answers,
-          },
-        }
-      })
-
-      await post.create({
-        data: {
-          ...restData,
-          images: {
-            create: images,
-          },
-          questions: {
-            create: questionsData,
-          },
+    await prisma.post.create({
+      data: {
+        ...restData,
+        images: {
+          create: images,
         },
-      })
-
-      return {
-        status: 200,
-      }
+        questions: {
+          create: questions,
+        },
+      },
     })
+
+    return {
+      status: 200,
+    }
   } catch (error) {
+    console.log(error)
     return {
       error,
     }
   }
 }
 
-export const updatePostDB = async (data, id) => {
-  const { deleted_images: deletedImages, images, questions, ...restData } = data
+export const updatePostDB = async (data, id, userId) => {
+  const { deleted_images: deletedImages, images, ...restData } = data
 
   try {
-    const updatedPost = await post.update({
+    await post.update({
       where: {
         id: +id,
+        user_id: +userId,
       },
       data: {
         ...restData,
@@ -133,14 +120,14 @@ export const updatePostDB = async (data, id) => {
   }
 }
 
-export const confirmedPostDB = async (id) => {
+export const confirmedPostDB = async (id, userId) => {
   try {
     await post.update({
       where: {
         id: +id,
       },
       data: {
-        confirmer_id: 1, //auth id
+        confirmer_id: +userId,
       },
     })
     return {
@@ -153,11 +140,12 @@ export const confirmedPostDB = async (id) => {
   }
 }
 
-export const deleteConfirmedDB = async (id) => {
+export const deleteConfirmedDB = async (id, userId) => {
   try {
     await post.update({
       where: {
         id: +id,
+        user_id: +userId,
       },
       data: {
         confirmer_id: null,
@@ -173,11 +161,12 @@ export const deleteConfirmedDB = async (id) => {
   }
 }
 
-export const completedPostDB = async (id) => {
+export const completedPostDB = async (id, userId) => {
   try {
     await post.update({
       where: {
         id: +id,
+        user_id: +userId,
       },
       data: {
         completed: true,
@@ -193,11 +182,12 @@ export const completedPostDB = async (id) => {
   }
 }
 
-export const deletePostDB = async (id) => {
+export const deletePostDB = async (id, userId) => {
   try {
     await post.delete({
       where: {
         id: +id,
+        user_id: +userId,
       },
     })
     return {
