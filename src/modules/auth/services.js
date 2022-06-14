@@ -15,8 +15,13 @@ export const signIn = async (req, res, next) => {
   try {
     const { email, password } = req.body
     const { user } = await db.findUserDB(email)
-    const result = verifyUser(password, user)
-    if (!result.auth) res.json(result)
+    const result = await verifyUser(password, user)
+    console.log(result)
+    if (!result.auth) {
+      res.json(result)
+      console.log(result)
+      return
+    }
 
     const payload = {
       id: user.id,
@@ -25,7 +30,11 @@ export const signIn = async (req, res, next) => {
     const accessToken = generateToken(payload, "access")
     const refreshToken = generateToken(payload, "refresh")
     const { error } = await db.createTokenDB(user.id, refreshToken)
-    if (error) res.json(error)
+    if (error) {
+      res.json(error)
+      console.log(error)
+      return
+    }
 
     res.cookie("refreshToken", refreshToken, {
       maxAge: 60 * 60 * 24 * 30 * 1000,

@@ -2,7 +2,8 @@ import { prisma } from "../../services/Prisma.js"
 
 const { post } = prisma
 
-export const getAllPostsDB = async ({ skip, take, type, categories }) => {
+export const getAllPostsDB = async ({ skip, take, type, categories, userId }) => {
+  console.log(userId)
   try {
     const query = {
       orderBy: {
@@ -18,6 +19,14 @@ export const getAllPostsDB = async ({ skip, take, type, categories }) => {
       },
     }
 
+    if (userId) {
+      query.include.favorites = {
+        where: {
+          user_id: +userId,
+        },
+      }
+    }
+
     if (take) {
       query.take = take
       query.skip = skip || 0
@@ -29,6 +38,35 @@ export const getAllPostsDB = async ({ skip, take, type, categories }) => {
       posts,
     }
   } catch (error) {
+    console.log(error)
+    return {
+      error,
+    }
+  }
+}
+export const getAllFavoritesDB = async (userId) => {
+  try {
+    const posts = await post.findMany({
+      orderBy: {
+        id: "desc",
+      },
+      where: {
+        favorites: {
+          some: {
+            user_id: +userId,
+          },
+        },
+      },
+      include: {
+        category: true,
+      },
+    })
+
+    return {
+      posts,
+    }
+  } catch (error) {
+    console.log(error)
     return {
       error,
     }

@@ -20,6 +20,7 @@ model User {
   is_verified    Boolean   @default(false)
   token          Token[]
   posts          Post[]    @relation("user")
+  favorites      Favorite[]
   confirmedPosts Post[]    @relation("confirmer")
   messages_from  Message[] @relation("from")
   messages_to    Message[] @relation("to")
@@ -48,12 +49,23 @@ model Post {
   description  String     @db.Text
   images       Image[]
   questions    Question[]
+  favorites    Favorite[]
   address      String?
   type         Type       @default(LOST)
   trusted      Boolean    @default(false)
   completed    Boolean    @default(false)
   created_at   DateTime   @default(now())
   updated_at   DateTime   @default(now()) @updatedAt
+}
+
+model Favorite {
+  id         Int      @id @default(autoincrement())
+  user_id    Int
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  post_id    Int
+  post       Post     @relation(fields: [post_id], references: [id], onDelete: Cascade)
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
 }
 
 model Category {

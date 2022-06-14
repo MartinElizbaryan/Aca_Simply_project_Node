@@ -10,6 +10,7 @@ const router = Router()
 
 router.get("/", service.getAllPosts)
 router.post("/", auth, validate(createPostSchema), service.createPost)
+router.get("/favorites", auth, service.getAllFavorites)
 router.get("/:id", validate(getPostByIdSchema), service.getPostById)
 router.get("/:id/with-questions", auth, validate(getPostByIdSchema), service.getPostWithQuestionsById)
 router.put("/:id", auth, service.updatePost)

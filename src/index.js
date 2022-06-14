@@ -18,7 +18,6 @@ app.use((req, res, next) => {
 app.use((err, req, res, next) => {
   const error = err.status ? err : internalServerErrorCreator()
   const status = err.status || 500
-
   console.log(error.stack)
 
   res.status(status).json(error)

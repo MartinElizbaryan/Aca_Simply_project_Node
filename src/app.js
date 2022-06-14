@@ -4,6 +4,7 @@ import fs from "fs"
 import path from "path"
 import cors from "cors"
 import cookieParser from "cookie-parser"
+import { verifyToken } from "./helpers/common.js";
 
 const app = express()
 
@@ -13,6 +14,17 @@ const config = JSON.parse(configStr)[env]
 
 app.use(express.json())
 app.use(cookieParser())
+
+app.use((req, res, next) => {
+  const token = req.headers.authorization.split(" ")[1]
+  const payload = verifyToken(token)
+  if (payload) {
+    const { id, is_admin } = payload
+    req.auth = { id, is_admin }
+  }
+  next()
+})
+
 app.use(
   cors({
     origin: [process.env.CLIENT_URL],
