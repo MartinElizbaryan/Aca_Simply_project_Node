@@ -13,6 +13,7 @@ export default {
       description: Joi.string(),
       address: Joi.string(),
       type: Joi.string().valid("LOST", "FOUND"),
+      category_id: Joi.number().integer().positive().required(),
       images: Joi.array().items(
         Joi.object({
           src: Joi.string(),

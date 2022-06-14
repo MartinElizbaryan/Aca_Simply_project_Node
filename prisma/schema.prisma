@@ -32,6 +32,8 @@ model Token {
   user_id Int
   user    User   @relation(fields: [user_id], references: [id])
   token   String
+  created_at   DateTime   @default(now())
+  updated_at   DateTime   @default(now()) @updatedAt
 }
 
 model Post {
@@ -40,6 +42,8 @@ model Post {
   user         User       @relation("user", fields: [user_id], references: [id])
   confirmer_id Int?
   confirmer    User?      @relation("confirmer", fields: [confirmer_id], references: [id])
+  category_id  Int
+  category     Category   @relation(fields: [category_id], references: [id])
   name         String     @db.VarChar(50)
   description  String     @db.Text
   images       Image[]
@@ -50,6 +54,14 @@ model Post {
   completed    Boolean    @default(false)
   created_at   DateTime   @default(now())
   updated_at   DateTime   @default(now()) @updatedAt
+}
+
+model Category {
+  id         Int      @id @default(autoincrement())
+  name       String
+  posts      Post[]
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now()) @updatedAt
 }
 
 model Question {

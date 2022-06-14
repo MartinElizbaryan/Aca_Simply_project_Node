@@ -2,16 +2,29 @@ import { prisma } from "../../services/Prisma.js"
 
 const { post } = prisma
 
-export const getAllPostsDB = async () => {
+export const getAllPostsDB = async ({ skip, take, type, categories }) => {
   try {
-    const posts = await post.findMany({
+    const query = {
       orderBy: {
         id: "desc",
       },
+      where: {
+        type,
+        category_id: { in: categories },
+      },
       include: {
         user: true,
+        category: true,
       },
-    })
+    }
+
+    if (take) {
+      query.take = take
+      query.skip = skip || 0
+    }
+
+    const posts = await post.findMany(query)
+
     return {
       posts,
     }
@@ -30,6 +43,7 @@ export const getPostByIdDB = async (id) => {
       },
       include: {
         user: true,
+        category: true,
       },
     })
     return {
@@ -54,6 +68,7 @@ export const getPostWithQuestionsByIdDB = async (id) => {
             answers: true,
           },
         },
+        category: true,
       },
     })
     return {

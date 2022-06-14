@@ -26,6 +26,24 @@ async function main() {
         "It's very simple - once someone contacts you that your property has been found, you will arrange with them to send it to you.",
     },
   ]
+  const categories = [
+    {
+      name: "Others",
+    },
+    {
+      name: "Animal",
+    },
+    {
+      name: "Headphones",
+    },
+    {
+      name: "Phone",
+    },
+  ]
+
+  await prisma.category.createMany({
+    data: categories,
+  })
 
   await prisma.user.upsert({
     where: { email: "brad@gmail.com" },
@@ -38,58 +56,432 @@ async function main() {
       phone: "+37493-65-65-65",
       is_verified: true,
       posts: {
-        create: {
-          name: "Phone",
-          description: "Phone",
-          address: "Yerevan",
-          type: "FIND",
-          questions: {
-            create: [
-              {
-                title: "What is your phone's model?",
-                answers: {
-                  create: [
-                    {
-                      title: "Iphone",
-                      status: false,
-                    },
-                    {
-                      title: "Samsung",
-                      status: true,
-                    },
-                    {
-                      title: "Xiaomi",
-                      status: false,
-                    },
-                  ],
+        create: [
+          {
+            name: "Phone",
+            description: "Phone",
+            address: "Yerevan",
+            type: "FIND",
+            category_id: 1,
+            questions: {
+              create: [
+                {
+                  title: "What is your phone's model?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Iphone",
+                        status: false,
+                      },
+                      {
+                        title: "Samsung",
+                        status: true,
+                      },
+                      {
+                        title: "Xiaomi",
+                        status: false,
+                      },
+                    ],
+                  },
                 },
-              },
-              {
-                title: "What color is your phone?",
-                answers: {
-                  create: [
-                    {
-                      title: "Black",
-                      status: false,
-                    },
-                    {
-                      title: "White",
-                      status: false,
-                    },
-                    {
-                      title: "Red",
-                      status: true,
-                    },
-                    {
-                      title: "Blue",
-                      status: false,
-                    },
-                  ],
+                {
+                  title: "What color is your phone?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Black",
+                        status: false,
+                      },
+                      {
+                        title: "White",
+                        status: false,
+                      },
+                      {
+                        title: "Red",
+                        status: true,
+                      },
+                      {
+                        title: "Blue",
+                        status: false,
+                      },
+                    ],
+                  },
                 },
-              },
-            ],
+              ],
+            },
           },
-        },
+          {
+            name: "Phone",
+            description: "Phone",
+            address: "Yerevan",
+            type: "FIND",
+            category_id: 2,
+            questions: {
+              create: [
+                {
+                  title: "What is your phone's model?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Iphone",
+                        status: false,
+                      },
+                      {
+                        title: "Samsung",
+                        status: true,
+                      },
+                      {
+                        title: "Xiaomi",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "What color is your phone?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Black",
+                        status: false,
+                      },
+                      {
+                        title: "White",
+                        status: false,
+                      },
+                      {
+                        title: "Red",
+                        status: true,
+                      },
+                      {
+                        title: "Blue",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            name: "Phone",
+            description: "Phone",
+            address: "Yerevan",
+            type: "FIND",
+            category_id: 3,
+            questions: {
+              create: [
+                {
+                  title: "What is your phone's model?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Iphone",
+                        status: false,
+                      },
+                      {
+                        title: "Samsung",
+                        status: true,
+                      },
+                      {
+                        title: "Xiaomi",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "What color is your phone?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Black",
+                        status: false,
+                      },
+                      {
+                        title: "White",
+                        status: false,
+                      },
+                      {
+                        title: "Red",
+                        status: true,
+                      },
+                      {
+                        title: "Blue",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            name: "Phone",
+            description: "Phone",
+            address: "Yerevan",
+            type: "FIND",
+            category_id: 2,
+            questions: {
+              create: [
+                {
+                  title: "What is your phone's model?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Iphone",
+                        status: false,
+                      },
+                      {
+                        title: "Samsung",
+                        status: true,
+                      },
+                      {
+                        title: "Xiaomi",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "What color is your phone?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Black",
+                        status: false,
+                      },
+                      {
+                        title: "White",
+                        status: false,
+                      },
+                      {
+                        title: "Red",
+                        status: true,
+                      },
+                      {
+                        title: "Blue",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            name: "Phone",
+            description: "Phone",
+            address: "Yerevan",
+            type: "FIND",
+            category_id: 1,
+            questions: {
+              create: [
+                {
+                  title: "What is your phone's model?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Iphone",
+                        status: false,
+                      },
+                      {
+                        title: "Samsung",
+                        status: true,
+                      },
+                      {
+                        title: "Xiaomi",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "What color is your phone?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Black",
+                        status: false,
+                      },
+                      {
+                        title: "White",
+                        status: false,
+                      },
+                      {
+                        title: "Red",
+                        status: true,
+                      },
+                      {
+                        title: "Blue",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            name: "Phone",
+            description: "Phone",
+            address: "Yerevan",
+            type: "FIND",
+            category_id: 3,
+            questions: {
+              create: [
+                {
+                  title: "What is your phone's model?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Iphone",
+                        status: false,
+                      },
+                      {
+                        title: "Samsung",
+                        status: true,
+                      },
+                      {
+                        title: "Xiaomi",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "What color is your phone?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Black",
+                        status: false,
+                      },
+                      {
+                        title: "White",
+                        status: false,
+                      },
+                      {
+                        title: "Red",
+                        status: true,
+                      },
+                      {
+                        title: "Blue",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            name: "Phone",
+            description: "Phone",
+            address: "Yerevan",
+            type: "FIND",
+            category_id: 1,
+            questions: {
+              create: [
+                {
+                  title: "What is your phone's model?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Iphone",
+                        status: false,
+                      },
+                      {
+                        title: "Samsung",
+                        status: true,
+                      },
+                      {
+                        title: "Xiaomi",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "What color is your phone?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Black",
+                        status: false,
+                      },
+                      {
+                        title: "White",
+                        status: false,
+                      },
+                      {
+                        title: "Red",
+                        status: true,
+                      },
+                      {
+                        title: "Blue",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            name: "Phone",
+            description: "Phone",
+            address: "Yerevan",
+            type: "FIND",
+            category_id: 1,
+            questions: {
+              create: [
+                {
+                  title: "What is your phone's model?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Iphone",
+                        status: false,
+                      },
+                      {
+                        title: "Samsung",
+                        status: true,
+                      },
+                      {
+                        title: "Xiaomi",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "What color is your phone?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Black",
+                        status: false,
+                      },
+                      {
+                        title: "White",
+                        status: false,
+                      },
+                      {
+                        title: "Red",
+                        status: true,
+                      },
+                      {
+                        title: "Blue",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
       },
     },
   })
@@ -109,6 +501,7 @@ async function main() {
           description: "Bag",
           address: "Abovyan",
           type: "LOST",
+          category_id: 2,
           questions: {
             create: [
               {
@@ -148,6 +541,7 @@ async function main() {
       is_verified: true,
     },
   })
+
   messages.forEach(async (message) => {
     await prisma.message.create({
       data: {
