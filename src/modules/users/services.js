@@ -20,6 +20,7 @@ export const findUser = async (req, res, next) => {
 
 export const findMe = async (req, res, next) => {
   try {
+    console.log(req.auth.id)
     const result = await db.findMeDB(req.auth.id)
     res.json(result)
   } catch (error) {

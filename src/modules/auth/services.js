@@ -19,8 +19,6 @@ export const signIn = async (req, res, next) => {
     console.log(result)
     if (!result.auth) {
       res.json(result)
-      console.log(result)
-      return
     }
 
     const payload = {
@@ -32,8 +30,6 @@ export const signIn = async (req, res, next) => {
     const { error } = await db.createTokenDB(user.id, refreshToken)
     if (error) {
       res.json(error)
-      console.log(error)
-      return
     }
 
     res.cookie("refreshToken", refreshToken, {

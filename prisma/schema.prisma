@@ -9,23 +9,23 @@ datasource db {
 }
 
 model User {
-  id             Int       @id @default(autoincrement())
-  name           String    @db.VarChar(50)
-  surname        String    @db.VarChar(50)
-  email          String    @unique @db.VarChar(320)
+  id             Int        @id @default(autoincrement())
+  name           String     @db.VarChar(50)
+  surname        String     @db.VarChar(50)
+  email          String     @unique @db.VarChar(320)
   password       String
   phone          String?
-  money          Int       @default(2000)
-  is_admin       Boolean   @default(false)
-  is_verified    Boolean   @default(false)
+  money          Int        @default(2000)
+  is_admin       Boolean    @default(false)
+  is_verified    Boolean    @default(false)
   token          Token[]
-  posts          Post[]    @relation("user")
+  posts          Post[]     @relation("user")
   favorites      Favorite[]
-  confirmedPosts Post[]    @relation("confirmer")
-  messages_from  Message[] @relation("from")
-  messages_to    Message[] @relation("to")
-  created_at     DateTime  @default(now())
-  updated_at     DateTime  @default(now()) @updatedAt
+  confirmedPosts Post[]     @relation("confirmer")
+  messages_from  Message[]  @relation("from")
+  messages_to    Message[]  @relation("to")
+  created_at     DateTime   @default(now())
+  updated_at     DateTime   @default(now()) @updatedAt
 }
 
 model Token {
@@ -51,6 +51,7 @@ model Post {
   questions    Question[]
   favorites    Favorite[]
   address      String?
+  views        Int        @default(0)
   type         Type       @default(LOST)
   trusted      Boolean    @default(false)
   completed    Boolean    @default(false)

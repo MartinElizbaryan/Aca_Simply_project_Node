@@ -94,6 +94,28 @@ export const getPostByIdDB = async (id) => {
   }
 }
 
+export const updatePostViewsDB = async (id) => {
+  try {
+    await post.update({
+      where: {
+        id: +id,
+      },
+      data: {
+        views: {
+          increment: 1,
+        },
+      },
+    })
+    return {
+      error: null,
+    }
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
+
 export const getPostWithQuestionsByIdDB = async (id) => {
   try {
     const foundPost = await post.findUnique({

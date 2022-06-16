@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use((req, res, next) => {
-  const token = req.headers.authorization.split(" ")[1]
+  const token = req.headers.authorization?.split(" ")[1]
   const payload = verifyToken(token)
   if (payload) {
     const { id, is_admin } = payload
