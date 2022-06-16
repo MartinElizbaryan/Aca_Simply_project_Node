@@ -3,8 +3,9 @@ import logger from "morgan"
 import fs from "fs"
 import path from "path"
 import cors from "cors"
+
 import cookieParser from "cookie-parser"
-import { verifyToken } from "./helpers/common.js";
+import { verifyToken } from "./helpers/common.js"
 
 const app = express()
 
@@ -31,6 +32,7 @@ app.use(
     credentials: true,
   })
 )
+
 app.use(logger("dev" /*, { skip: (req, res) => res.statusCode < 400 }*/))
 
 app.set("port", process.env.PORT)
