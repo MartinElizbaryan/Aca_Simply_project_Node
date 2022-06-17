@@ -36,7 +36,7 @@ export const createMessageDB = async (data, fromId, toId) => {
   try {
     const newMessage = await message.create({
       data: {
-        message: data.message,
+        text: data.text,
         from_id: +fromId,
         to_id: +toId,
       },

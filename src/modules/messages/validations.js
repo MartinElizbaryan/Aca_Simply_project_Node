@@ -12,7 +12,7 @@ export default {
       id: Joi.number().integer().positive().required(),
     }),
     body: Joi.object({
-      message: Joi.string().required(),
+      text: Joi.string().required(),
     }),
   },
 }
