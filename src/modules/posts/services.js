@@ -3,13 +3,21 @@ import * as db from "./db.js"
 
 export const getAllPosts = async (req, res, next) => {
   try {
-    const take = +req.query.take
-    const skip = ((req.query.page || 1) - 1) * take
-    const type = req.query.type || "LOST"
-    const categoriesData = req.query.category || ""
-    const categories = categoriesData.map((id) => +id)
+    const { take, page = 1, type = "LOST", category: categoriesData } = req.query
+    const skip = (page - 1) * take
+    console.log("awdawdawd", categoriesData)
+    console.log(take, page, skip, type, categoriesData)
+    console.log(req.query)
+    const categories = categoriesData?.map((id) => +id) || []
 
-    const result = await db.getAllPostsDB({ skip, take, type, categories, userId: req.auth?.id })
+    const result = await db.getAllPostsDB({
+      skip,
+      take: +take,
+      type,
+      categories,
+      userId: req.auth?.id,
+    })
+
     res.json(result)
   } catch (error) {
     console.log("service", error)
