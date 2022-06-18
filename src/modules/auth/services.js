@@ -1,5 +1,6 @@
 import path from "path"
 import { verifyToken, verifyUser, generateToken } from "../../helpers/common.js"
+import { unauthorizedErrorCreator } from "../../helpers/errors.js"
 import * as db from "./db.js"
 
 export const signUp = async (req, res, next) => {
@@ -16,9 +17,9 @@ export const signIn = async (req, res, next) => {
     const { email, password } = req.body
     const { user } = await db.findUserDB(email)
     const result = await verifyUser(password, user)
-    console.log(result)
     if (!result.auth) {
-      res.json(result)
+      console.log(result.message)
+      throw unauthorizedErrorCreator(result.message)
     }
 
     const payload = {
@@ -89,11 +90,9 @@ export const deleteRefreshToken = async (req, res, next) => {
     const { refreshToken } = req.cookies
     const { id } = verifyToken(refreshToken)
 
-    await db.deleteTokenWithoutYourDB({ refreshToken, id })
+    const result = await db.deleteTokenWithoutYourDB({ refreshToken, id })
 
-    res.json({
-      auth: false,
-    })
+    res.json(result)
   } catch (error) {
     next(error)
   }

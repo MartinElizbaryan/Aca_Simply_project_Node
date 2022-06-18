@@ -49,6 +49,24 @@ export const findUserDB = async (email) => {
   }
 }
 
+export const findTokenDB = async (refreshToken) => {
+  try {
+    const foundToken = await token.findFirst({
+      where: {
+        token: refreshToken,
+      },
+    })
+    return {
+      token: foundToken,
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      error,
+    }
+  }
+}
+
 export const createTokenDB = async (userId, refreshToken) => {
   try {
     await token.create({
@@ -67,17 +85,18 @@ export const createTokenDB = async (userId, refreshToken) => {
   }
 }
 
-export const deleteTokenDB = async (token) => {
+export const deleteTokenDB = async (refreshToken) => {
   try {
     await token.delete({
       where: {
-        token,
+        token: refreshToken,
       },
     })
     return {
       status: 204,
     }
   } catch (error) {
+    console.log(error)
     return {
       error,
     }
@@ -103,16 +122,19 @@ export const updateVerifiedDB = async (id) => {
     }
   }
 }
-export const deleteTokenWithoutYourDB = async ({ token, id }) => {
+export const deleteTokenWithoutYourDB = async ({ refreshToken, id }) => {
   try {
     await token.delete({
       where: {
         user_id: id,
         NOT: {
-          token,
+          token: refreshToken,
         },
       },
     })
+    return {
+      status: 204,
+    }
   } catch (error) {
     return {
       error,

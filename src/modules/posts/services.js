@@ -22,7 +22,6 @@ export const getAllFavorites = async (req, res, next) => {
     const result = await db.getAllFavoritesDB(req.auth.id)
     res.json(result)
   } catch (error) {
-    console.log(error)
     next(error)
   }
 }
