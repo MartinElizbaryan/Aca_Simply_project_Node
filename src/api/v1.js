@@ -4,7 +4,7 @@ import { usersRoutes } from "../modules/users/routes.js"
 import { messagesRoutes } from "../modules/messages/routes.js"
 import { authRoutes } from "../modules/auth/routes.js"
 import { categoriesRoutes } from "../modules/categories/routes.js"
-import { favoritesRoutes } from "../modules/favorites/routes.js";
+import { favoritesRoutes } from "../modules/favorites/routes.js"
 import { adminRoutes } from "../modules/admin/routes.js"
 
 const router = Router()

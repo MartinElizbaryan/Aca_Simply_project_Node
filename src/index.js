@@ -28,10 +28,24 @@ app.use((err, req, res, next) => {
 })
 
 const server = http.createServer(app)
-const io = new Server(server)
+const io = new Server(server, {
+  cors: {
+    origin: process.env.CLIENT_URL,
+  },
+})
 
 io.on("connection", (socket) => {
-  console.log("User", socket.id)
+  socket.on("join", (room) => {
+    socket.join(room)
+    console.log("User joined", socket.id, room)
+  })
+  socket.on("send", ({ room, data }) => {
+    socket.to(room).emit("receive", data)
+  })
+  socket.on("leave", (room) => {
+    socket.leave(room)
+    console.log("User left", socket.id, room)
+  })
   socket.on("disconnect", () => {
     console.log("User disconnected", socket.id)
   })
