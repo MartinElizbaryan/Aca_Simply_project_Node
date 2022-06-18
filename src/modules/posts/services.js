@@ -3,10 +3,12 @@ import * as db from "./db.js"
 
 export const getAllPosts = async (req, res, next) => {
   try {
-    const { take, page = 1, type = "LOST", category: categoriesData = "" } = req.query
+    const { take, page = 1, type = "LOST", category: categoriesData } = req.query
     const skip = (page - 1) * take
-
-    const categories = categoriesData.map((id) => +id)
+    console.log("awdawdawd", categoriesData)
+    console.log(take, page, skip, type, categoriesData)
+    console.log(req.query)
+    const categories = categoriesData?.map((id) => +id) || []
 
     const result = await db.getAllPostsDB({
       skip,

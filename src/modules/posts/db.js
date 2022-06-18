@@ -11,7 +11,6 @@ export const getAllPostsDB = async ({ skip, take, type, categories, userId }) =>
       },
       where: {
         type,
-        category_id: { in: categories },
       },
       include: {
         user: true,
@@ -25,6 +24,10 @@ export const getAllPostsDB = async ({ skip, take, type, categories, userId }) =>
           user_id: +userId,
         },
       }
+    }
+
+    if (categories.length) {
+      query.where.category_id = { in: categories }
     }
 
     if (take) {
