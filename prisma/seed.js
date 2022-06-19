@@ -541,6 +541,30 @@ async function main() {
       is_verified: true,
     },
   })
+  await prisma.user.upsert({
+    where: { email: "martin@gmail.com" },
+    update: {},
+    create: {
+      email: "martin@gmail.com",
+      password: await hashPassword("qwerty"),
+      name: "Martin",
+      surname: "Skrtel",
+      is_admin: true,
+      is_verified: true,
+    },
+  })
+  await prisma.user.upsert({
+    where: { email: "James@gmail.com" },
+    update: {},
+    create: {
+      email: "James@gmail.com",
+      password: await hashPassword("qwerty"),
+      name: "James",
+      surname: "Blunt",
+      is_admin: false,
+      is_verified: true,
+    },
+  })
 
   messages.forEach(async (message) => {
     await prisma.message.create({
@@ -550,13 +574,41 @@ async function main() {
         to_id: 2,
       },
     }),
-      await prisma.message.create({
-        data: {
-          text: message,
-          from_id: 2,
-          to_id: 1,
-        },
-      })
+    await prisma.message.create({
+      data: {
+        text: message,
+        from_id: 2,
+        to_id: 1,
+      },
+    })
+    await prisma.message.create({
+      data: {
+        text: message,
+        from_id: 4,
+        to_id: 1,
+      },
+    })
+    await prisma.message.create({
+      data: {
+        text: message,
+        from_id: 4,
+        to_id: 2,
+      },
+    })
+    await prisma.message.create({
+      data: {
+        text: message,
+        from_id: 4,
+        to_id: 3,
+      },
+    })
+    await prisma.message.create({
+      data: {
+        text: message,
+        from_id: 4,
+        to_id: 5,
+      },
+    })
   })
   faq.forEach(async (question) => {
     await prisma.faq.create({
