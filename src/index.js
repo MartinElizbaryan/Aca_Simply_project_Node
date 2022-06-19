@@ -4,6 +4,7 @@ import { Server } from "socket.io"
 
 import * as routes from "./api/index.js"
 import { internalServerErrorCreator, notFoundErrorCreator } from "./helpers/errors.js"
+import logger from "morgan";
 
 const PORT = app.get("port")
 const { API_VERSIONS } = app.get("config")
@@ -34,9 +35,27 @@ const io = new Server(server, {
   },
 })
 
+const users = {}
+
+function getOnlineUsersId () {
+  return Object.values(users).map((id) => +id)
+}
+const {log} = console;
+
 io.on("connection", (socket) => {
-  socket.on("join", (room) => {
+
+  socket.on("join", ({ room, authId }) => {
     socket.join(room)
+    users[socket.id] = authId
+
+    console.log(users)
+
+    const usersArray = getOnlineUsersId()
+
+    socket.broadcast.emit("onlineUsers", usersArray)
+    // socket.to(room).emit("onlineUsers", usersArray)
+    io.to(socket.id).emit("onlineUsers", usersArray)
+
     console.log("User joined", socket.id, room)
   })
   socket.on("send", ({ room, data }) => {
@@ -47,6 +66,10 @@ io.on("connection", (socket) => {
     console.log("User left", socket.id, room)
   })
   socket.on("disconnect", () => {
+    log(socket.id, "disconnect")
+    delete users[socket.id]
+    // socket.to().emit("onlineUsers", getOnlineUsersId())
+    socket.broadcast.emit("onlineUsers", getOnlineUsersId())
     console.log("User disconnected", socket.id)
   })
 })

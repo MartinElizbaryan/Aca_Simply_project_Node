@@ -1,4 +1,5 @@
 import { prisma } from "../../services/Prisma.js"
+import logger from "morgan";
 
 const { user } = prisma
 
@@ -34,6 +35,43 @@ export const findUserDB = async (id) => {
       user: foundUser,
     }
   } catch (error) {
+    return {
+      error,
+    }
+  }
+}
+export const findUserChatDB = async (id) => {
+  try {
+    const foundUsers = await user.findMany({
+      where: {
+        OR: [
+          {
+            messages_from: {
+              some: {
+                to_id: +id,
+              },
+            },
+          },
+          {
+            messages_to: {
+              some: {
+                from_id: +id,
+              },
+            },
+          },
+        ],
+      },
+      select: {
+        id: true,
+        name: true,
+        surname: true,
+      },
+    })
+    return {
+      users: foundUsers,
+    }
+  } catch (error) {
+    console.log(error)
     return {
       error,
     }

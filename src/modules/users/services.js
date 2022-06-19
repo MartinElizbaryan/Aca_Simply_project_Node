@@ -9,6 +9,15 @@ export const updateUser = async (req, res, next) => {
   }
 }
 
+export const findUserChat = async (req, res, next) => {
+  try {
+    const result = await db.findUserChatDB(req.auth.id)
+    res.json(result)
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const findUser = async (req, res, next) => {
   try {
     const result = await db.findUserDB(req.params.id)
