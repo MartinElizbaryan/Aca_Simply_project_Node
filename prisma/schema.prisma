@@ -32,7 +32,7 @@ model Token {
   id         Int      @id @default(autoincrement())
   user_id    Int
   user       User     @relation(fields: [user_id], references: [id])
-  token      String
+  token      String   @unique
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 }

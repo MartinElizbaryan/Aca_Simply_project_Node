@@ -3,10 +3,9 @@ import * as db from "./db.js"
 
 export const getAllPosts = async (req, res, next) => {
   try {
-    const { take, page = 1, type = "LOST", category: categoriesData = "" } = req.query
+    const { take, page = 1, type = "LOST", category: categoriesData } = req.query
     const skip = (page - 1) * take
-
-    const categories = categoriesData.map((id) => +id)
+    const categories = categoriesData?.map((id) => +id) || []
 
     const result = await db.getAllPostsDB({
       skip,
@@ -18,7 +17,6 @@ export const getAllPosts = async (req, res, next) => {
 
     res.json(result)
   } catch (error) {
-    console.log("service", error)
     next(error)
   }
 }
@@ -28,7 +26,6 @@ export const getAllFavorites = async (req, res, next) => {
     const result = await db.getAllFavoritesDB(req.auth.id)
     res.json(result)
   } catch (error) {
-    console.log(error)
     next(error)
   }
 }
