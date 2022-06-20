@@ -17,3 +17,12 @@ export const createMessage = async (req, res, next) => {
     next(error)
   }
 }
+
+export const seenMessage = async (req, res, next) => {
+  try {
+    const result = await db.seenMessageDB(req.auth.id, req.params.id)
+    res.json(result)
+  } catch (error) {
+    next(error)
+  }
+}

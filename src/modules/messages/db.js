@@ -50,3 +50,21 @@ export const createMessageDB = async (data, fromId, toId) => {
     }
   }
 }
+
+export const seenMessageDB = async (authId, fromId) => {
+  try {
+    await message.updateMany({
+      data: {
+        is_seen: true,
+      },
+      where: {
+        from_id: +fromId,
+        to_id: +authId,
+      },
+    })
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}

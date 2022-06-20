@@ -15,4 +15,10 @@ export default {
       text: Joi.string().required(),
     }),
   },
+
+  seenMessageSchema: {
+    params: Joi.object({
+      id: Joi.number().integer().positive().required(),
+    }),
+  },
 }
