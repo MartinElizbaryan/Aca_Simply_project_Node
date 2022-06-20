@@ -10,7 +10,8 @@ export default (schema) => {
       schema.body && (await schema.body.validateAsync(body))
       return next()
     } catch (error) {
-      next(badRequestErrorCreator(error.details))
+      console.log(error)
+      next(badRequestErrorCreator(error.details[0].message))
     }
   }
 }
