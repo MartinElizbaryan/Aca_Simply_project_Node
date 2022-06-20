@@ -48,6 +48,23 @@ export const sendActivationMail = async (to, link) => {
   }
 }
 
+export const sendContactMail = async ({ name, surname, email, subject, message }) => {
+  try {
+    const res = await transporter.sendMail({
+      from: {
+        name: `${name} ${surname}`,
+        address: email,
+      },
+      to: process.env.SMTP_USER,
+      subject,
+      text: `From:  ${email} \n\n${message}`,
+    })
+    console.log(res)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const uploadImagesToCloudinary = async (images) => {
   for await (const image of images) {
     console.log(image)

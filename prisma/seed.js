@@ -573,7 +573,7 @@ async function main() {
         from_id: 1,
         to_id: 2,
       },
-    }),
+    })
     await prisma.message.create({
       data: {
         text: message,
