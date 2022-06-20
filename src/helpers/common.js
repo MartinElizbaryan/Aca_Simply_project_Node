@@ -89,20 +89,20 @@ export const verifyUser = async (password, user) => {
   if (!user) {
     return {
       auth: false,
-      message: "User not found!",
+      message: "user not found",
     }
   }
   const isPasswordCorrect = await comparePassword(password, user.password)
   if (!isPasswordCorrect) {
     return {
       auth: false,
-      message: "Invalid username/password!",
+      message: "email/password is invalid",
     }
   }
   if (!user.is_verified) {
     return {
       auth: false,
-      message: "Please, confirm your email address first!",
+      message: "email is not confirmed",
     }
   }
   return {
