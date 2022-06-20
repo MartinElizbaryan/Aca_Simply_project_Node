@@ -114,6 +114,7 @@ model Message {
   to_id      Int
   to         User     @relation("to", fields: [to_id], references: [id])
   text       String   @db.Text
+  is_seen    Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
 }
