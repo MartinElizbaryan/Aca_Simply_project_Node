@@ -26,3 +26,12 @@ export const seenMessage = async (req, res, next) => {
     next(error)
   }
 }
+
+export const unreadMessage = async (req, res, next) => {
+  try {
+    const result = await db.unreadMessageDB(req.auth.id)
+    res.json(result)
+  } catch (error) {
+    next(error)
+  }
+}

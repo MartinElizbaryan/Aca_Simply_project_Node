@@ -8,6 +8,7 @@ const { getAllMessagesSchema, createMessageSchema, seenMessageSchema } = validat
 
 const router = Router()
 
+router.get("/unread", auth, service.unreadMessage)
 router.get("/:id", auth, validate(getAllMessagesSchema), service.getAllMessages)
 router.post("/:id", auth, validate(createMessageSchema), service.createMessage)
 router.patch("/:id", auth, validate(seenMessageSchema), service.seenMessage)

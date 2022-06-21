@@ -68,3 +68,24 @@ export const seenMessageDB = async (authId, fromId) => {
     }
   }
 }
+
+export const unreadMessageDB = async (authId) => {
+  try {
+    const count = await message.aggregate({
+      _count: {
+        id: true,
+      },
+      where: {
+        to_id: +authId,
+      },
+    })
+
+    return count
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
+
+

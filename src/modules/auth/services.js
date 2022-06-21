@@ -29,10 +29,10 @@ export const signIn = async (req, res, next) => {
     const accessToken = generateToken(payload, "access")
     const refreshToken = generateToken(payload, "refresh")
     const { error } = await db.createTokenDB(user.id, refreshToken)
+    console.log("errors", error)
     if (error) {
       res.json(error)
     }
-
     res.cookie("refreshToken", refreshToken, {
       maxAge: 60 * 60 * 24 * 30 * 1000,
       httpOnly: true,

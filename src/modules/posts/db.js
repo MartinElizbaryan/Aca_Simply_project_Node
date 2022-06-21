@@ -15,6 +15,7 @@ export const getAllPostsDB = async ({ skip, take, type, categories, userId }) =>
       include: {
         user: true,
         category: true,
+        images: true,
       },
     }
 
