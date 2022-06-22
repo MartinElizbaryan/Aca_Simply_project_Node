@@ -4,21 +4,28 @@
     <title>Lost & Found</title>
     <link href="http://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css" />
     <style>
+      body{
+        background-color: rgb(220, 233, 223);
+      }
       .wrapper {
         text-align: center;
-        margin: 100px;
+        margin: 0px 100px;
         font-family: "Roboto", sans-serif;
       }
       .text {
         font-size: 30px;
         margin: 30px;
       }
+      .text2 {
+        font-size: 20px;
+        margin: 20px;
+      }
       .checkmark {
         display: inline-block;
         border-radius: 50%;
         background-color: green;
-        width: 100px;
-        height: 100px;
+        width: 70px;
+        height: 70px;
         -ms-transform: rotate(45deg);
         -webkit-transform: rotate(45deg);
         transform: rotate(45deg);
@@ -26,23 +33,28 @@
       .checkmark_stem {
         position: absolute;
         width: 15px;
-        height: 52px;
+        height: 42px;
         background-color: #ccc;
-        left: 49px;
-        top: 20px;
+        left: 33px;
+        top: 10px;
       }
       .checkmark_kick {
         position: absolute;
-        width: 25px;
-        height: 15px;
+        width: 30px;
+        height: 14px;
         background-color: #ccc;
-        left: 30px;
-        top: 57px;
+        left: 18px;
+        top: 38px;
+      }
+      #logo{
+        width: 200px;
       }
     </style>
   </head>
   <body>
     <div class="wrapper">
+      <img src="https://res.cloudinary.com/lost-found/image/upload/v1655918538/public/lost1_vtxvkz.png" id="logo"/>
+      <div class="text2">Thanks for your time to join us.</div>
       <div>
         <span class="checkmark">
           <div class="checkmark_stem"></div>
@@ -51,10 +63,10 @@
       </div>
       <div class="text">Your account is verified! You can already sign in.</div>
     </div>
-    <script>
+    <!-- <script>
       setTimeout(function () {
         window.close()
       }, 2000)
-    </script>
+    </script> -->
   </body>
 </html>

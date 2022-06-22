@@ -40,6 +40,7 @@ export const signIn = async (req, res, next) => {
     res.json({
       auth: true,
       accessToken,
+      user,
     })
   } catch (error) {
     next(error)
