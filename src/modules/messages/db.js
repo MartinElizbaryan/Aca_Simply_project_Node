@@ -77,6 +77,7 @@ export const unreadMessageDB = async (authId) => {
       },
       where: {
         to_id: +authId,
+        is_seen: false,
       },
     })
 
@@ -87,5 +88,3 @@ export const unreadMessageDB = async (authId) => {
     }
   }
 }
-
-
