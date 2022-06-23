@@ -1,6 +1,7 @@
 import { v4 } from "uuid"
 import { hashPassword, sendActivationMail } from "../../helpers/common.js"
 import { prisma } from "../../services/Prisma.js"
+
 const { user, token } = prisma
 
 export const createUserDB = async (data) => {
@@ -25,7 +26,6 @@ export const createUserDB = async (data) => {
       }
     })
   } catch (error) {
-    console.log(error.message)
     return {
       error,
     }
@@ -96,7 +96,6 @@ export const deleteTokenDB = async (refreshToken) => {
       status: 204,
     }
   } catch (error) {
-    console.log(error)
     return {
       error,
     }
@@ -130,6 +129,86 @@ export const deleteTokenWithoutYourDB = async ({ refreshToken, id }) => {
         NOT: {
           token: refreshToken,
         },
+      },
+    })
+    return {
+      status: 204,
+    }
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
+
+export const updateUserResetCodeDB = async (user_id, reset_code) => {
+  try {
+    await user.update({
+      where: {
+        user_id,
+      },
+      update: {
+        reset_code,
+      },
+    })
+    return {
+      status: 204,
+    }
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
+
+export const updateUserPasswordDB = async (reset_code, password) => {
+  try {
+    await user.update({
+      where: {
+        reset_code,
+      },
+      data: {
+        password,
+      },
+    })
+    return {
+      status: 204,
+    }
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
+
+export const findUserResetCodeDB = async (code) => {
+  try {
+    const { reset_code } = await user.findUnique({
+      where: {
+        reset_code: code,
+      },
+      data: {
+        reset_code: null,
+      },
+    })
+    return {
+      status: 204,
+    }
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
+
+export const deleteUserResetCodeDB = async (reset_code) => {
+  try {
+    await user.update({
+      where: {
+        reset_code,
+      },
+      data: {
+        reset_code: null,
       },
     })
     return {

@@ -1,5 +1,4 @@
 import { prisma } from "../../services/Prisma.js"
-import logger from "morgan";
 
 const { user } = prisma
 
