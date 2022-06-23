@@ -141,13 +141,13 @@ export const deleteTokenWithoutYourDB = async ({ refreshToken, id }) => {
   }
 }
 
-export const updateUserResetCodeDB = async (user_id, reset_code) => {
+export const updateUserResetCodeDB = async (id, reset_code) => {
   try {
     await user.update({
       where: {
-        user_id,
+        id,
       },
-      update: {
+      data: {
         reset_code,
       },
     })
@@ -155,6 +155,7 @@ export const updateUserResetCodeDB = async (user_id, reset_code) => {
       status: 204,
     }
   } catch (error) {
+    console.log(error)
     return {
       error,
     }
@@ -169,6 +170,7 @@ export const updateUserPasswordDB = async (reset_code, password) => {
       },
       data: {
         password,
+        reset_code: null,
       },
     })
     return {
@@ -183,32 +185,9 @@ export const updateUserPasswordDB = async (reset_code, password) => {
 
 export const findUserResetCodeDB = async (code) => {
   try {
-    const { reset_code } = await user.findUnique({
+    await user.findUnique({
       where: {
         reset_code: code,
-      },
-      data: {
-        reset_code: null,
-      },
-    })
-    return {
-      status: 204,
-    }
-  } catch (error) {
-    return {
-      error,
-    }
-  }
-}
-
-export const deleteUserResetCodeDB = async (reset_code) => {
-  try {
-    await user.update({
-      where: {
-        reset_code,
-      },
-      data: {
-        reset_code: null,
       },
     })
     return {

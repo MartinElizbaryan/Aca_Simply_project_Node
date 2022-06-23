@@ -50,8 +50,8 @@ export const sendActivationMail = async (to, link) => {
 
 export const sendResetMail = async (to, code) => {
   try {
-    const file = await fs.readFile(`${path.resolve()}/public/verificationMessage.html`, "utf-8")
-    const html = file.replace("code", code)
+    const file = await fs.readFile(`${path.resolve()}/public/resetMessage.html`, "utf-8")
+    const html = file.replace("reset_code", code)
     await transporter.sendMail({
       from: {
         name: "Lost & Found",

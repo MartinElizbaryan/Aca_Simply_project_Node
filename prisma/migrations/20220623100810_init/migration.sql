@@ -9,10 +9,12 @@ CREATE TABLE `User` (
     `money` INTEGER NOT NULL DEFAULT 2000,
     `is_admin` BOOLEAN NOT NULL DEFAULT false,
     `is_verified` BOOLEAN NOT NULL DEFAULT false,
+    `reset_code` VARCHAR(191) NULL,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updated_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
 
     UNIQUE INDEX `User_email_key`(`email`),
+    UNIQUE INDEX `User_reset_code_key`(`reset_code`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 

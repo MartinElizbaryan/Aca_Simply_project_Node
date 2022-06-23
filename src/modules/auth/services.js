@@ -3,6 +3,7 @@ import {
   generateRandom6DigitNumber,
   generateToken,
   hashPassword,
+  sendResetMail,
   verifyToken,
   verifyUser,
 } from "../../helpers/common.js"
@@ -117,19 +118,20 @@ export const forgotPassword = async (req, res, next) => {
     const { email } = req.body
     const { user } = await db.findUserDB(email)
     if (!user) throw notFoundErrorCreator("User not found.")
-    const code = generateRandom6DigitNumber()
+    const code = String(generateRandom6DigitNumber())
     const result = await db.updateUserResetCodeDB(user.id, code)
-    // await sendResetMail(user.email, code)
+    console.log(code)
+    await sendResetMail(user.email, code)
     res.json(result)
   } catch (error) {
     next(error)
   }
 }
 
-export const checkResetCode = async (req, res, next) => {
+export const verifyResetCode = async (req, res, next) => {
   try {
     const { code } = req.body
-    const result = await db.updateUserPasswordDB(code, hash)
+    const result = await db.findUserResetCodeDB(code)
     res.json(result)
   } catch (error) {
     next(error)
