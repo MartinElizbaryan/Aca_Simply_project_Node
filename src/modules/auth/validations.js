@@ -35,7 +35,10 @@ export default {
   },
   verifyCodeSchema: {
     body: Joi.object({
-      code: Joi.string().required(),
+      code: Joi.string()
+        .pattern(/^[0-9]+$/)
+        .length(6)
+        .required(),
     }),
   },
   changePasswordSchema: {
