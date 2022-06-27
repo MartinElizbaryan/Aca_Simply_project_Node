@@ -7,6 +7,7 @@ import { categoriesRoutes } from "../modules/categories/routes.js"
 import { favoritesRoutes } from "../modules/favorites/routes.js"
 import { adminRoutes } from "../modules/admin/routes.js"
 import { contactRoutes } from "../modules/contact/routes.js"
+import { faqRoutes } from "../modules/faq/routes.js"
 
 const router = Router()
 
@@ -18,5 +19,6 @@ router.use("/categories", categoriesRoutes)
 router.use("/favorites", favoritesRoutes)
 router.use("/admin", adminRoutes)
 router.use("/contact", contactRoutes)
+router.use("/faq", faqRoutes)
 
 export { router as v1 }

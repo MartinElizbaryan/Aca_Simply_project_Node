@@ -30,4 +30,11 @@ export default {
       money: Joi.number().integer().positive().required(),
     }),
   },
+  changePasswordSchema: {
+    body: Joi.object({
+      oldPassword: Joi.string().min(6).max(15).alphanum().required(),
+      password: Joi.string().min(6).max(15).alphanum().required(),
+      confirmPassword: Joi.string().required().valid(Joi.ref("password")),
+    }),
+  },
 }

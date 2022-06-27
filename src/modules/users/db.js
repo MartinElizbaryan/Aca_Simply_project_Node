@@ -119,7 +119,7 @@ export const addMoneyDB = async (data, id) => {
   }
 }
 
-export const updateUserPasswordDB = async (id, password) => {
+export const updateUserPasswordDB = async (password, id) => {
   try {
     await user.update({
       where: {

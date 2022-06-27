@@ -4,7 +4,7 @@ import auth from "../../middlewares/auth.middleware.js"
 import validate from "../../middlewares/validate.middleware.js"
 import validations from "./validations.js"
 
-const { findUserSchema, updateUserSchema, addMoneySchema } = validations
+const { findUserSchema, updateUserSchema, addMoneySchema, changePasswordSchema } = validations
 
 const router = Router()
 
@@ -13,5 +13,6 @@ router.get("/chat", auth, service.findUserChat)
 router.get("/:id", auth, validate(findUserSchema), service.findUser)
 router.put("/:id", auth, validate(updateUserSchema), service.updateUser)
 router.patch("/add-money", auth, validate(addMoneySchema), service.addMoney)
+router.patch("/change-password", auth, validate(changePasswordSchema), service.changePassword)
 
 export { router as usersRoutes }
