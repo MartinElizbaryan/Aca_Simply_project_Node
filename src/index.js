@@ -45,14 +45,10 @@ io.on("connection", (socket) => {
     socket.join(room)
     users[socket.id] = authId
 
-    console.log(users)
-
     const usersArray = getOnlineUsersId()
 
-    // socket.broadcast.emit("onlineUsers", usersArray)
-    // // socket.to(room).emit("onlineUsers", usersArray)
-    // io.to(socket.id).emit("onlineUsers", usersArray)
-    io.sockets.emit("onlineUsers", usersArray)
+    socket.broadcast.emit("onlineUsers", usersArray)
+    io.to(socket.id).emit("onlineUsers", usersArray)
 
     console.log("User joined", socket.id, room)
   })
@@ -73,7 +69,6 @@ io.on("connection", (socket) => {
   socket.on("disconnect", () => {
     console.log(socket.id, "disconnect")
     delete users[socket.id]
-    // socket.to().emit("onlineUsers", getOnlineUsersId())
     socket.broadcast.emit("onlineUsers", getOnlineUsersId())
     console.log("User disconnected", socket.id)
   })

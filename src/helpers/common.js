@@ -32,7 +32,7 @@ export const verifyToken = (token) => {
 
 export const sendActivationMail = async (to, link) => {
   try {
-    const file = await fs.readFile(`${path.resolve()}/public/message.html`, "utf-8")
+    const file = await fs.readFile(`${path.resolve()}/public/verificationMessage.html`, "utf-8")
     const html = file.replace("verification-link", link)
     await transporter.sendMail({
       from: {
@@ -48,9 +48,27 @@ export const sendActivationMail = async (to, link) => {
   }
 }
 
+export const sendResetMail = async (to, code) => {
+  try {
+    const file = await fs.readFile(`${path.resolve()}/public/resetMessage.html`, "utf-8")
+    const html = file.replace("reset_code", code)
+    await transporter.sendMail({
+      from: {
+        name: "Lost & Found",
+        address: process.env.SMTP_USER,
+      },
+      to,
+      subject: "Reset Password",
+      html,
+    })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export const sendContactMail = async ({ name, surname, email, subject, message }) => {
   try {
-    const res = await transporter.sendMail({
+    await transporter.sendMail({
       from: {
         name: `${name} ${surname}`,
         address: email,
@@ -59,7 +77,6 @@ export const sendContactMail = async ({ name, surname, email, subject, message }
       subject,
       text: `From:  ${email} \n\n${message}`,
     })
-    console.log(res)
   } catch (error) {
     console.log(error)
   }
@@ -108,4 +125,8 @@ export const verifyUser = async (password, user) => {
   return {
     auth: true,
   }
+}
+
+export const generateRandom6DigitNumber = () => {
+  return Math.floor(100000 + Math.random() * 900000)
 }

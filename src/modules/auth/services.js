@@ -1,6 +1,13 @@
 import path from "path"
-import { verifyToken, verifyUser, generateToken } from "../../helpers/common.js"
-import { unauthorizedErrorCreator } from "../../helpers/errors.js"
+import {
+  generateRandom6DigitNumber,
+  generateToken,
+  hashPassword,
+  sendResetMail,
+  verifyToken,
+  verifyUser,
+} from "../../helpers/common.js"
+import { notFoundErrorCreator, unauthorizedErrorCreator } from "../../helpers/errors.js"
 import * as db from "./db.js"
 
 export const signUp = async (req, res, next) => {
@@ -17,10 +24,7 @@ export const signIn = async (req, res, next) => {
     const { email, password } = req.body
     const { user } = await db.findUserDB(email)
     const result = await verifyUser(password, user)
-    if (!result.auth) {
-      console.log(result.message)
-      throw unauthorizedErrorCreator(result.message)
-    }
+    if (!result.auth) throw unauthorizedErrorCreator(result.message)
 
     const payload = {
       id: user.id,
@@ -40,6 +44,7 @@ export const signIn = async (req, res, next) => {
     res.json({
       auth: true,
       accessToken,
+      user,
     })
   } catch (error) {
     next(error)
@@ -103,6 +108,42 @@ export const updateVerified = async (req, res, next) => {
     const { error } = await db.updateVerifiedDB(req.params.id)
     if (error) res.json(error) // add html file
     res.sendFile(`${path.resolve()}/public/verified.html`)
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const forgotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body
+    const { user } = await db.findUserDB(email)
+    if (!user) throw notFoundErrorCreator("User not found.")
+    const code = String(generateRandom6DigitNumber())
+    const result = await db.updateUserResetCodeDB(user.id, code)
+    console.log(code)
+    await sendResetMail(user.email, code)
+    res.json(result)
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const verifyResetCode = async (req, res, next) => {
+  try {
+    const { code } = req.body
+    const result = await db.findUserResetCodeDB(code)
+    res.json(result)
+  } catch (error) {
+    next(error)
+  }
+}
+
+export const changePassword = async (req, res, next) => {
+  try {
+    const { password, code } = req.body
+    const hash = await hashPassword(password)
+    const result = await db.updateUserPasswordDB(code, hash)
+    res.json(result)
   } catch (error) {
     next(error)
   }

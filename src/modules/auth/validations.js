@@ -28,4 +28,20 @@ export default {
         .required(),
     }),
   },
+  forgotPasswordSchema: {
+    body: Joi.object({
+      email: Joi.string().email().required(),
+    }),
+  },
+  verifyCodeSchema: {
+    body: Joi.object({
+      code: Joi.string().required(),
+    }),
+  },
+  changePasswordSchema: {
+    body: Joi.object({
+      password: Joi.string().min(6).max(15).alphanum().required(),
+      confirmPassword: Joi.string().required().valid(Joi.ref("password")),
+    }),
+  },
 }

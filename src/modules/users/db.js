@@ -118,3 +118,23 @@ export const addMoneyDB = async (data, id) => {
     }
   }
 }
+
+export const updateUserPasswordDB = async (id, password) => {
+  try {
+    await user.update({
+      where: {
+        id: +id,
+      },
+      data: {
+        password,
+      },
+    })
+    return {
+      status: 204,
+    }
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
