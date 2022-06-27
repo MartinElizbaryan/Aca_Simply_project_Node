@@ -11,7 +11,7 @@ export const getAllPosts = async (req, res, next) => {
       name: name,
       skip,
       take: +take,
-      type,
+      type: type.toUpperCase(),
       categories,
       userId: req.auth?.id,
     })

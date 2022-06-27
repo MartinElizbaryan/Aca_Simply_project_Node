@@ -4,7 +4,6 @@ import { Server } from "socket.io"
 
 import * as routes from "./api/index.js"
 import { internalServerErrorCreator, notFoundErrorCreator } from "./helpers/errors.js"
-import logger from "morgan";
 
 const PORT = app.get("port")
 const { API_VERSIONS } = app.get("config")
@@ -37,13 +36,11 @@ const io = new Server(server, {
 
 const users = {}
 
-function getOnlineUsersId () {
+function getOnlineUsersId() {
   return Object.values(users).map((id) => +id)
 }
-const {log} = console;
 
 io.on("connection", (socket) => {
-
   socket.on("join", ({ room, authId }) => {
     socket.join(room)
     users[socket.id] = authId
@@ -52,21 +49,29 @@ io.on("connection", (socket) => {
 
     const usersArray = getOnlineUsersId()
 
-    socket.broadcast.emit("onlineUsers", usersArray)
-    // socket.to(room).emit("onlineUsers", usersArray)
-    io.to(socket.id).emit("onlineUsers", usersArray)
+    // socket.broadcast.emit("onlineUsers", usersArray)
+    // // socket.to(room).emit("onlineUsers", usersArray)
+    // io.to(socket.id).emit("onlineUsers", usersArray)
+    io.sockets.emit("onlineUsers", usersArray)
 
     console.log("User joined", socket.id, room)
   })
   socket.on("send", ({ room, data }) => {
     socket.to(room).emit("receive", data)
+    io.sockets.emit("messageAdded")
   })
+  socket.on("messageDone", ({ room }) => {
+    console.log(room, "room")
+    console.log("messageDOne")
+    io.sockets.emit("messageAdded")
+  })
+
   socket.on("leave", (room) => {
     socket.leave(room)
     console.log("User left", socket.id, room)
   })
   socket.on("disconnect", () => {
-    log(socket.id, "disconnect")
+    console.log(socket.id, "disconnect")
     delete users[socket.id]
     // socket.to().emit("onlineUsers", getOnlineUsersId())
     socket.broadcast.emit("onlineUsers", getOnlineUsersId())
