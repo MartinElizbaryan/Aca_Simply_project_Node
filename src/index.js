@@ -54,13 +54,13 @@ io.on("connection", (socket) => {
   })
   socket.on("send", ({ room, data }) => {
     socket.to(room).emit("receive", data)
-    io.sockets.emit("messageAdded")
+    // io.sockets.emit("messageAdded")
   })
-  socket.on("messageDone", ({ room }) => {
-    console.log(room, "room")
-    console.log("messageDOne")
-    io.sockets.emit("messageAdded")
-  })
+  // socket.on("messageDone", ({ room }) => {
+  //   console.log(room, "room")
+  //   console.log("messageDOne")
+  //   io.sockets.emit("messageAdded")
+  // })
 
   socket.on("leave", (room) => {
     socket.leave(room)
