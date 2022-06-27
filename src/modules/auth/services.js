@@ -131,8 +131,12 @@ export const forgotPassword = async (req, res, next) => {
 export const verifyResetCode = async (req, res, next) => {
   try {
     const { code } = req.body
-    const result = await db.findUserResetCodeDB(code)
-    res.json(result)
+    const { user } = await db.findUserResetCodeDB(code)
+    if (!user) throw notFoundErrorCreator("code is not valid")
+    res.json({
+      status: 204,
+      code,
+    })
   } catch (error) {
     next(error)
   }
