@@ -130,5 +130,5 @@ model Faq {
 
 enum Type {
   LOST
-  FIND
+  FOUND
 }

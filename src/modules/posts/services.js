@@ -12,7 +12,7 @@ export const getAllPosts = async (req, res, next) => {
       name: name,
       skip,
       take: +take,
-      type: type.toUpperCase(),
+      type,
       categories,
       userId: req.auth?.id,
     })

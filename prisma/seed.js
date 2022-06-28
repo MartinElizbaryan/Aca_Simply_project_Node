@@ -86,7 +86,7 @@ async function main() {
             name: "Phone",
             description: "Phone",
             address: "Yerevan",
-            type: "FIND",
+            type: "FOUND",
             category_id: 1,
             questions: {
               create: [
@@ -139,7 +139,7 @@ async function main() {
             name: "Phone",
             description: "Phone",
             address: "Yerevan",
-            type: "FIND",
+            type: "FOUND",
             category_id: 2,
             questions: {
               create: [
@@ -192,7 +192,7 @@ async function main() {
             name: "Phone",
             description: "Phone",
             address: "Yerevan",
-            type: "FIND",
+            type: "FOUND",
             category_id: 3,
             questions: {
               create: [
@@ -245,7 +245,7 @@ async function main() {
             name: "Phone",
             description: "Phone",
             address: "Yerevan",
-            type: "FIND",
+            type: "FOUND",
             category_id: 2,
             questions: {
               create: [
@@ -298,7 +298,7 @@ async function main() {
             name: "Phone",
             description: "Phone",
             address: "Yerevan",
-            type: "FIND",
+            type: "FOUND",
             category_id: 1,
             questions: {
               create: [
@@ -351,7 +351,7 @@ async function main() {
             name: "Phone",
             description: "Phone",
             address: "Yerevan",
-            type: "FIND",
+            type: "FOUND",
             category_id: 3,
             questions: {
               create: [
@@ -404,7 +404,7 @@ async function main() {
             name: "Phone",
             description: "Phone",
             address: "Yerevan",
-            type: "FIND",
+            type: "FOUND",
             category_id: 1,
             questions: {
               create: [
@@ -457,7 +457,7 @@ async function main() {
             name: "Phone",
             description: "Phone",
             address: "Yerevan",
-            type: "FIND",
+            type: "FOUND",
             category_id: 1,
             questions: {
               create: [
