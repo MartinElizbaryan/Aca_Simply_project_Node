@@ -160,6 +160,7 @@ export const getPostByIdDB = async (id, userId) => {
       include: {
         user: true,
         category: true,
+        images: true,
       },
     }
 
@@ -258,26 +259,30 @@ export const createPostDB = async (data) => {
 }
 
 export const updatePostDB = async (data, id, userId) => {
-  const { deleted_images: deletedImages, images, ...restData } = data
-
+  // const { deleted_images: deletedImages, images, ...restData } = data
+  console.log(id, "id")
+  console.log("userId", userId)
   try {
-    await post.update({
+    const a = await post.updateMany({
       where: {
         id: +id,
         user_id: +userId,
       },
-      data: {
-        ...restData,
-        images: {
-          create: images,
-          delete: deletedImages,
-        },
-      },
+      // data: {
+      // ...restData,
+      // images: {
+      //   create: images,
+      //   delete: deletedImages,
+      // },
+      // },
+      data,
     })
+    console.log("db answer", a)
     return {
       status: 200,
     }
   } catch (error) {
+    console.log(error)
     return {
       error,
     }

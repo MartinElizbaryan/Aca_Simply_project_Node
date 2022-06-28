@@ -32,6 +32,7 @@ export const findUser = async (req, res, next) => {
 export const findMe = async (req, res, next) => {
   try {
     const result = await db.findMeDB(req.auth.id)
+    result.user.favorites = result.user.favorites.map((favorite) => favorite.post)
     res.json(result)
   } catch (error) {
     next(error)
