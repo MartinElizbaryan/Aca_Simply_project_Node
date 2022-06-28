@@ -86,6 +86,20 @@ export const findMeDB = async (id) => {
       where: {
         id: +id,
       },
+      include: {
+        favorites: {
+          include: {
+            post: {
+              include: {
+                user: true,
+                category: true,
+                images: true,
+                favorites: true,
+              },
+            },
+          },
+        },
+      },
     })
     return {
       user: foundUser,

@@ -12,7 +12,7 @@ export const getAllPosts = async (req, res, next) => {
       name: name,
       skip,
       take: +take,
-      type,
+      type: type.toUpperCase(),
       categories,
       userId: req.auth?.id,
     })
@@ -86,9 +86,14 @@ export const createPost = async (req, res, next) => {
 
 export const updatePost = async (req, res, next) => {
   try {
+    console.log("body", req.body)
+    console.log("params", req.params.id)
+    console.log("auth", req.auth.id)
     const result = await db.updatePostDB(req.body, req.params.id, req.auth.id)
+    console.log(result)
     res.json(result)
   } catch (error) {
+    console.log(error)
     next(error)
   }
 }
