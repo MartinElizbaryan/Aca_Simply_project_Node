@@ -40,7 +40,7 @@ CREATE TABLE `Post` (
     `description` TEXT NOT NULL,
     `address` VARCHAR(191) NULL,
     `views` INTEGER NOT NULL DEFAULT 0,
-    `type` ENUM('LOST', 'FIND') NOT NULL DEFAULT 'LOST',
+    `type` ENUM('LOST', 'FOUND') NOT NULL DEFAULT 'LOST',
     `trusted` BOOLEAN NOT NULL DEFAULT false,
     `completed` BOOLEAN NOT NULL DEFAULT false,
     `created_at` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),

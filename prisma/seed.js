@@ -515,7 +515,7 @@ async function main() {
     update: {},
     create: {
       email: "ann@gmail.com",
-      password: await hashPassword("qwerty"),
+      password: await hashPassword("qwerty12"),
       name: "Ann",
       surname: "Brown",
       is_verified: true,
@@ -558,7 +558,7 @@ async function main() {
     update: {},
     create: {
       email: "john@gmail.com",
-      password: await hashPassword("qwerty"),
+      password: await hashPassword("qwerty12"),
       name: "John",
       surname: "Smith",
       is_admin: true,
@@ -570,7 +570,7 @@ async function main() {
     update: {},
     create: {
       email: "martin@gmail.com",
-      password: await hashPassword("qwerty"),
+      password: await hashPassword("qwerty12"),
       name: "Martin",
       surname: "Skrtel",
       is_admin: true,
@@ -582,7 +582,7 @@ async function main() {
     update: {},
     create: {
       email: "James@gmail.com",
-      password: await hashPassword("qwerty"),
+      password: await hashPassword("qwerty12"),
       name: "James",
       surname: "Blunt",
       is_admin: false,
