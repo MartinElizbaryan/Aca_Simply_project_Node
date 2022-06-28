@@ -53,9 +53,6 @@ async function main() {
   ]
   const categories = [
     {
-      name: "Others",
-    },
-    {
       name: "Animal",
     },
     {
@@ -63,6 +60,9 @@ async function main() {
     },
     {
       name: "Phone",
+    },
+    {
+      name: "Others",
     },
   ]
 
@@ -510,7 +510,6 @@ async function main() {
       },
     },
   })
-
   await prisma.user.upsert({
     where: { email: "ann@gmail.com" },
     update: {},
@@ -658,6 +657,22 @@ async function main() {
       {
         user_id: 2,
         post_id: 3,
+      },
+      {
+        user_id: 4,
+        post_id: 1,
+      },
+      {
+        user_id: 4,
+        post_id: 2,
+      },
+      {
+        user_id: 4,
+        post_id: 8,
+      },
+      {
+        user_id: 4,
+        post_id: 9,
       },
     ],
   })

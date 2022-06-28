@@ -65,7 +65,14 @@ export const getAllFavoritesDB = async (userId) => {
         },
       },
       include: {
+        user: true,
         category: true,
+        images: true,
+        favorites: {
+          where: {
+            user_id: +userId,
+          },
+        },
       },
     })
 
@@ -80,9 +87,73 @@ export const getAllFavoritesDB = async (userId) => {
   }
 }
 
-export const getPostByIdDB = async (id) => {
+export const getAllMyPostsDB = async (userId) => {
   try {
-    const foundPost = await post.findUnique({
+    const posts = await post.findMany({
+      orderBy: {
+        id: "desc",
+      },
+      where: {
+        user_id: +userId,
+      },
+      include: {
+        user: true,
+        category: true,
+        images: true,
+        favorites: {
+          where: {
+            user_id: +userId,
+          },
+        },
+      },
+    })
+
+    return {
+      posts,
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      error,
+    }
+  }
+}
+
+export const getAllConfirmedPostsDB = async (userId) => {
+  try {
+    const posts = await post.findMany({
+      orderBy: {
+        id: "desc",
+      },
+      where: {
+        confirmer_id: +userId,
+      },
+      include: {
+        user: true,
+        category: true,
+        images: true,
+        favorites: {
+          where: {
+            user_id: +userId,
+          },
+        },
+      },
+    })
+
+    return {
+      posts,
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      error,
+    }
+  }
+}
+
+export const getPostByIdDB = async (id, userId) => {
+  try {
+    const query = {
       where: {
         id: +id,
       },
@@ -90,7 +161,18 @@ export const getPostByIdDB = async (id) => {
         user: true,
         category: true,
       },
-    })
+    }
+
+    if (userId) {
+      query.include.favorites = {
+        where: {
+          user_id: +userId,
+        },
+      }
+    }
+
+    const foundPost = await post.findUnique(query)
+
     return {
       post: foundPost,
     }
