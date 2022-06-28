@@ -45,6 +45,10 @@ export default {
     body: Joi.object({
       password: Joi.string().min(6).max(15).alphanum().required(),
       confirmPassword: Joi.string().required().valid(Joi.ref("password")),
+      code: Joi.string()
+        .pattern(/^[0-9]+$/)
+        .length(6)
+        .required(),
     }),
   },
 }
