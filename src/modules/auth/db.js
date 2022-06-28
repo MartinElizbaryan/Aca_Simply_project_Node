@@ -185,13 +185,13 @@ export const updateUserPasswordDB = async (reset_code, password) => {
 
 export const findUserResetCodeDB = async (code) => {
   try {
-    await user.findUnique({
+    const foundUser = await user.findUnique({
       where: {
         reset_code: code,
       },
     })
     return {
-      status: 204,
+      user: foundUser,
     }
   } catch (error) {
     return {

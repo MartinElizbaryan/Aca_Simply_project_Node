@@ -117,7 +117,7 @@ export const forgotPassword = async (req, res, next) => {
   try {
     const { email } = req.body
     const { user } = await db.findUserDB(email)
-    if (!user) throw notFoundErrorCreator("User not found.")
+    if (!user) throw notFoundErrorCreator("user not found")
     const code = String(generateRandom6DigitNumber())
     const result = await db.updateUserResetCodeDB(user.id, code)
     console.log(code)
@@ -131,8 +131,12 @@ export const forgotPassword = async (req, res, next) => {
 export const verifyResetCode = async (req, res, next) => {
   try {
     const { code } = req.body
-    const result = await db.findUserResetCodeDB(code)
-    res.json(result)
+    const { user } = await db.findUserResetCodeDB(code)
+    if (!user) throw notFoundErrorCreator("code is not valid")
+    res.json({
+      status: 204,
+      code,
+    })
   } catch (error) {
     next(error)
   }
