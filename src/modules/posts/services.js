@@ -53,10 +53,12 @@ export const getPostWithQuestionsById = async (req, res, next) => {
 }
 
 export const createPost = async (req, res, next) => {
+  console.log(req.body)
   try {
     const { images, questions } = req.body
     await uploadImagesToCloudinary(images)
     const questionsData = changeQuestionsDataStructure(questions)
+    console.log(questionsData)
     const result = await db.createPostDB({
       ...req.body,
       questions: questionsData,

@@ -90,7 +90,7 @@ export const uploadImagesToCloudinary = async (images) => {
   }
 }
 
-export const changeQuestionsDataStructure = async (questions) => {
+export const changeQuestionsDataStructure = (questions) => {
   return questions.map((question) => {
     const { answers, ...restData } = question
     return {
