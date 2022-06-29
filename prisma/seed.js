@@ -554,6 +554,50 @@ async function main() {
     },
   })
   await prisma.user.upsert({
+    where: { email: "avetisyanani6@gmail.com" },
+    update: {},
+    create: {
+      email: "avetisyanani6@gmail.com",
+      password: await hashPassword("ani12345"),
+      name: "Ani",
+      surname: "Avetisyan",
+      is_verified: true,
+      is_admin: true,
+      posts: {
+        create: {
+          name: "Dog",
+          description: "Dog",
+          address: "Babajanyan",
+          type: "FOUND",
+          category_id: 2,
+          questions: {
+            create: [
+              {
+                title: "What color is your dog?",
+                answers: {
+                  create: [
+                    {
+                      title: "Black",
+                      status: true,
+                    },
+                    {
+                      title: "White",
+                      status: false,
+                    },
+                    {
+                      title: "Brown",
+                      status: false,
+                    },
+                  ],
+                },
+              },
+            ],
+          },
+        },
+      },
+    },
+  })
+  await prisma.user.upsert({
     where: { email: "john@gmail.com" },
     update: {},
     create: {
