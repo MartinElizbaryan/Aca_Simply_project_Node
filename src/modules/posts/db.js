@@ -65,7 +65,14 @@ export const getAllFavoritesDB = async (userId) => {
         },
       },
       include: {
+        user: true,
         category: true,
+        images: true,
+        favorites: {
+          where: {
+            user_id: +userId,
+          },
+        },
       },
     })
 
@@ -80,17 +87,93 @@ export const getAllFavoritesDB = async (userId) => {
   }
 }
 
-export const getPostByIdDB = async (id) => {
+export const getAllMyPostsDB = async (userId) => {
   try {
-    const foundPost = await post.findUnique({
+    const posts = await post.findMany({
+      orderBy: {
+        id: "desc",
+      },
+      where: {
+        user_id: +userId,
+      },
+      include: {
+        user: true,
+        category: true,
+        images: true,
+        favorites: {
+          where: {
+            user_id: +userId,
+          },
+        },
+      },
+    })
+
+    return {
+      posts,
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      error,
+    }
+  }
+}
+
+export const getAllConfirmedPostsDB = async (userId) => {
+  try {
+    const posts = await post.findMany({
+      orderBy: {
+        id: "desc",
+      },
+      where: {
+        confirmer_id: +userId,
+      },
+      include: {
+        user: true,
+        category: true,
+        images: true,
+        favorites: {
+          where: {
+            user_id: +userId,
+          },
+        },
+      },
+    })
+
+    return {
+      posts,
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      error,
+    }
+  }
+}
+
+export const getPostByIdDB = async (id, userId) => {
+  try {
+    const query = {
       where: {
         id: +id,
       },
       include: {
         user: true,
         category: true,
+        images: true,
       },
-    })
+    }
+
+    if (userId) {
+      query.include.favorites = {
+        where: {
+          user_id: +userId,
+        },
+      }
+    }
+
+    const foundPost = await post.findUnique(query)
+
     return {
       post: foundPost,
     }
@@ -176,26 +259,30 @@ export const createPostDB = async (data) => {
 }
 
 export const updatePostDB = async (data, id, userId) => {
-  const { deleted_images: deletedImages, images, ...restData } = data
-
+  // const { deleted_images: deletedImages, images, ...restData } = data
+  console.log(id, "id")
+  console.log("userId", userId)
   try {
-    await post.update({
+    const a = await post.updateMany({
       where: {
         id: +id,
         user_id: +userId,
       },
-      data: {
-        ...restData,
-        images: {
-          create: images,
-          delete: deletedImages,
-        },
-      },
+      // data: {
+      // ...restData,
+      // images: {
+      //   create: images,
+      //   delete: deletedImages,
+      // },
+      // },
+      data,
     })
+    console.log("db answer", a)
     return {
       status: 200,
     }
   } catch (error) {
+    console.log(error)
     return {
       error,
     }

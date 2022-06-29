@@ -34,9 +34,25 @@ export const getAllFavorites = async (req, res, next) => {
 
 export const getPostById = async (req, res, next) => {
   try {
-    const result = await db.getPostByIdDB(req.params.id)
+    const result = await db.getPostByIdDB(req.params.id, req.auth?.id)
     if (!result.error && (+req.auth?.id !== result.post.user_id || !req.auth))
       await db.updatePostViewsDB(result.post.user_id)
+    res.json(result)
+  } catch (error) {
+    next(error)
+  }
+}
+export const getAllMyPosts = async (req, res, next) => {
+  try {
+    const result = await db.getAllMyPostsDB(req.auth.id)
+    res.json(result)
+  } catch (error) {
+    next(error)
+  }
+}
+export const getAllConfirmedPosts = async (req, res, next) => {
+  try {
+    const result = await db.getAllConfirmedPostsDB(req.auth.id)
     res.json(result)
   } catch (error) {
     next(error)
@@ -72,9 +88,14 @@ export const createPost = async (req, res, next) => {
 
 export const updatePost = async (req, res, next) => {
   try {
+    console.log("body", req.body)
+    console.log("params", req.params.id)
+    console.log("auth", req.auth.id)
     const result = await db.updatePostDB(req.body, req.params.id, req.auth.id)
+    console.log(result)
     res.json(result)
   } catch (error) {
+    console.log(error)
     next(error)
   }
 }
