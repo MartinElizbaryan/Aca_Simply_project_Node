@@ -50,9 +50,9 @@ export const addMoney = async (req, res, next) => {
 export const changePassword = async (req, res, next) => {
   try {
     const { user } = await db.findMeDB(req.auth.id)
-    const isPasswordCorrect = await comparePassword(req.body.oldPassword, user.password)
-    if (!isPasswordCorrect) throw badRequestErrorCreator("Old password is incorrect.")
-    const hash = await hashPassword(req.body.password)
+    const isPasswordCorrect = await comparePassword(req.body.currentPassword, user.password)
+    if (!isPasswordCorrect) throw badRequestErrorCreator("Current password is incorrect.")
+    const hash = await hashPassword(req.body.newPassword)
     const result = await db.updateUserPasswordDB(hash, req.auth.id)
     res.json(result)
   } catch (error) {

@@ -32,9 +32,9 @@ export default {
   },
   changePasswordSchema: {
     body: Joi.object({
-      oldPassword: Joi.string().min(6).max(15).alphanum().required(),
-      password: Joi.string().min(6).max(15).alphanum().required(),
-      confirmPassword: Joi.string().required().valid(Joi.ref("password")),
+      currentPassword: Joi.string().min(6).max(15).alphanum().required(),
+      newPassword: Joi.string().min(6).max(15).alphanum().required(),
+      confirmPassword: Joi.string().required().valid(Joi.ref("newPassword")),
     }),
   },
 }

@@ -26,6 +26,7 @@ export const createUserDB = async (data) => {
       }
     })
   } catch (error) {
+    console.log(error.code)
     return {
       error,
     }
