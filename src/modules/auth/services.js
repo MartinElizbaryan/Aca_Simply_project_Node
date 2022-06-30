@@ -19,7 +19,7 @@ export const signUp = async (req, res, next) => {
     const result = await db.createUserDB(req.body)
     if (result.error) {
       if (result.error.code === "P2002")
-        throw badRequestErrorCreator("email address is already used.")
+        throw badRequestErrorCreator("email address is already used")
     }
     res.json(result)
   } catch (error) {
