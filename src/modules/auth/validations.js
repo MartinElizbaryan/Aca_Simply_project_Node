@@ -14,7 +14,7 @@ export default {
         .pattern(/^[a-zA-Zա-ևԱ-Ֆ-]+$/)
         .required(),
       email: Joi.string().email().required(),
-      password: Joi.string().min(6).max(15).alphanum().required(),
+      password: Joi.string().min(8).max(15).alphanum().required(),
       confirmPassword: Joi.string().required().valid(Joi.ref("password")),
     }),
   },

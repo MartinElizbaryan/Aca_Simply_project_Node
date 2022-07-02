@@ -7,12 +7,20 @@ import {
   verifyToken,
   verifyUser,
 } from "../../helpers/common.js"
-import { notFoundErrorCreator, unauthorizedErrorCreator } from "../../helpers/errors.js"
+import {
+  badRequestErrorCreator,
+  notFoundErrorCreator,
+  unauthorizedErrorCreator,
+} from "../../helpers/errors.js"
 import * as db from "./db.js"
 
 export const signUp = async (req, res, next) => {
   try {
     const result = await db.createUserDB(req.body)
+    if (result.error) {
+      if (result.error.code === "P2002")
+        throw badRequestErrorCreator("email address is already used")
+    }
     res.json(result)
   } catch (error) {
     next(error)
