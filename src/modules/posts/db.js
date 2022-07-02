@@ -4,15 +4,20 @@ const { post } = prisma
 
 export const getAllPostsDB = async ({ skip, take, type, categories, userId, name }) => {
   try {
+    const where = {
+      type,
+      trusted: true,
+    }
+
     const query = {
       orderBy: {
         id: "desc",
       },
-      where: {
-        type,
-        trusted: true,
-      },
-      include: {
+      select: {
+        id: true,
+        name: true,
+        type: true,
+        description: true,
         user: true,
         category: true,
         images: true,
@@ -20,7 +25,7 @@ export const getAllPostsDB = async ({ skip, take, type, categories, userId, name
     }
 
     if (userId) {
-      query.include.favorites = {
+      query.select.favorites = {
         where: {
           user_id: +userId,
         },
@@ -28,11 +33,11 @@ export const getAllPostsDB = async ({ skip, take, type, categories, userId, name
     }
 
     if (name) {
-      query.where.name = name
+      where.name = name
     }
 
     if (categories.length) {
-      query.where.category_id = { in: categories }
+      where.category_id = { in: categories }
     }
 
     if (take) {
@@ -40,10 +45,14 @@ export const getAllPostsDB = async ({ skip, take, type, categories, userId, name
       query.skip = skip || 0
     }
 
+    query.where = where
+
     const posts = await post.findMany(query)
+    const count = await post.count({ where })
 
     return {
       posts,
+      count,
     }
   } catch (error) {
     console.log(error)
@@ -52,6 +61,7 @@ export const getAllPostsDB = async ({ skip, take, type, categories, userId, name
     }
   }
 }
+
 export const getAllFavoritesDB = async (userId) => {
   try {
     const posts = await post.findMany({
