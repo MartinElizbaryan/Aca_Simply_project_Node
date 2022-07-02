@@ -112,6 +112,7 @@ export const deleteConfirmed = async (req, res, next) => {
     const result = await db.deleteConfirmedDB(req.params.id, req.auth.id)
     res.json(result)
   } catch (error) {
+    console.log(error)
     next(error)
   }
 }

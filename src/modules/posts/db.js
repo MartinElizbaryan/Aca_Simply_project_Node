@@ -10,6 +10,7 @@ export const getAllPostsDB = async ({ skip, take, type, categories, userId, name
       },
       where: {
         type,
+        trusted: true,
       },
       include: {
         user: true,
@@ -161,6 +162,7 @@ export const getPostByIdDB = async (id, userId) => {
         user: true,
         category: true,
         images: true,
+        confirmer: true,
       },
     }
 
@@ -311,7 +313,7 @@ export const confirmedPostDB = async (id, userId) => {
 
 export const deleteConfirmedDB = async (id, userId) => {
   try {
-    await post.update({
+    await post.updateMany({
       where: {
         id: +id,
         user_id: +userId,
@@ -324,6 +326,7 @@ export const deleteConfirmedDB = async (id, userId) => {
       status: 204,
     }
   } catch (error) {
+    console.log(error)
     return {
       error,
     }
@@ -332,7 +335,7 @@ export const deleteConfirmedDB = async (id, userId) => {
 
 export const completedPostDB = async (id, userId) => {
   try {
-    await post.update({
+    await post.updateMany({
       where: {
         id: +id,
         user_id: +userId,
@@ -353,7 +356,7 @@ export const completedPostDB = async (id, userId) => {
 
 export const deletePostDB = async (id, userId) => {
   try {
-    await post.delete({
+    await post.deleteMany({
       where: {
         id: +id,
         user_id: +userId,
