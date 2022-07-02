@@ -75,7 +75,7 @@ async function main() {
     update: {},
     create: {
       email: "brad@gmail.com",
-      password: await hashPassword("qwerty"),
+      password: await hashPassword("qwerty12"),
       name: "Brad",
       surname: "Gibson",
       phone: "+37493-65-65-65",
