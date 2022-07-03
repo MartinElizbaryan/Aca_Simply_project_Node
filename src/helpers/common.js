@@ -14,7 +14,7 @@ export const comparePassword = async (password, hash) => {
 }
 
 export const generateToken = (payload, type) => {
-  const expiresIn = type === "access" ? 60 * 30 * 60 : 60 * 60 * 24 * 30
+  const expiresIn = type === "access" ? 60 * 60 * 30 : 60 * 60 * 24 * 30
   const token = jwt.sign(payload, process.env.JWT_PRIVATE_KEY, {
     expiresIn,
   })

@@ -11,7 +11,7 @@ const router = Router()
 router.get("/me", auth, service.findMe)
 router.get("/chat", auth, service.findUserChat)
 router.get("/:id", auth, validate(findUserSchema), service.findUser)
-router.put("/:id", auth, validate(updateUserSchema), service.updateUser)
+router.put("/", auth, validate(updateUserSchema), service.updateUser)
 router.patch("/add-money", auth, validate(addMoneySchema), service.addMoney)
 router.patch("/change-password", auth, validate(changePasswordSchema), service.changePassword)
 
