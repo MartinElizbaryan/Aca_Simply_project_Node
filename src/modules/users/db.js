@@ -4,7 +4,7 @@ const { user } = prisma
 
 export const updateUserDB = async (data, id) => {
   try {
-    await user.update({
+    const updatedUser = await user.update({
       where: {
         id: +id,
       },
@@ -12,6 +12,7 @@ export const updateUserDB = async (data, id) => {
     })
     return {
       status: 200,
+      user: updatedUser,
     }
   } catch (error) {
     return {

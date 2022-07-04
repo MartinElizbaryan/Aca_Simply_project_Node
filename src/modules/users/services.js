@@ -4,7 +4,7 @@ import { badRequestErrorCreator } from "../../helpers/errors.js"
 
 export const updateUser = async (req, res, next) => {
   try {
-    const result = await db.updateUserDB(req.body, req.params.id)
+    const result = await db.updateUserDB(req.body, req.auth.id)
     res.json(result)
   } catch (error) {
     next(error)
