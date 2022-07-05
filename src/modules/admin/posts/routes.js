@@ -7,6 +7,7 @@ const { updateTrustedSchema, deletePostSchema } = validations
 
 const router = Router()
 
+router.get("/not-trusted/", service.notTrusted)
 router.patch("/trusted/:id", validate(updateTrustedSchema), service.updateTrusted)
 router.delete("/:id", validate(deletePostSchema), service.deletePost)
 
