@@ -53,13 +53,28 @@ async function main() {
   ]
   const categories = [
     {
-      name: "Animal",
+      name: "Bags",
     },
     {
-      name: "Headphones",
+      name: "Keys",
     },
     {
-      name: "Phone",
+      name: "Pets",
+    },
+    {
+      name: "Cloths",
+    },
+    {
+      name: "Accessories",
+    },
+    {
+      name: "Jewelery",
+    },
+    {
+      name: "Documents",
+    },
+    {
+      name: "Devices",
     },
     {
       name: "Others",
@@ -88,6 +103,168 @@ async function main() {
             address: "Yerevan",
             type: "FOUND",
             trusted: true,
+            category_id: 8,
+            questions: {
+              create: [
+                {
+                  title: "What is your phone's model?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Iphone",
+                        status: false,
+                      },
+                      {
+                        title: "Samsung",
+                        status: true,
+                      },
+                      {
+                        title: "Xiaomi",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "What color is your phone?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Black",
+                        status: false,
+                      },
+                      {
+                        title: "White",
+                        status: false,
+                      },
+                      {
+                        title: "Red",
+                        status: true,
+                      },
+                      {
+                        title: "Blue",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            name: "Phone",
+            description: "Phone",
+            address: "Yerevan",
+            type: "FOUND",
+            trusted: true,
+            category_id: 8,
+            questions: {
+              create: [
+                {
+                  title: "What is your phone's model?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Iphone",
+                        status: false,
+                      },
+                      {
+                        title: "Samsung",
+                        status: true,
+                      },
+                      {
+                        title: "Xiaomi",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "What color is your phone?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Black",
+                        status: false,
+                      },
+                      {
+                        title: "White",
+                        status: false,
+                      },
+                      {
+                        title: "Red",
+                        status: true,
+                      },
+                      {
+                        title: "Blue",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            name: "Phone",
+            description: "Phone",
+            address: "Yerevan",
+            type: "FOUND",
+            trusted: true,
+            category_id: 9,
+            questions: {
+              create: [
+                {
+                  title: "What is your phone's model?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Iphone",
+                        status: false,
+                      },
+                      {
+                        title: "Samsung",
+                        status: true,
+                      },
+                      {
+                        title: "Xiaomi",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+                {
+                  title: "What color is your phone?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Black",
+                        status: false,
+                      },
+                      {
+                        title: "White",
+                        status: false,
+                      },
+                      {
+                        title: "Red",
+                        status: true,
+                      },
+                      {
+                        title: "Blue",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+          {
+            name: "Phone",
+            description: "Phone",
+            address: "Yerevan",
+            type: "FOUND",
+            trusted: true,
             category_id: 1,
             questions: {
               create: [
@@ -196,169 +373,7 @@ async function main() {
             address: "Yerevan",
             type: "FOUND",
             trusted: true,
-            category_id: 3,
-            questions: {
-              create: [
-                {
-                  title: "What is your phone's model?",
-                  answers: {
-                    create: [
-                      {
-                        title: "Iphone",
-                        status: false,
-                      },
-                      {
-                        title: "Samsung",
-                        status: true,
-                      },
-                      {
-                        title: "Xiaomi",
-                        status: false,
-                      },
-                    ],
-                  },
-                },
-                {
-                  title: "What color is your phone?",
-                  answers: {
-                    create: [
-                      {
-                        title: "Black",
-                        status: false,
-                      },
-                      {
-                        title: "White",
-                        status: false,
-                      },
-                      {
-                        title: "Red",
-                        status: true,
-                      },
-                      {
-                        title: "Blue",
-                        status: false,
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-          {
-            name: "Phone",
-            description: "Phone",
-            address: "Yerevan",
-            type: "FOUND",
-            trusted: true,
-            category_id: 2,
-            questions: {
-              create: [
-                {
-                  title: "What is your phone's model?",
-                  answers: {
-                    create: [
-                      {
-                        title: "Iphone",
-                        status: false,
-                      },
-                      {
-                        title: "Samsung",
-                        status: true,
-                      },
-                      {
-                        title: "Xiaomi",
-                        status: false,
-                      },
-                    ],
-                  },
-                },
-                {
-                  title: "What color is your phone?",
-                  answers: {
-                    create: [
-                      {
-                        title: "Black",
-                        status: false,
-                      },
-                      {
-                        title: "White",
-                        status: false,
-                      },
-                      {
-                        title: "Red",
-                        status: true,
-                      },
-                      {
-                        title: "Blue",
-                        status: false,
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-          {
-            name: "Phone",
-            description: "Phone",
-            address: "Yerevan",
-            type: "FOUND",
-            trusted: true,
-            category_id: 1,
-            questions: {
-              create: [
-                {
-                  title: "What is your phone's model?",
-                  answers: {
-                    create: [
-                      {
-                        title: "Iphone",
-                        status: false,
-                      },
-                      {
-                        title: "Samsung",
-                        status: true,
-                      },
-                      {
-                        title: "Xiaomi",
-                        status: false,
-                      },
-                    ],
-                  },
-                },
-                {
-                  title: "What color is your phone?",
-                  answers: {
-                    create: [
-                      {
-                        title: "Black",
-                        status: false,
-                      },
-                      {
-                        title: "White",
-                        status: false,
-                      },
-                      {
-                        title: "Red",
-                        status: true,
-                      },
-                      {
-                        title: "Blue",
-                        status: false,
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-          {
-            name: "Phone",
-            description: "Phone",
-            address: "Yerevan",
-            type: "FOUND",
-            trusted: true,
-            category_id: 3,
+            category_id: 4,
             questions: {
               create: [
                 {
@@ -412,7 +427,7 @@ async function main() {
             address: "Yerevan",
             type: "LOST",
             trusted: true,
-            category_id: 1,
+            category_id: 8,
             questions: {
               create: [
                 {
@@ -464,9 +479,9 @@ async function main() {
             name: "Phone",
             description: "Phone",
             address: "Yerevan",
-            type: "FOUND",
+            type: "LOST",
             trusted: true,
-            category_id: 1,
+            category_id: 7,
             questions: {
               create: [
                 {
@@ -533,7 +548,7 @@ async function main() {
           description: "Bag",
           address: "Abovyan",
           type: "LOST",
-          category_id: 2,
+          category_id: 6,
           questions: {
             create: [
               {
@@ -577,7 +592,7 @@ async function main() {
           description: "Dog",
           address: "Babajanyan",
           type: "FOUND",
-          category_id: 2,
+          category_id: 6,
           questions: {
             create: [
               {
@@ -686,6 +701,7 @@ async function main() {
       },
     })
   })
+
   faq.forEach(async (question) => {
     await prisma.faq.create({
       data: question,
