@@ -30,7 +30,7 @@ export const getAllFAQDB = async () => {
   }
 }
 
-export const getFAQByIdDB = async (data, id) => {
+export const getFAQByIdDB = async (id) => {
   try {
     const foundFAQ = await faq.findUnique({
       where: {
@@ -41,6 +41,7 @@ export const getFAQByIdDB = async (data, id) => {
       faq: foundFAQ,
     }
   } catch (error) {
+    console.log(error)
     return {
       error,
     }
@@ -48,6 +49,7 @@ export const getFAQByIdDB = async (data, id) => {
 }
 
 export const updateFAQDB = async (data, id) => {
+  console.log(data)
   try {
     await faq.update({
       where: {
