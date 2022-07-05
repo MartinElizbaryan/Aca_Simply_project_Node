@@ -23,6 +23,7 @@ export const getFAQById = async (req, res, next) => {
     const result = await db.getFAQByIdDB(req.params.id)
     res.json(result)
   } catch (error) {
+    console.log(error)
     next(error)
   }
 }
