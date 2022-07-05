@@ -13,7 +13,7 @@ const {
 
 const router = Router()
 
-router.get("/verify/:id/:link", service.updateVerified)
+router.get("/verify/:link", service.updateVerified)
 router.post("/sign-up", validate(createUserSchema), service.signUp)
 router.post("/sign-in", validate(findUserSchema), service.signIn)
 router.delete("/sign-out", service.signOut)

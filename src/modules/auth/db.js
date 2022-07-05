@@ -15,11 +15,12 @@ export const createUserDB = async (data) => {
           surname,
           email,
           password: hash,
+          verification_code: v4(),
         },
       })
       await sendActivationMail(
         createdUser.email,
-        `${process.env.SERVER_BASE_URL}/auth/verify/${createdUser.id}/${v4()}`
+        `${process.env.SERVER_BASE_URL}/auth/verify/${createdUser.verification_code}`
       )
       return {
         status: 200,
@@ -103,11 +104,11 @@ export const deleteTokenDB = async (refreshToken) => {
   }
 }
 
-export const updateVerifiedDB = async (id) => {
+export const updateVerifiedDB = async (link) => {
   try {
     await user.update({
       where: {
-        id: +id,
+        verification_code: link,
       },
       data: {
         is_verified: true,
