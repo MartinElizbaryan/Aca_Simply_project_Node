@@ -225,6 +225,9 @@ export const getPostWithQuestionsByIdDB = async (id) => {
         id: +id,
       },
       include: {
+        user: true,
+        images: true,
+        confirmer: true,
         questions: {
           include: {
             answers: true,
