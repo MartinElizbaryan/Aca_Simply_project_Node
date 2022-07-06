@@ -2,7 +2,7 @@ import { prisma } from "../../services/Prisma.js"
 
 const { post } = prisma
 
-export const getAllPostsDB = async ({ skip, take, type, categories, userId, name }) => {
+export const getAllPostsDB = async ({ skip, take, type, categories, userId, search }) => {
   try {
     const where = {
       type,
@@ -32,8 +32,19 @@ export const getAllPostsDB = async ({ skip, take, type, categories, userId, name
       }
     }
 
-    if (name) {
-      where.name = name
+    if (search) {
+      where.OR = [
+        {
+          name: {
+            contains: search,
+          },
+        },
+        {
+          description: {
+            contains: search,
+          },
+        },
+      ]
     }
 
     if (categories.length) {

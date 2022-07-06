@@ -18,13 +18,14 @@ model User {
   money          Int        @default(2000)
   is_admin       Boolean    @default(false)
   is_verified    Boolean    @default(false)
+  verification_code     String?     @unique
+  reset_code     String?     @unique
   tokens         Token[]
   posts          Post[]     @relation("user")
   favorites      Favorite[]
   confirmedPosts Post[]     @relation("confirmer")
   messages_from  Message[]  @relation("from")
   messages_to    Message[]  @relation("to")
-  reset_code     String?     @unique
   created_at     DateTime   @default(now())
   updated_at     DateTime   @default(now()) @updatedAt
 }

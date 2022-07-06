@@ -112,7 +112,7 @@ export const deleteRefreshToken = async (req, res, next) => {
 
 export const updateVerified = async (req, res, next) => {
   try {
-    const { error } = await db.updateVerifiedDB(req.params.id)
+    const { error } = await db.updateVerifiedDB(req.params.link)
     if (error) res.json(error) // add html file
     res.sendFile(`${path.resolve()}/public/verified.html`)
   } catch (error) {
