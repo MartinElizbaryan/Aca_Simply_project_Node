@@ -43,11 +43,6 @@ export const findUserDB = async (id) => {
 export const findUserChatDB = async (id) => {
   try {
     const foundUsers = await user.findMany({
-      // orderBy: {
-      //   messages_from: {
-      //     created_at: "asc",
-      //   },
-      // },
       where: {
         OR: [
           {
@@ -75,7 +70,42 @@ export const findUserChatDB = async (id) => {
         },
       },
     })
-    console.log(foundUsers, "users")
+    return {
+      users: foundUsers,
+    }
+  } catch (error) {
+    console.log(error)
+    return {
+      error,
+    }
+  }
+}
+export const findUserChatWithAllMessagesDB = async (id) => {
+  try {
+    const foundUsers = await user.findMany({
+      where: {
+        OR: [
+          {
+            messages_from: {
+              some: {
+                to_id: +id,
+              },
+            },
+          },
+          {
+            messages_to: {
+              some: {
+                from_id: +id,
+              },
+            },
+          },
+        ],
+      },
+      include: {
+        messages_from: true,
+        messages_to: true,
+      },
+    })
     return {
       users: foundUsers,
     }

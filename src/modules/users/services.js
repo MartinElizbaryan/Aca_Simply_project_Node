@@ -13,9 +13,28 @@ export const updateUser = async (req, res, next) => {
 
 export const findUserChat = async (req, res, next) => {
   try {
-    const result = await db.findUserChatDB(req.auth.id)
-    res.json(result)
+    let { users } = await db.findUserChatDB(req.auth.id)
+    const { users: usersSort } = await db.findUserChatWithAllMessagesDB(req.auth.id)
+
+    users = users.map((user, index) => {
+      const fromIdLength = usersSort[index].messages_from.length
+      let fromId = usersSort[index].messages_from[fromIdLength - 1]?.id
+      const toIdLength = usersSort[index].messages_to.length
+      let toId = usersSort[index].messages_to[toIdLength - 1]?.id
+
+      fromId = fromId ? fromId : 0
+      toId = toId ? toId : 0
+      user.lastMessage = fromId > toId ? fromId : toId
+      return user
+    })
+
+    users.sort((a, b) => {
+      return b.lastMessage - a.lastMessage
+    })
+
+    res.json({ users })
   } catch (error) {
+    console.log(error)
     next(error)
   }
 }
