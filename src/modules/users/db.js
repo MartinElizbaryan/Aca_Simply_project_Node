@@ -66,10 +66,7 @@ export const findUserChatDB = async (id) => {
           },
         ],
       },
-      select: {
-        id: true,
-        name: true,
-        surname: true,
+      include: {
         messages_from: {
           where: {
             to_id: +id,
