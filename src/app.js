@@ -13,7 +13,7 @@ const env = process.env.NODE_ENV || "development"
 const configStr = fs.readFileSync(path.resolve("src/config.json"), "utf-8")
 const config = JSON.parse(configStr)[env]
 
-app.use(express.json())
+app.use(express.json({ limit: "50mb" }))
 app.use(cookieParser())
 
 app.use((req, res, next) => {

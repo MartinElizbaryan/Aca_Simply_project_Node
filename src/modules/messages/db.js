@@ -51,6 +51,22 @@ export const createMessageDB = async (data, fromId, toId) => {
   }
 }
 
+
+export const createManyMessageDB = async (data) => {
+  try {
+    const newMessage = await message.createMany({
+      data,
+    })
+    return {
+      message: newMessage,
+    }
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
+
 export const seenMessageDB = async (authId, fromId) => {
   try {
     await message.updateMany({

@@ -67,6 +67,7 @@ io.on("connection", (socket) => {
     socket.on("messageIsSeen", () => {
       io.to(socket.id).emit("seen")
       io.to(socket.id).emit("messageCountUpdate")
+      io.to(socket.id).emit("seenMessages")
     })
 
     // all users
