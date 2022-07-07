@@ -43,6 +43,11 @@ export const findUserDB = async (id) => {
 export const findUserChatDB = async (id) => {
   try {
     const foundUsers = await user.findMany({
+      orderBy: {
+        messages_from: {
+          created_at: "asc",
+        },
+      },
       where: {
         OR: [
           {
@@ -61,7 +66,10 @@ export const findUserChatDB = async (id) => {
           },
         ],
       },
-      include: {
+      select: {
+        id: true,
+        name: true,
+        surname: true,
         messages_from: {
           where: {
             to_id: +id,
@@ -70,6 +78,7 @@ export const findUserChatDB = async (id) => {
         },
       },
     })
+    console.log(foundUsers, "users")
     return {
       users: foundUsers,
     }
