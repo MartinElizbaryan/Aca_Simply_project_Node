@@ -7,11 +7,7 @@ import {
   verifyToken,
   verifyUser,
 } from "../../helpers/common.js"
-import {
-  badRequestErrorCreator,
-  notFoundErrorCreator,
-  unauthorizedErrorCreator,
-} from "../../helpers/errors.js"
+import { badRequestErrorCreator, notFoundErrorCreator } from "../../helpers/errors.js"
 import * as db from "./db.js"
 
 export const signUp = async (req, res, next) => {
@@ -32,7 +28,7 @@ export const signIn = async (req, res, next) => {
     const { email, password } = req.body
     const { user } = await db.findUserDB(email)
     const result = await verifyUser(password, user)
-    if (!result.auth) throw unauthorizedErrorCreator(result.message)
+    if (!result.auth) throw badRequestErrorCreator(result.message)
 
     const payload = {
       id: user.id,
