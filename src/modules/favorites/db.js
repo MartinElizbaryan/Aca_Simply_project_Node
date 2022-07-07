@@ -1,4 +1,4 @@
-import { prisma } from "../../services/Prisma.js"
+import { prisma } from "../../services/prisma.js"
 
 const { favorite } = prisma
 

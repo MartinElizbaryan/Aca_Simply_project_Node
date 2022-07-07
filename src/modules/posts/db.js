@@ -1,4 +1,5 @@
-import { prisma } from "../../services/Prisma.js"
+import { prisma } from "../../services/prisma.js"
+import { dateDaysBack } from "../../helpers/common.js"
 
 const { post } = prisma
 
@@ -384,6 +385,44 @@ export const deletePostDB = async (id, userId) => {
       where: {
         id: +id,
         user_id: +userId,
+      },
+    })
+    return {
+      status: 204,
+    }
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
+
+export const deleteOldPostDB = async (days) => {
+  try {
+    await post.deleteMany({
+      where: {
+        created_at: {
+          lte: dateDaysBack(days),
+        },
+      },
+    })
+    return {
+      status: 204,
+    }
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
+
+export const findOldPostDB = async (days) => {
+  try {
+    await post.findMany({
+      where: {
+        created_at: {
+          lte: dateDaysBack(days),
+        },
       },
     })
     return {

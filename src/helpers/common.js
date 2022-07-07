@@ -2,8 +2,8 @@ import bcrypt from "bcrypt"
 import path from "path"
 import jwt from "jsonwebtoken"
 import { promises as fs } from "fs"
-import { transporter } from "../services/Mail.js"
-import cloudinary from "../services/Cloudinary.js"
+import { transporter } from "../services/mail.js"
+import cloudinary from "../services/cloudinary.js"
 
 export const hashPassword = async (password) => {
   return await bcrypt.hash(password, 12)
@@ -129,4 +129,8 @@ export const verifyUser = async (password, user) => {
 
 export const generateRandom6DigitNumber = () => {
   return Math.floor(100000 + Math.random() * 900000)
+}
+
+export const dateDaysBack = (days) => {
+  return new Date(Date.now() - 60 * 60 * 24 * days * 1000)
 }

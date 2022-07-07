@@ -1,6 +1,6 @@
 import { v4 } from "uuid"
 import { hashPassword, sendActivationMail } from "../../helpers/common.js"
-import { prisma } from "../../services/Prisma.js"
+import { prisma } from "../../services/prisma.js"
 
 const { user, token } = prisma
 

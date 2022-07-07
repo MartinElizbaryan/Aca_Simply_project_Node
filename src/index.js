@@ -4,6 +4,7 @@ import { Server } from "socket.io"
 
 import * as routes from "./api/index.js"
 import { internalServerErrorCreator, notFoundErrorCreator } from "./helpers/errors.js"
+import { job } from "./services/cron.js"
 
 const PORT = app.get("port")
 const { API_VERSIONS } = app.get("config")
@@ -34,7 +35,7 @@ const io = new Server(server, {
   },
 })
 
-const users = {}
+export const users = {}
 
 function getOnlineUsersId() {
   return Object.keys(users).map((id) => +id)
@@ -46,9 +47,7 @@ function getIdBySocketId(socketId) {
   }
 }
 
-io.on("connection", (socket /*, esiminch*/) => {
-  // console.log("esiminch", esiminch)
-
+io.on("connection", (socket) => {
   socket.on("connect-success", ({ userId }) => {
     console.log("userId", userId)
     console.log("socket.id", socket.id)
@@ -75,7 +74,7 @@ io.on("connection", (socket /*, esiminch*/) => {
   })
 
   socket.on("disconnect", () => {
-    console.log("looooooooooooooooooooooooooooooogout")
+    console.log("logout")
     delete users[getIdBySocketId(socket.id)]
     // All users expect me
     socket.broadcast.emit("onlineUsers", getOnlineUsersId())
@@ -107,3 +106,4 @@ io.on("connection", (socket /*, esiminch*/) => {
 server.listen(PORT, function () {
   console.log(`\n🚀 Server ready at: http://localhost:${this.address().port}\n`)
 })
+job.start()
