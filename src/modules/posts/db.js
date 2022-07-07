@@ -285,23 +285,22 @@ export const createPostDB = async (data) => {
 }
 
 export const updatePostDB = async (data, id, userId) => {
-  // const { deleted_images: deletedImages, images, ...restData } = data
-  console.log(id, "id")
-  console.log("userId", userId)
+  const { deleted_images: deletedImages, images, ...restData } = data
+  console.log('Images',images);
   try {
     const a = await post.updateMany({
       where: {
         id: +id,
         user_id: +userId,
       },
-      // data: {
-      // ...restData,
-      // images: {
-      //   create: images,
-      //   delete: deletedImages,
-      // },
-      // },
-      data,
+      data: {
+        ...restData,
+        images: {
+          create: images,
+          delete: deletedImages,
+        },
+      },
+      // data,
     })
     console.log("db answer", a)
     return {
