@@ -98,6 +98,15 @@ async function main() {
       posts: {
         create: [
           {
+            name: "Bag",
+            description: "Bag",
+            address: "Abovyan",
+            type: "FOUND",
+            category_id: 1,
+            trusted: true,
+            created_at: new Date(2022, 5, 7),
+          },
+          {
             name: "Phone",
             description: "Phone",
             address: "Yerevan",
@@ -543,36 +552,58 @@ async function main() {
       surname: "Brown",
       is_verified: true,
       posts: {
-        create: {
-          name: "Bag",
-          description: "Bag",
-          address: "Abovyan",
-          type: "LOST",
-          category_id: 6,
-          questions: {
-            create: [
-              {
-                title: "What color is your bag?",
-                answers: {
-                  create: [
-                    {
-                      title: "Black",
-                      status: true,
-                    },
-                    {
-                      title: "White",
-                      status: false,
-                    },
-                    {
-                      title: "Red",
-                      status: false,
-                    },
-                  ],
+        create: [
+          {
+            name: "Bag",
+            description: "Bag",
+            address: "Abovyan",
+            type: "LOST",
+            category_id: 6,
+            trusted: true,
+            created_at: new Date(2022, 5, 7),
+            questions: {
+              create: [
+                {
+                  title: "What color is your bag?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Black",
+                        status: true,
+                      },
+                      {
+                        title: "White",
+                        status: false,
+                      },
+                      {
+                        title: "Red",
+                        status: false,
+                      },
+                    ],
+                  },
                 },
-              },
-            ],
+              ],
+            },
           },
-        },
+          {
+            name: "Bag",
+            description: "Bag",
+            address: "Abovyan",
+            type: "LOST",
+            category_id: 9,
+            trusted: true,
+            created_at: new Date(2022, 5, 7),
+          },
+          {
+            name: "Bag",
+            description: "Bag",
+            address: "Abovyan",
+            type: "LOST",
+            category_id: 1,
+            trusted: true,
+            created_at: new Date(2022, 5, 7),
+          },
+        ],
       },
     },
   })
@@ -587,36 +618,47 @@ async function main() {
       is_verified: true,
       is_admin: true,
       posts: {
-        create: {
-          name: "Dog",
-          description: "Dog",
-          address: "Babajanyan",
-          type: "FOUND",
-          category_id: 6,
-          questions: {
-            create: [
-              {
-                title: "What color is your dog?",
-                answers: {
-                  create: [
-                    {
-                      title: "Black",
-                      status: true,
-                    },
-                    {
-                      title: "White",
-                      status: false,
-                    },
-                    {
-                      title: "Brown",
-                      status: false,
-                    },
-                  ],
-                },
-              },
-            ],
+        create: [
+          {
+            name: "Phone",
+            description: "Phone",
+            address: "Yerevan",
+            type: "FOUND",
+            trusted: true,
+            category_id: 4,
+            created_at: new Date(2022, 5, 7),
           },
-        },
+          {
+            name: "Dog",
+            description: "Dog",
+            address: "Babajanyan",
+            type: "FOUND",
+            category_id: 6,
+            questions: {
+              create: [
+                {
+                  title: "What color is your dog?",
+                  answers: {
+                    create: [
+                      {
+                        title: "Black",
+                        status: true,
+                      },
+                      {
+                        title: "White",
+                        status: false,
+                      },
+                      {
+                        title: "Brown",
+                        status: false,
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
       },
     },
   })
@@ -657,7 +699,7 @@ async function main() {
     },
   })
 
-  messages.forEach(async (message) => {
+  for (const message of messages) {
     await prisma.message.create({
       data: {
         text: message,
@@ -700,13 +742,13 @@ async function main() {
         to_id: 5,
       },
     })
-  })
+  }
 
-  faq.forEach(async (question) => {
+  for (const question of faq) {
     await prisma.faq.create({
       data: question,
     })
-  })
+  }
 
   await prisma.favorite.createMany({
     data: [

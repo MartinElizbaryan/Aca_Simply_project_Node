@@ -1,10 +1,14 @@
 import cron from "node-cron"
-import { prisma } from "./prisma.js"
+import {
+  sendNotificationAfterPostDeletion,
+  sendNotificationBeforePostDeletion,
+} from "../helpers/cronActions.js"
 
-const { post } = prisma
-
-export const job = cron.schedule("* * */1 * * *", async () => {
+export const job = cron.schedule("*/15 * * * *", async () => {
   try {
+    await sendNotificationBeforePostDeletion()
+    await sendNotificationAfterPostDeletion()
+    console.log("Running cron")
   } catch (e) {
     console.log(e)
   }

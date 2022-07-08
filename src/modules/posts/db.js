@@ -287,7 +287,7 @@ export const createPostDB = async (data) => {
 
 export const updatePostDB = async (data, id, userId) => {
   const { deleted_images: deletedImages, images, ...restData } = data
-  console.log('Images',images);
+  console.log("Images", images)
   try {
     const a = await post.updateMany({
       where: {
@@ -396,18 +396,16 @@ export const deletePostDB = async (id, userId) => {
   }
 }
 
-export const deleteOldPostDB = async (days) => {
+export const deleteOldPostsDB = async (days) => {
   try {
-    await post.deleteMany({
+    const count = await post.deleteMany({
       where: {
         created_at: {
           lte: dateDaysBack(days),
         },
       },
     })
-    return {
-      status: 204,
-    }
+    return count
   } catch (error) {
     return {
       error,
@@ -415,18 +413,16 @@ export const deleteOldPostDB = async (days) => {
   }
 }
 
-export const findOldPostDB = async (days) => {
+export const findOldPostsDB = async (days) => {
   try {
-    await post.findMany({
+    const posts = await post.findMany({
       where: {
         created_at: {
           lte: dateDaysBack(days),
         },
       },
     })
-    return {
-      status: 204,
-    }
+    return posts
   } catch (error) {
     return {
       error,

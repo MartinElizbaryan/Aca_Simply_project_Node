@@ -5,6 +5,7 @@ import { Server } from "socket.io"
 import * as routes from "./api/index.js"
 import { internalServerErrorCreator, notFoundErrorCreator } from "./helpers/errors.js"
 import { job } from "./services/cron.js"
+import { getAllNotificationsDB, getUnreadNotificationsDB } from "./modules/notifications/db.js"
 
 const PORT = app.get("port")
 const { API_VERSIONS } = app.get("config")
@@ -18,7 +19,6 @@ app.use((req, res, next) => {
 })
 
 // handle errors
-// eslint-disable-next-line
 app.use((err, req, res, next) => {
   console.log(err)
   const error = err.status ? err : internalServerErrorCreator()
@@ -29,7 +29,8 @@ app.use((err, req, res, next) => {
 })
 
 const server = http.createServer(app)
-const io = new Server(server, {
+
+export const io = new Server(server, {
   cors: {
     origin: process.env.CLIENT_URL,
   },
@@ -67,11 +68,21 @@ io.on("connection", (socket) => {
     socket.on("messageIsSeen", () => {
       io.to(socket.id).emit("seen")
       io.to(socket.id).emit("messageCountUpdate")
-      io.to(socket.id).emit("seenMessages")
+      // io.to(socket.id).emit("seenMessages")
     })
 
     // all users
     io.emit("onlineUsers", getOnlineUsersId(users))
+  })
+
+  socket.on("updateNotification", async () => {
+    const userId = getIdBySocketId(socket.id)
+    const { notifications } = await getAllNotificationsDB(userId)
+    const unread = await getUnreadNotificationsDB(userId)
+    io.to(socket.id).emit("receiveUpdatedNotifications", {
+      notifications,
+      unread: unread._count.id,
+    })
   })
 
   socket.on("disconnect", () => {
@@ -80,28 +91,6 @@ io.on("connection", (socket) => {
     // All users expect me
     socket.broadcast.emit("onlineUsers", getOnlineUsersId())
   })
-
-  // socket.on("join", ({ room, authId }) => {
-  //   socket.join(room)
-  //   users[socket.id] = authId
-  //
-  //   const usersArray = getOnlineUsersId()
-  //
-  //   socket.broadcast.emit("onlineUsers", usersArray)
-  //   io.to(socket.id).emit("onlineUsers", usersArray)
-  //
-  //   console.log("User joined", socket.id, room)
-  // })
-  // socket.on("messageDone", ({ room }) => {
-  //   console.log(room, "room")
-  //   console.log("messageDOne")
-  //   io.sockets.emit("messageAdded")
-  // })
-
-  // socket.on("leave", (room) => {
-  //   socket.leave(room)
-  //   console.log("User left", socket.id, room)
-  // })
 })
 
 server.listen(PORT, function () {

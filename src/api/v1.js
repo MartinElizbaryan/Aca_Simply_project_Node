@@ -8,6 +8,8 @@ import { favoritesRoutes } from "../modules/favorites/routes.js"
 import { adminRoutes } from "../modules/admin/routes.js"
 import { contactRoutes } from "../modules/contact/routes.js"
 import { faqRoutes } from "../modules/faq/routes.js"
+import { notificationsRoutes } from "../modules/notifications/routes.js"
+import auth from "../middlewares/auth.middleware.js"
 
 const router = Router()
 
@@ -15,6 +17,7 @@ router.use("/users", usersRoutes)
 router.use("/auth", authRoutes)
 router.use("/posts", postsRoutes)
 router.use("/messages", messagesRoutes)
+router.use("/notifications", auth, notificationsRoutes)
 router.use("/categories", categoriesRoutes)
 router.use("/favorites", favoritesRoutes)
 router.use("/admin", adminRoutes)
