@@ -57,7 +57,7 @@ io.on("connection", (socket) => {
     socket.on("send", ({ data }) => {
       // users via socket id
       io.to(users[data.to_id]).emit("receive", data)
-      io.to(users[data.to_id]).emit("seen")
+      io.to(users[data.to_id]).emit("chatUsersUpdate")
       io.to(users[data.to_id]).emit("messageCountUpdate")
     })
 
@@ -65,10 +65,11 @@ io.on("connection", (socket) => {
       io.to(socket.id).emit("onlineUsers", getOnlineUsersId(users))
     })
 
-    socket.on("messageIsSeen", () => {
-      io.to(socket.id).emit("seen")
+    socket.on("messageIsSeen", ({ to_id: toId }) => {
+      io.to(socket.id).emit("chatUsersUpdate")
       io.to(socket.id).emit("messageCountUpdate")
-      // io.to(socket.id).emit("seenMessages")
+      io.to(users[toId]).emit("seenMessages")
+      io.to(socket.id).emit("seenMessages")
     })
 
     // all users
