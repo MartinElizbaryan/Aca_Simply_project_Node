@@ -5,7 +5,6 @@ import { Server } from "socket.io"
 import * as routes from "./api/index.js"
 import { internalServerErrorCreator, notFoundErrorCreator } from "./helpers/errors.js"
 import { job } from "./services/cron.js"
-import { getAllNotificationsDB, getUnreadNotificationsDB } from "./modules/notifications/db.js"
 
 const PORT = app.get("port")
 const { API_VERSIONS } = app.get("config")
@@ -74,16 +73,6 @@ io.on("connection", (socket) => {
 
     // all users
     io.emit("onlineUsers", getOnlineUsersId(users))
-  })
-
-  socket.on("updateNotification", async () => {
-    const userId = getIdBySocketId(socket.id)
-    const { notifications } = await getAllNotificationsDB(userId)
-    const unread = await getUnreadNotificationsDB(userId)
-    io.to(socket.id).emit("receiveUpdatedNotifications", {
-      notifications,
-      unread: unread._count.id,
-    })
   })
 
   socket.on("disconnect", () => {

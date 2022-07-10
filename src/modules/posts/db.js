@@ -378,6 +378,27 @@ export const completedPostDB = async (id, userId) => {
   }
 }
 
+export const updateDateDB = async (userId, id) => {
+  try {
+    await post.updateMany({
+      where: {
+        id: +id,
+        user_id: +userId,
+      },
+      data: {
+        created_at: new Date(),
+      },
+    })
+    return {
+      status: 204,
+    }
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
+
 export const deletePostDB = async (id, userId) => {
   try {
     await post.deleteMany({

@@ -4,6 +4,10 @@ import jwt from "jsonwebtoken"
 import { promises as fs } from "fs"
 import { transporter } from "../services/mail.js"
 import cloudinary from "../services/cloudinary.js"
+import moment from "moment"
+import { notifications } from "../constants/notifications.js"
+import { createNotificationDB, getUnreadNotificationsDB } from "../modules/notifications/db.js"
+import { io, users } from "../index.js"
 
 export const hashPassword = async (password) => {
   return await bcrypt.hash(password, 12)
@@ -133,4 +137,34 @@ export const generateRandom6DigitNumber = () => {
 
 export const dateDaysBack = (days) => {
   return new Date(Date.now() - 60 * 60 * 24 * days * 1000)
+}
+
+export const createNotificationText = (type, post) => {
+  if (type === "afterDelay") {
+    const date = moment().format("ll")
+    return notifications[type].replace("'date'", date)
+  }
+  const date = moment(post.created_at).format("lll")
+  return notifications[type].replace("name", post.name).replace("'date'", date)
+}
+
+export const createNotification = async (type, post) => {
+  const text = createNotificationText(type, post)
+  const data = {
+    text,
+    type,
+    user_id: +post.user_id,
+    post_id: +post.id,
+  }
+  const { notification } = await createNotificationDB(data)
+  return notification
+}
+
+export const sendNotification = async (notification) => {
+  const { _count } = await getUnreadNotificationsDB(notification.user_id)
+
+  io.to(users[notification.user_id]).emit("receiveNotification", {
+    notification,
+    count: _count.id,
+  })
 }
