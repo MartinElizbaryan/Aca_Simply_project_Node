@@ -53,6 +53,7 @@ model Post {
   images       Image[]
   questions    Question[]
   favorites    Favorite[]
+  notifications Notification[]
   address      String?
   views        Int        @default(0)
   type         Type       @default(LOST)
@@ -127,7 +128,9 @@ model Notification {
   user_id    Int
   user       User     @relation(fields: [user_id], references: [id])
   post_id    Int?
+  post       Post?     @relation(fields: [post_id], references: [id])
   text       String   @db.Text
+  type       String
   is_seen    Boolean  @default(false)
   created_at DateTime @default(now())
   updated_at DateTime @default(now()) @updatedAt
