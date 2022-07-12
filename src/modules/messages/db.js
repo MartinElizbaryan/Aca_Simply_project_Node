@@ -5,6 +5,9 @@ const { message } = prisma
 export const getAllMessagesDB = async (fromId, toId) => {
   try {
     const messages = await message.findMany({
+      orderBy: {
+        id: "asc",
+      },
       include: {
         from: true,
         to: true,

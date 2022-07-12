@@ -58,6 +58,7 @@ io.on("connection", (socket) => {
       // users via socket id
       io.to(users[data.to_id]).emit("receive", data)
       io.to(users[data.to_id]).emit("chatUsersUpdate")
+      io.to(socket.id).emit("chatUsersUpdate")
       io.to(users[data.to_id]).emit("messageCountUpdate")
     })
 
