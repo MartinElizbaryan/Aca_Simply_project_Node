@@ -265,7 +265,7 @@ export const createPostDB = async (data) => {
     const newPost = await prisma.post.create({
       data: {
         ...restData,
-        imagesa: {
+        images: {
           create: images,
         },
         questions: {
