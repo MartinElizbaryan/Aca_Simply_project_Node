@@ -149,13 +149,14 @@ export const createNotificationText = (type, post) => {
   return notifications[type].replace("name", post.name).replace("'date'", date)
 }
 
-export const createNotification = async (type, post) => {
-  const text = createNotificationText(type, post)
+export const createNotification = async (type, post, needToChange = true) => {
+  const text = needToChange ? createNotificationText(type, post) : notifications[type]
+
   const data = {
     text,
     type,
     user_id: +post.user_id,
-    post_id: +post.id,
+    post_id: post.id ? +post.id : post.id,
   }
   const { notification } = await createNotificationDB(data)
   return notification
