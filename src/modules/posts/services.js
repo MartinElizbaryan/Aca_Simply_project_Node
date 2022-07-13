@@ -69,12 +69,12 @@ export const getPostWithQuestionsById = async (req, res, next) => {
 }
 
 export const createPost = async (req, res, next) => {
-  console.log(req.body)
   try {
     const { images, questions } = req.body
+    // not piti sargi
     await uploadImagesToCloudinary(images)
     const questionsData = changeQuestionsDataStructure(questions)
-    console.log(questionsData)
+
     const result = await db.createPostDB({
       ...req.body,
       questions: questionsData,
@@ -88,11 +88,9 @@ export const createPost = async (req, res, next) => {
 
 export const updatePost = async (req, res, next) => {
   try {
-    console.log("body", req.body)
-    console.log("params", req.params.id)
-    console.log("auth", req.auth.id)
+    const { images } = req.body
+    await uploadImagesToCloudinary(images)
     const result = await db.updatePostDB(req.body, req.params.id, req.auth.id)
-    console.log(result)
     res.json(result)
   } catch (error) {
     console.log(error)
