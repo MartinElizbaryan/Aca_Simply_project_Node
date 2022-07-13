@@ -43,7 +43,6 @@ export const getUnreadNotificationsDB = async (authId) => {
 
 export const createNotificationDB = async (data) => {
   try {
-    console.log(data)
     const newNotification = await notification.create({
       data,
     })

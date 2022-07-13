@@ -88,8 +88,9 @@ export const sendContactMail = async ({ name, surname, email, subject, message }
 
 export const uploadImagesToCloudinary = async (images) => {
   for await (const image of images) {
-    console.log(image)
+    console.time("upload started")
     const uploadedResponse = await cloudinary.uploader.upload(image.src)
+    console.timeEnd("upload started")
     image.src = uploadedResponse.public_id
   }
 }
