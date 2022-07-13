@@ -262,10 +262,10 @@ export const createPostDB = async (data) => {
   try {
     const { images, questions, ...restData } = data
 
-    await prisma.post.create({
+    const newPost = await prisma.post.create({
       data: {
         ...restData,
-        images: {
+        imagesa: {
           create: images,
         },
         questions: {
@@ -276,6 +276,7 @@ export const createPostDB = async (data) => {
 
     return {
       status: 200,
+      post: newPost,
     }
   } catch (error) {
     console.log(error)

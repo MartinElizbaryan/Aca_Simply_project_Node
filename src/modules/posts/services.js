@@ -1,4 +1,9 @@
-import { changeQuestionsDataStructure, uploadImagesToCloudinary } from "../../helpers/common.js"
+import {
+  changeQuestionsDataStructure,
+  createNotification,
+  sendNotification,
+  uploadImagesToCloudinary,
+} from "../../helpers/common.js"
 import * as db from "./db.js"
 
 export const getAllPosts = async (req, res, next) => {
@@ -71,7 +76,16 @@ export const getPostWithQuestionsById = async (req, res, next) => {
 export const createPost = async (req, res, next) => {
   try {
     const { images, questions } = req.body
-    // not piti sargi
+    res.json({
+      status: 200,
+    })
+    const notificationBeforeCreate = await createNotification(
+      "beforePostCreate",
+      { user_id: req.auth.id },
+      false
+    )
+    sendNotification(notificationBeforeCreate)
+
     await uploadImagesToCloudinary(images)
     const questionsData = changeQuestionsDataStructure(questions)
 
@@ -80,7 +94,17 @@ export const createPost = async (req, res, next) => {
       questions: questionsData,
       user_id: req.auth.id,
     })
-    res.json(result)
+    if (result.error) {
+      const notificationOnErrorCreate = await createNotification(
+        "onErrorPostCreate",
+        { user_id: req.auth.id },
+        false
+      )
+      sendNotification(notificationOnErrorCreate)
+    }
+
+    const notificationAfterCreate = await createNotification("afterPostCreate", result.post, false)
+    sendNotification(notificationAfterCreate)
   } catch (error) {
     next(error)
   }

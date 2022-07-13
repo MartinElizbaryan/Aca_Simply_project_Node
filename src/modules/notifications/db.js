@@ -50,7 +50,7 @@ export const createNotificationDB = async (data) => {
       notification: newNotification,
     }
   } catch (error) {
-    // console.log(error)
+    console.log(error)
     return {
       error,
     }
