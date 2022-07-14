@@ -41,9 +41,21 @@ function getOnlineUsersId() {
   return Object.keys(users).map((id) => +id)
 }
 
-function getIdBySocketId(socketId) {
-  for (const userId in users) {
-    if (users[userId] === socketId) return userId
+// function getIdBySocketId(socketId) {
+//   for (const userId in users) {
+//     if (users[userId] === socketId) return userId
+//   }
+// }
+
+function sendEvent(socketArr, eventName) {
+  // socketArr.forEach((socketId) => {})
+}
+
+const addInOnlineUsers = (userId, socketId) => {
+  if (users[userId]) {
+    users[userId].push(socketId)
+  } else {
+    users[userId] = [socketId]
   }
 }
 
@@ -51,7 +63,8 @@ io.on("connection", (socket) => {
   socket.on("connect-success", ({ userId }) => {
     console.log("userId", userId)
     console.log("socket.id", socket.id)
-    users[userId] = socket.id
+
+    addInOnlineUsers(userId, socket.id)
 
     socket.on("send", ({ data }) => {
       // users via socket id
@@ -83,6 +96,43 @@ io.on("connection", (socket) => {
     socket.broadcast.emit("onlineUsers", getOnlineUsersId())
   })
 })
+
+// io.on("connection", (socket) => {
+//   socket.on("connect-success", ({ userId }) => {
+//     console.log("userId", userId)
+//     console.log("socket.id", socket.id)
+//     users[userId] = socket.id
+//
+//     socket.on("send", ({ data }) => {
+//       // users via socket id
+//       io.to(users[data.to_id]).emit("receive", data)
+//       io.to(users[data.to_id]).emit("chatUsersUpdate")
+//       io.to(socket.id).emit("chatUsersUpdate")
+//       io.to(users[data.to_id]).emit("messageCountUpdate")
+//     })
+//
+//     socket.on("getOnlineUsers", () => {
+//       io.to(socket.id).emit("onlineUsers", getOnlineUsersId(users))
+//     })
+//
+//     socket.on("messageIsSeen", ({ to_id: toId }) => {
+//       io.to(socket.id).emit("chatUsersUpdate")
+//       io.to(socket.id).emit("messageCountUpdate")
+//       io.to(users[toId]).emit("seenMessages")
+//       io.to(socket.id).emit("seenMessages")
+//     })
+//
+//     // all users
+//     io.emit("onlineUsers", getOnlineUsersId(users))
+//   })
+//
+//   socket.on("disconnect", () => {
+//     console.log("logout")
+//     delete users[getIdBySocketId(socket.id)]
+//     // All users expect me
+//     socket.broadcast.emit("onlineUsers", getOnlineUsersId())
+//   })
+// })
 
 server.listen(PORT, function () {
   console.log(`\n🚀 Server ready at: http://localhost:${this.address().port}\n`)
