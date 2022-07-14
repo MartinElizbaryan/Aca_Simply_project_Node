@@ -125,7 +125,7 @@ export const updateVerifiedDB = async (link) => {
 }
 export const deleteTokenWithoutYourDB = async ({ refreshToken, id }) => {
   try {
-    await token.delete({
+    await token.deleteMany({
       where: {
         user_id: id,
         NOT: {
@@ -137,6 +137,7 @@ export const deleteTokenWithoutYourDB = async ({ refreshToken, id }) => {
       status: 204,
     }
   } catch (error) {
+    console.log(error)
     return {
       error,
     }
