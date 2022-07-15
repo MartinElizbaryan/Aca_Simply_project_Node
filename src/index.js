@@ -6,6 +6,7 @@ import { job } from "./services/cron.js"
 import {
   addInOnlineUsers,
   deleteSocketId,
+  getIdViaSocketId,
   getOnlineUsersId,
   sendEventViaSocketId,
 } from "./helpers/socketHelpers.js"
@@ -39,21 +40,6 @@ export const io = new Server(server, {
 })
 
 export const users = {}
-
-const getOnlineUsersId = () => {
-  return Object.keys(users).map((id) => +id)
-}
-
-const getIdViaSocketId = (socketId) => {
-  return Object.keys(users).find((id) => {
-    return users[id].includes(socketId)
-  })
-}
-
-export const sendEventViaSocketId = (socketId, event, data = {}) => {
-  const userId = getIdViaSocketId(socketId)
-  sendEventViaUserId(userId, event, data)
-}
 
 export const sendEventViaSocketIdExpectCurrent = (socketId, event, data = {}) => {
   const userId = getIdViaSocketId(socketId)
