@@ -55,6 +55,7 @@ io.on("connection", (socket) => {
       sendEventViaUserId(data.to_id, "playNotificationSound")
       sendEventViaUserId(data.to_id, "chatUsersUpdate")
       sendEventViaUserId(data.to_id, "messageCountUpdate")
+      sendEventViaSocketId(socket.id, "chatUsersUpdate")
     })
 
     socket.on("getOnlineUsers", () => {
