@@ -7,7 +7,7 @@ import cloudinary from "../services/cloudinary.js"
 import moment from "moment"
 import { notifications } from "../constants/notifications.js"
 import { createNotificationDB, getUnreadNotificationsDB } from "../modules/notifications/db.js"
-import { io, users } from "../index.js"
+import { sendEventViaUserId } from "../index.js"
 
 export const hashPassword = async (password) => {
   return await bcrypt.hash(password, 12)
@@ -164,8 +164,7 @@ export const createNotification = async (type, post, needToChange = true) => {
 
 export const sendNotification = async (notification) => {
   const { _count } = await getUnreadNotificationsDB(notification.user_id)
-
-  io.to(users[notification.user_id]).emit("receiveNotification", {
+  sendEventViaUserId(notification.user_id, "receiveNotification", {
     notification,
     count: _count.id,
   })
