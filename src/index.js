@@ -40,6 +40,30 @@ export const io = new Server(server, {
 
 export const users = {}
 
+const getOnlineUsersId = () => {
+  return Object.keys(users).map((id) => +id)
+}
+
+const getIdViaSocketId = (socketId) => {
+  return Object.keys(users).find((id) => {
+    return users[id].includes(socketId)
+  })
+}
+
+export const sendEventViaSocketId = (socketId, event, data = {}) => {
+  const userId = getIdViaSocketId(socketId)
+  sendEventViaUserId(userId, event, data)
+}
+
+export const sendEventViaSocketIdExpectCurrent = (socketId, event, data = {}) => {
+  const userId = getIdViaSocketId(socketId)
+  const socketIdsExpectCurrent = users[userId].filter((sId) => {
+    return sId !== socketId
+  })
+  // console.log(socketIdsExpectCurrent, event)
+  io.to(socketIdsExpectCurrent).emit(event, data)
+}
+
 export const sendEventViaUserId = (userId, event, data = {}) => {
   users[userId]?.forEach((sId) => {
     io.to(sId).emit(event, data)
@@ -59,7 +83,7 @@ io.on("connection", (socket) => {
     })
 
     socket.on("getOnlineUsers", () => {
-      sendEventViaSocketId(socket.id, "onlineUsers", getOnlineUsersId(users))
+      sendEventViaSocketId(socket.id, "onlineUsers", getOnlineUsersId())
     })
 
     socket.on("messageIsSeen", ({ to_id: toId }) => {
@@ -70,13 +94,13 @@ io.on("connection", (socket) => {
     })
 
     // all users
-    io.emit("onlineUsers", getOnlineUsersId(users))
+    io.emit("onlineUsers", getOnlineUsersId())
   })
 
   socket.on("disconnect", () => {
     deleteSocketId(socket.id)
     // All users expect me
-    socket.broadcast.emit("onlineUsers", getOnlineUsersId(users))
+    socket.broadcast.emit("onlineUsers", getOnlineUsersId())
   })
 })
 
