@@ -18,7 +18,7 @@ export const sendEventViaSocketId = (socketId, event, data = {}) => {
 export const deleteSocketId = (socketId) => {
   Object.keys(users).forEach((id) => {
     users[id].forEach((idSocket, socketIndex) => {
-      if (+idSocket === socketId) {
+      if (idSocket === socketId) {
         users[id].splice(socketIndex, 1)
       }
     })
