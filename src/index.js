@@ -95,7 +95,7 @@ io.on("connection", (socket) => {
       sendEventViaUserId(data.to_id, "receive", data)
       sendEventViaUserId(data.to_id, "chatUsersUpdate")
       sendEventViaUserId(data.to_id, "messageCountUpdate")
-      sendEventViaSocketId(socket.id, "messageCountUpdate")
+      // sendEventViaSocketId(socket.id, "messageCountUpdate")
     })
 
     socket.on("getOnlineUsers", () => {
