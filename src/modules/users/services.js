@@ -1,6 +1,6 @@
 import * as db from "./db.js"
-import { comparePassword, hashPassword } from "../../helpers/common.js"
 import { badRequestErrorCreator } from "../../helpers/errors.js"
+import { comparePassword, hashPassword } from "../../helpers/authHelpers.js"
 
 export const updateUser = async (req, res, next) => {
   try {

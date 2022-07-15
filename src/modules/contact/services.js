@@ -1,4 +1,4 @@
-import { sendContactMail } from "../../helpers/common.js"
+import { sendContactMail } from "../../helpers/mailSenders.js"
 
 export const sendMail = async (req, res, next) => {
   try {
