@@ -53,6 +53,15 @@ export const sendEventViaSocketId = (socketId, event, data = {}) => {
   sendEventViaUserId(userId, event, data)
 }
 
+export const sendEventViaSocketIdExpectCurrent = (socketId, event, data = {}) => {
+  const userId = getIdViaSocketId(socketId)
+  const socketIdsExpectCurrent = users[userId].filter((sId) => {
+    return sId !== socketId
+  })
+  // console.log(socketIdsExpectCurrent, event)
+  io.to(socketIdsExpectCurrent).emit(event, data)
+}
+
 export const sendEventViaUserId = (userId, event, data = {}) => {
   users[userId]?.forEach((sId) => {
     io.to(sId).emit(event, data)

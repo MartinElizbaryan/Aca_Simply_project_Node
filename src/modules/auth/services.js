@@ -9,6 +9,7 @@ import {
 } from "../../helpers/common.js"
 import { badRequestErrorCreator, notFoundErrorCreator } from "../../helpers/errors.js"
 import * as db from "./db.js"
+import { sendEventViaSocketIdExpectCurrent } from "../../index.js"
 
 export const signUp = async (req, res, next) => {
   try {
@@ -94,11 +95,14 @@ export const refreshToken = async (req, res, next) => {
 }
 
 export const deleteRefreshToken = async (req, res, next) => {
+  console.log("req.body", req.body)
   try {
     const { refreshToken } = req.cookies
     const { id } = verifyToken(refreshToken)
+    const { socketId } = req.body
 
     const result = await db.deleteTokenWithoutYourDB({ refreshToken, id })
+    sendEventViaSocketIdExpectCurrent(socketId, "signOut")
 
     res.json(result)
   } catch (error) {
