@@ -46,7 +46,6 @@ export const sendEventViaSocketIdExpectCurrent = (socketId, event, data = {}) =>
   const socketIdsExpectCurrent = users[userId].filter((sId) => {
     return sId !== socketId
   })
-  // console.log(socketIdsExpectCurrent, event)
   io.to(socketIdsExpectCurrent).emit(event, data)
 }
 
