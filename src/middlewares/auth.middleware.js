@@ -6,23 +6,25 @@ export default async (req, res, next) => {
     if (req.auth) next()
     else {
       const refreshTokenFromCookies = req.cookies.refreshToken
+      console.log("refreshTokenFromCookies", refreshTokenFromCookies)
       if (!refreshTokenFromCookies) throw new Error("Unauthorized")
       const payload = verifyToken(refreshTokenFromCookies)
+      console.log("payload", payload)
       if (!payload) throw new Error("Unauthorized")
       const { id, is_admin } = payload
       const { accessToken, refreshToken, error } = await refreshTokens(refreshTokenFromCookies, {
         id,
         is_admin,
       })
+      console.log(error)
       if (error) throw new Error("Unauthorized")
       res.cookie("refreshToken", refreshToken, {
         maxAge: 60 * 60 * 24 * 30 * 1000,
         httpOnly: true,
       })
-      res.cookie("accessToken", accessToken, {
-        maxAge: 60 * 2 * 1000,
-      })
+      res.cookie("accessToken", accessToken)
       req.auth = { id, is_admin }
+      console.log("works")
       next()
     }
   } catch (error) {
