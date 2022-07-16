@@ -1,5 +1,6 @@
 import * as db from "./db.js"
-import { createManyMessageDB } from "./db.js";
+import { createManyMessageDB } from "./db.js"
+import { eventHandleSend } from "../../index.js"
 
 export const getAllMessages = async (req, res, next) => {
   try {
@@ -54,8 +55,15 @@ export const sendAnswers = async (req, res, next) => {
       text: `Post name: ${req.body.post_title}`,
     })
     const result = await createManyMessageDB(data)
-    res.json(result)
 
+    console.log(result.messages)
+    data.forEach((q) => {
+      q.id = Math.random()
+      eventHandleSend(q)
+    })
+
+    console.log(data)
+    res.json(result)
   } catch (error) {
     console.log(error)
     next(error)

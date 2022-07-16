@@ -55,16 +55,21 @@ export const sendEventViaUserId = (userId, event, data = {}) => {
   })
 }
 
+export const eventHandleSend = (data) => {
+  console.log("data", data)
+  sendEventViaUserId(data.to_id, "receive", data)
+  sendEventViaUserId(data.to_id, "playNotificationSound")
+  sendEventViaUserId(data.to_id, "chatUsersUpdate")
+  sendEventViaUserId(data.to_id, "messageCountUpdate")
+  sendEventViaUserId(data.from_id, "chatUsersUpdate")
+}
+
 io.on("connection", (socket) => {
   socket.on("connect-success", ({ userId }) => {
     addInOnlineUsers(userId, socket.id)
 
     socket.on("send", ({ data }) => {
-      sendEventViaUserId(data.to_id, "receive", data)
-      sendEventViaUserId(data.to_id, "playNotificationSound")
-      sendEventViaUserId(data.to_id, "chatUsersUpdate")
-      sendEventViaUserId(data.to_id, "messageCountUpdate")
-      sendEventViaSocketId(socket.id, "chatUsersUpdate")
+      eventHandleSend(data)
     })
 
     socket.on("getOnlineUsers", () => {
