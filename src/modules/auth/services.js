@@ -61,36 +61,7 @@ export const signOut = async (req, res, next) => {
   }
 }
 
-export const refreshToken = async (req, res, next) => {
-  try {
-    const refreshTokenFromCookies = req.cookies.refreshToken
-    const { id, is_admin } = verifyToken(refreshTokenFromCookies)
-    await db.deleteTokenDB(refreshTokenFromCookies)
-
-    const payload = {
-      id,
-      is_admin,
-    }
-    const accessToken = generateToken(payload, "access")
-    const refreshToken = generateToken(payload, "refresh")
-    const { error } = await db.createTokenDB(id, refreshToken)
-    if (error) res.json(error)
-
-    res.cookie("refreshToken", refreshToken, {
-      maxAge: 60 * 60 * 24 * 30 * 1000,
-      httpOnly: true,
-    })
-    res.json({
-      auth: true,
-      accessToken,
-    })
-  } catch (error) {
-    next(error)
-  }
-}
-
 export const deleteRefreshToken = async (req, res, next) => {
-  console.log("req.body", req.body)
   try {
     const { refreshToken } = req.cookies
     const { id } = verifyToken(refreshToken)

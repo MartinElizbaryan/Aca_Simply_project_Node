@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken"
+import * as db from "../modules/auth/db.js"
 
 export const hashPassword = async (password) => {
   return await bcrypt.hash(password, 12)
@@ -10,7 +11,7 @@ export const comparePassword = async (password, hash) => {
 }
 
 export const generateToken = (payload, type) => {
-  const expiresIn = type === "access" ? 60 * 60 : 60 * 60 * 24 * 30
+  const expiresIn = type === "access" ? 60 * 1 : 60 * 60 * 24 * 30
   const token = jwt.sign(payload, process.env.JWT_PRIVATE_KEY, {
     expiresIn,
   })
@@ -48,5 +49,22 @@ export const verifyUser = async (password, user) => {
   }
   return {
     auth: true,
+  }
+}
+
+export const refreshTokens = async (token, payload) => {
+  try {
+    const { id } = payload
+    await db.deleteTokenDB(token)
+    const accessToken = generateToken(payload, "access")
+    const refreshToken = generateToken(payload, "refresh")
+    const { error } = await db.createTokenDB(id, refreshToken)
+    if (error) return { error }
+    return {
+      accessToken: accessToken,
+      refreshToken: refreshToken,
+    }
+  } catch (error) {
+    return { error }
   }
 }
