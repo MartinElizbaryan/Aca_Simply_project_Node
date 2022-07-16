@@ -1,5 +1,6 @@
 import * as db from "./db.js"
-import { sendEventViaUserId } from "../../index.js"
+import { createManyMessageDB } from "./db.js"
+import { eventHandleSend } from "../../index.js"
 
 export const getAllMessages = async (req, res, next) => {
   try {
@@ -53,12 +54,16 @@ export const sendAnswers = async (req, res, next) => {
       to_id: +req.body.user_id,
       text: `Post name: ${req.body.post_title}`,
     })
-    // const result = await createManyMessageDB(data)
+    const result = await createManyMessageDB(data)
+
+    console.log(result.messages)
     data.forEach((q) => {
-      sendEventViaUserId(+req.body.user_id, "receive", q)
+      q.id = Math.random()
+      eventHandleSend(q)
     })
+
     console.log(data)
-    res.json("result")
+    res.json(result)
   } catch (error) {
     console.log(error)
     next(error)
