@@ -1,5 +1,5 @@
 import * as db from "./db.js"
-import { createManyMessageDB } from "./db.js";
+import { sendEventViaUserId } from "../../index.js"
 
 export const getAllMessages = async (req, res, next) => {
   try {
@@ -53,9 +53,12 @@ export const sendAnswers = async (req, res, next) => {
       to_id: +req.body.user_id,
       text: `Post name: ${req.body.post_title}`,
     })
-    const result = await createManyMessageDB(data)
-    res.json(result)
-
+    // const result = await createManyMessageDB(data)
+    data.forEach((q) => {
+      sendEventViaUserId(+req.body.user_id, "receive", q)
+    })
+    console.log(data)
+    res.json("result")
   } catch (error) {
     console.log(error)
     next(error)
