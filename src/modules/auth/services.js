@@ -1,13 +1,8 @@
 import path from "path"
-import {
-  generateRandom6DigitNumber,
-  generateToken,
-  hashPassword,
-  sendResetMail,
-  verifyToken,
-  verifyUser,
-} from "../../helpers/common.js"
+import { sendResetMail } from "../../helpers/mailSenders.js"
+import { generateRandom6DigitNumber } from "../../helpers/common.js"
 import { badRequestErrorCreator, notFoundErrorCreator } from "../../helpers/errors.js"
+import { generateToken, hashPassword, verifyToken, verifyUser } from "../../helpers/authHelpers.js"
 import * as db from "./db.js"
 import { sendEventViaSocketIdExpectCurrent } from "../../index.js"
 

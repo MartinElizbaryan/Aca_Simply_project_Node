@@ -9,12 +9,16 @@ export const sendNotificationBeforePostDeletion = async () => {
   }
 }
 
-export const sendNotificationAfterPostDeletion = async () => {
+export const deleteOldPostsAndSendNotification = async () => {
   const posts30DaysOld = await findOldPostsDB(30)
 
   // await deleteOldPostsDB(30)
+
   for (const post of posts30DaysOld) {
-    const notification = await createNotification("afterPostDeletion", post)
+    const notification = await createNotification("afterPostDeletion", {
+      ...post,
+      post_id: undefined,
+    })
     await sendNotification(notification)
   }
 }

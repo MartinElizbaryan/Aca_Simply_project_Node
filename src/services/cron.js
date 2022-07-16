@@ -4,7 +4,7 @@ import { sendNotificationBeforePostDeletion } from "../helpers/cronActions.js"
 export const job = cron.schedule("*/15 * * * *", async () => {
   try {
     await sendNotificationBeforePostDeletion()
-    // await sendNotificationAfterPostDeletion()
+    // await deleteOldPostsAndSendNotification()
     console.log("Running cron")
   } catch (e) {
     console.log(e)
