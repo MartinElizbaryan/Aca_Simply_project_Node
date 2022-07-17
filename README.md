@@ -2,7 +2,7 @@
 
 ***
 
-![logo](https://res.cloudinary.com/lost-found/image/upload/v1658011686/public/logo_d0vdx1.png)
+![logo](https://res.cloudinary.com/lost-found/image/upload/v1655918538/public/lost1_vtxvkz.png)
 
 ## Description
 
