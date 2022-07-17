@@ -55,7 +55,11 @@ export const verifyUser = async (password, user) => {
 export const refreshTokens = async (token, payload) => {
   try {
     const { id } = payload
-    await db.deleteTokenDB(token)
+    const result = await db.deleteTokenDB(token)
+    if (result.code === "P2025")
+      return {
+        error,
+      }
     const accessToken = generateToken(payload, "access")
     const refreshToken = generateToken(payload, "refresh")
     const { error } = await db.createTokenDB(id, refreshToken)

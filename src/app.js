@@ -1,7 +1,7 @@
 import fs from "fs"
 import path from "path"
 import cors from "cors"
-import logger from "morgan"
+// import logger from "morgan"
 import express from "express"
 import cookieParser from "cookie-parser"
 import { verifyToken } from "./helpers/authHelpers.js"
@@ -32,7 +32,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(logger("dev" /*, { skip: (req, res) => res.statusCode < 400 }*/))
+// app.use(logger("dev" /*, { skip: (req, res) => res.statusCode < 400 }*/))
 
 app.set("port", process.env.PORT)
 app.set("env", env)
