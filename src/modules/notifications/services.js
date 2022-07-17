@@ -37,6 +37,21 @@ export const updateNotificationSeen = async (req, res, next) => {
   }
 }
 
+export const updateAllNotificationsSeen = async (req, res, next) => {
+  try {
+    const { status } = await db.updateAllNotificationsSeenDB(req.auth.id)
+    const { notifications } = await db.getAllNotificationsDB(req.auth.id)
+    const { _count } = await db.getUnreadNotificationsDB(req.auth.id)
+    res.json({
+      status,
+      notifications,
+      count: _count.id,
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 export const deleteNotification = async (req, res, next) => {
   try {
     const { status } = await db.deleteNotificationDB(req.auth.id, req.params.id)

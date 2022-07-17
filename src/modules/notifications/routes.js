@@ -10,6 +10,7 @@ const router = Router()
 
 router.get("/", service.getAllNotifications)
 router.get("/unread", service.getUnreadNotifications)
+router.patch("/mark-all", auth, service.updateAllNotificationsSeen)
 router.patch("/:id", validate(updateNotificationSeenSchema), service.updateNotificationSeen)
 router.patch("/:id/delay", auth, validate(delayDeletionSchema), service.delayPostDelete)
 router.delete("/:id", validate(deleteNotificationSchema), service.deleteNotification)

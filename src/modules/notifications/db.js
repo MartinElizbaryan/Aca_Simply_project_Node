@@ -79,6 +79,26 @@ export const updateNotificationIsSeenDB = async (authId, id) => {
   }
 }
 
+export const updateAllNotificationsSeenDB = async (authId) => {
+  try {
+    await notification.updateMany({
+      where: {
+        user_id: +authId,
+      },
+      data: {
+        is_seen: true,
+      },
+    })
+    return {
+      status: 204,
+    }
+  } catch (error) {
+    return {
+      error,
+    }
+  }
+}
+
 export const deleteNotificationDB = async (authId, id) => {
   try {
     await notification.deleteMany({
