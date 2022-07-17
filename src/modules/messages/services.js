@@ -1,6 +1,7 @@
 import * as db from "./db.js"
 import { createManyMessageDB } from "./db.js"
 import { eventHandleSend } from "../../index.js"
+import { getAnswerByIdDB } from "../answers/db.js"
 
 export const getAllMessages = async (req, res, next) => {
   try {
@@ -39,21 +40,34 @@ export const unreadMessage = async (req, res, next) => {
 }
 export const sendAnswers = async (req, res, next) => {
   try {
-    const data = req.body.questions.map((question) => {
-      const answer = question.answers.find((item) => {
-        return item.checked
+    const data = await Promise.all(
+      req.body.questions.map(async (question) => {
+        const answer = question.answers.find((item) => {
+          return item.checked
+        })
+
+        const answerFromDb = await getAnswerByIdDB(answer.id)
+        console.log(answerFromDb)
+
+        return {
+          from_id: +req.auth.id,
+          to_id: +req.body.user_id,
+          text: `${question.title} - ${answer.title} ${
+            answerFromDb.status ? "Right ANSWER" : "WRONG ANSWER"
+          }`,
+        }
       })
-      return {
-        from_id: +req.auth.id,
-        to_id: +req.body.user_id,
-        text: `${question.title} - ${answer.title}`,
-      }
-    })
+    )
     data.unshift({
       from_id: +req.auth.id,
       to_id: +req.body.user_id,
       text: `Post name: ${req.body.post_title}`,
     })
+
+    console.log("--------------------------------")
+    console.log("data", data)
+    console.log("--------------------------------")
+
     const result = await createManyMessageDB(data)
 
     data.forEach((q) => {
