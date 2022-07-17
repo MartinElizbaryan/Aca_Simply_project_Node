@@ -11,6 +11,7 @@ import {
   sendEventViaSocketId,
 } from "./helpers/socketHelpers.js"
 import { internalServerErrorCreator, notFoundErrorCreator } from "./helpers/errors.js"
+import { showDevelopersNames } from "./helpers/consoleHelpers.js"
 
 const PORT = app.get("port")
 const { API_VERSIONS } = app.get("config")
@@ -95,6 +96,7 @@ io.on("connection", (socket) => {
 })
 
 server.listen(PORT, function () {
+  showDevelopersNames()
   console.log(`\n🚀 Server ready at: http://localhost:${this.address().port}\n`)
 })
 
