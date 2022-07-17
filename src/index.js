@@ -11,7 +11,7 @@ import {
   sendEventViaSocketId,
 } from "./helpers/socketHelpers.js"
 import { internalServerErrorCreator, notFoundErrorCreator } from "./helpers/errors.js"
-import chalk from "chalk"
+import { showDevelopersNames } from "./helpers/consoleHelpers.js"
 
 const PORT = app.get("port")
 const { API_VERSIONS } = app.get("config")
@@ -96,18 +96,7 @@ io.on("connection", (socket) => {
 })
 
 server.listen(PORT, function () {
-  console.log(
-    `\n` +
-      chalk.bgWhite.black.bold.italic("Development Team:") +
-      `\n` +
-      chalk.greenBright.bold("Martin Elizbaryan") +
-      `\n` +
-      chalk.hex("#e1da0d").bold("Ani Avetisyan") +
-      `\n` +
-      chalk.magenta("Anahit Sargsyan") +
-      `\n` +
-      chalk.hex("#e1550d").bold("Artyom Harutunyan")
-  )
+  showDevelopersNames()
   console.log(`\n🚀 Server ready at: http://localhost:${this.address().port}\n`)
 })
 
