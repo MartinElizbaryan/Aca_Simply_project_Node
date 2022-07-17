@@ -32,4 +32,5 @@ export const addInOnlineUsers = (userId, socketId) => {
   } else {
     users[userId] = [socketId]
   }
+  users[userId] = [...new Set(users[userId])]
 }

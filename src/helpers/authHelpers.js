@@ -56,7 +56,7 @@ export const refreshTokens = async (token, payload) => {
   try {
     const { id } = payload
     const result = await db.deleteTokenDB(token)
-    if (result.code === "P2025")
+    if (result?.error?.code === "P2025")
       return {
         error,
       }

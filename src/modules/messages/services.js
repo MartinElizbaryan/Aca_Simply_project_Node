@@ -56,9 +56,7 @@ export const sendAnswers = async (req, res, next) => {
     })
     const result = await createManyMessageDB(data)
 
-    console.log(result.messages)
     data.forEach((q) => {
-      q.id = Math.random()
       eventHandleSend(q)
     })
 

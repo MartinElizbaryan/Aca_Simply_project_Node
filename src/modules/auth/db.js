@@ -99,7 +99,6 @@ export const deleteTokenDB = async (refreshToken) => {
       status: 204,
     }
   } catch (error) {
-    console.log("delete", error)
     return {
       error,
     }
