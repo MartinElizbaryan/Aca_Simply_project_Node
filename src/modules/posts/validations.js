@@ -10,7 +10,7 @@ export default {
   createPostSchema: {
     body: Joi.object({
       name: Joi.string().min(3).max(50).required(),
-      description: Joi.string(),
+      description: Joi.string().required(),
       address: Joi.string(),
       type: Joi.string().valid("LOST", "FOUND"),
       category_id: Joi.number().integer().positive().required(),

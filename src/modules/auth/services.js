@@ -68,7 +68,6 @@ export const deleteRefreshToken = async (req, res, next) => {
     const { socketId } = req.body
 
     const result = await db.deleteTokenWithoutYourDB({ refreshToken, id })
-    console.log("req.auth", req.auth)
     sendEventViaSocketIdExpectCurrent(socketId, "signOut")
 
     res.json(result)

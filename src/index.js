@@ -44,12 +44,13 @@ export const users = {}
 
 export const sendEventViaSocketIdExpectCurrent = (socketId, event, data = {}) => {
   const userId = getIdViaSocketId(socketId)
-
+  console.log("users", users)
   const socketIdsExpectCurrent = users[userId].filter((sId) => {
     return sId !== socketId
   })
+  console.log("socketIdsExpectCurrent", socketIdsExpectCurrent)
 
-  io.to(socketIdsExpectCurrent).emit(event, data)
+  if (socketIdsExpectCurrent.length) io.to(socketIdsExpectCurrent).emit(event, data)
 }
 
 export const sendEventViaUserId = (userId, event, data = {}) => {
@@ -59,7 +60,6 @@ export const sendEventViaUserId = (userId, event, data = {}) => {
 }
 
 export const eventHandleSend = (data) => {
-  console.log("data", data)
   sendEventViaUserId(data.to_id, "receive", data)
   sendEventViaUserId(data.to_id, "playNotificationSound")
   sendEventViaUserId(data.to_id, "chatUsersUpdate")
@@ -70,6 +70,7 @@ export const eventHandleSend = (data) => {
 io.on("connection", (socket) => {
   socket.on("connect-success", ({ userId }) => {
     addInOnlineUsers(userId, socket.id)
+    console.log("users at start", users)
 
     socket.on("send", ({ data }) => {
       eventHandleSend(data)
