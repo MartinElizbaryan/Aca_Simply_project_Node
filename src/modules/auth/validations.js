@@ -6,12 +6,12 @@ export default {
       name: Joi.string()
         .min(3)
         .max(50)
-        .pattern(/^[a-zA-Zա-ևԱ-Ֆ-]+$/)
+        .pattern(/^[a-zA-Zա-ևԱ-Ֆ- ]+$/)
         .required(),
       surname: Joi.string()
         .min(3)
         .max(50)
-        .pattern(/^[a-zA-Zա-ևԱ-Ֆ-]+$/)
+        .pattern(/^[a-zA-Zա-ևԱ-Ֆ- ]+$/)
         .required(),
       email: Joi.string().email().required(),
       password: Joi.string().min(8).max(15).alphanum().required(),

@@ -13,8 +13,11 @@ export const sendContactMail = async ({ name, surname, email, subject, message }
       subject,
       text: `From:  ${email} \n\n${message}`,
     })
+    return { status: 204 }
   } catch (error) {
-    console.log(error)
+    return {
+      error,
+    }
   }
 }
 
