@@ -22,6 +22,9 @@ export const getAllPostsDB = async ({ skip, take, type, categories, userId, sear
         user: true,
         category: true,
         images: true,
+        views: true,
+        trusted: true,
+        completed: true,
       },
     }
 
