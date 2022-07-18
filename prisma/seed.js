@@ -80,209 +80,92 @@ async function main() {
       name: "Others",
     },
   ]
-  const createPosts = {
+  const createPostsType1 = {
     create: [
       {
+        name: "Samsung S21",
+        description: "Samsung S21 with a bit issues",
+        address: "Yerevan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "What is your phone's model?",
+              answers: {
+                create: [
+                  {
+                    title: "Iphone",
+                    status: false,
+                  },
+                  {
+                    title: "Samsung",
+                    status: true,
+                  },
+                  {
+                    title: "Xiaomi",
+                    status: false,
+                  },
+                ],
+              },
+            },
+            {
+              title: "What color is your phone?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: true,
+                  },
+                  {
+                    title: "Red",
+                    status: false,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
         name: "Bag",
-        description: "Bag",
-        address: "Abovyan",
-        type: "FOUND",
-        category_id: 1,
-        trusted: true,
-        created_at: new Date(2022, 5, 7),
-      },
-      {
-        name: "Phone",
-        description: "Phone",
+        description: "Bag with my wallet",
         address: "Yerevan",
-        type: "FOUND",
-        trusted: true,
-        category_id: 8,
-        questions: {
-          create: [
-            {
-              title: "What is your phone's model?",
-              answers: {
-                create: [
-                  {
-                    title: "Iphone",
-                    status: false,
-                  },
-                  {
-                    title: "Samsung",
-                    status: true,
-                  },
-                  {
-                    title: "Xiaomi",
-                    status: false,
-                  },
-                ],
-              },
-            },
-            {
-              title: "What color is your phone?",
-              answers: {
-                create: [
-                  {
-                    title: "Black",
-                    status: false,
-                  },
-                  {
-                    title: "White",
-                    status: false,
-                  },
-                  {
-                    title: "Red",
-                    status: true,
-                  },
-                  {
-                    title: "Blue",
-                    status: false,
-                  },
-                ],
-              },
-            },
-          ],
-        },
-      },
-      {
-        name: "Phone",
-        description: "Phone",
-        address: "Yerevan",
-        type: "FOUND",
-        trusted: true,
-        category_id: 8,
-        questions: {
-          create: [
-            {
-              title: "What is your phone's model?",
-              answers: {
-                create: [
-                  {
-                    title: "Iphone",
-                    status: false,
-                  },
-                  {
-                    title: "Samsung",
-                    status: true,
-                  },
-                  {
-                    title: "Xiaomi",
-                    status: false,
-                  },
-                ],
-              },
-            },
-            {
-              title: "What color is your phone?",
-              answers: {
-                create: [
-                  {
-                    title: "Black",
-                    status: false,
-                  },
-                  {
-                    title: "White",
-                    status: false,
-                  },
-                  {
-                    title: "Red",
-                    status: true,
-                  },
-                  {
-                    title: "Blue",
-                    status: false,
-                  },
-                ],
-              },
-            },
-          ],
-        },
-      },
-      {
-        name: "Phone",
-        description: "Phone",
-        address: "Yerevan",
-        type: "FOUND",
-        trusted: true,
-        category_id: 9,
-        questions: {
-          create: [
-            {
-              title: "What is your phone's model?",
-              answers: {
-                create: [
-                  {
-                    title: "Iphone",
-                    status: false,
-                  },
-                  {
-                    title: "Samsung",
-                    status: true,
-                  },
-                  {
-                    title: "Xiaomi",
-                    status: false,
-                  },
-                ],
-              },
-            },
-            {
-              title: "What color is your phone?",
-              answers: {
-                create: [
-                  {
-                    title: "Black",
-                    status: false,
-                  },
-                  {
-                    title: "White",
-                    status: false,
-                  },
-                  {
-                    title: "Red",
-                    status: true,
-                  },
-                  {
-                    title: "Blue",
-                    status: false,
-                  },
-                ],
-              },
-            },
-          ],
-        },
-      },
-      {
-        name: "Phone",
-        description: "Phone",
-        address: "Yerevan",
-        type: "FOUND",
+        type: "LOST",
         trusted: true,
         category_id: 1,
         questions: {
           create: [
             {
-              title: "What is your phone's model?",
+              title: "Size of your bag",
               answers: {
                 create: [
                   {
-                    title: "Iphone",
+                    title: "Big",
                     status: false,
                   },
                   {
-                    title: "Samsung",
+                    title: "Medium",
                     status: true,
                   },
                   {
-                    title: "Xiaomi",
+                    title: "Small",
                     status: false,
                   },
                 ],
               },
             },
             {
-              title: "What color is your phone?",
+              title: "What color is your bag?",
               answers: {
                 create: [
                   {
@@ -308,120 +191,89 @@ async function main() {
         },
       },
       {
-        name: "Phone",
-        description: "Phone",
-        address: "Yerevan",
-        type: "FOUND",
-        trusted: true,
-        category_id: 2,
-        questions: {
-          create: [
-            {
-              title: "What is your phone's model?",
-              answers: {
-                create: [
-                  {
-                    title: "Iphone",
-                    status: false,
-                  },
-                  {
-                    title: "Samsung",
-                    status: true,
-                  },
-                  {
-                    title: "Xiaomi",
-                    status: false,
-                  },
-                ],
-              },
-            },
-            {
-              title: "What color is your phone?",
-              answers: {
-                create: [
-                  {
-                    title: "Black",
-                    status: false,
-                  },
-                  {
-                    title: "White",
-                    status: false,
-                  },
-                  {
-                    title: "Red",
-                    status: true,
-                  },
-                  {
-                    title: "Blue",
-                    status: false,
-                  },
-                ],
-              },
-            },
-          ],
-        },
-      },
-      {
-        name: "Phone",
-        description: "Phone",
-        address: "Yerevan",
-        type: "FOUND",
-        trusted: true,
-        category_id: 4,
-        questions: {
-          create: [
-            {
-              title: "What is your phone's model?",
-              answers: {
-                create: [
-                  {
-                    title: "Iphone",
-                    status: false,
-                  },
-                  {
-                    title: "Samsung",
-                    status: true,
-                  },
-                  {
-                    title: "Xiaomi",
-                    status: false,
-                  },
-                ],
-              },
-            },
-            {
-              title: "What color is your phone?",
-              answers: {
-                create: [
-                  {
-                    title: "Black",
-                    status: false,
-                  },
-                  {
-                    title: "White",
-                    status: false,
-                  },
-                  {
-                    title: "Red",
-                    status: true,
-                  },
-                  {
-                    title: "Blue",
-                    status: false,
-                  },
-                ],
-              },
-            },
-          ],
-        },
-      },
-      {
-        name: "Phone",
-        description: "Phone",
+        name: "Dog",
+        description: "Haski",
         address: "Yerevan",
         type: "LOST",
         trusted: true,
-        category_id: 8,
+        category_id: 3,
+        questions: {
+          create: [
+            {
+              title: "What color is your Dog?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "Brown",
+                    status: true,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Headphones",
+        description: "Headphones of my Samsung S10",
+        address: "Mergelyan",
+        type: "LOST",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "Do you Have issues on it",
+              answers: {
+                create: [
+                  {
+                    title: "Yes",
+                    status: false,
+                  },
+                  {
+                    title: "No",
+                    status: true,
+                  },
+                ],
+              },
+            },
+            {
+              title: "What color is your headphones?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: false,
+                  },
+                  {
+                    title: "Red",
+                    status: true,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Samsung S21",
+        description: "Samsung S21 with a bit issues",
+        address: "Yerevan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 5,
         questions: {
           create: [
             {
@@ -453,6 +305,60 @@ async function main() {
                   },
                   {
                     title: "White",
+                    status: true,
+                  },
+                  {
+                    title: "Red",
+                    status: false,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Bag",
+        description: "Bag with my wallet",
+        address: "Yerevan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 1,
+        questions: {
+          create: [
+            {
+              title: "Size of your bag",
+              answers: {
+                create: [
+                  {
+                    title: "Big",
+                    status: false,
+                  },
+                  {
+                    title: "Medium",
+                    status: true,
+                  },
+                  {
+                    title: "Small",
+                    status: false,
+                  },
+                ],
+              },
+            },
+            {
+              title: "What color is your bag?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
                     status: false,
                   },
                   {
@@ -470,35 +376,58 @@ async function main() {
         },
       },
       {
-        name: "Phone",
-        description: "Phone",
+        name: "Dog",
+        description: "Haski",
         address: "Yerevan",
-        type: "LOST",
+        type: "FOUND",
         trusted: true,
-        category_id: 7,
+        category_id: 3,
         questions: {
           create: [
             {
-              title: "What is your phone's model?",
+              title: "What color is your Dog?",
               answers: {
                 create: [
                   {
-                    title: "Iphone",
+                    title: "Black",
                     status: false,
                   },
                   {
-                    title: "Samsung",
+                    title: "Brown",
                     status: true,
                   },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Headphones",
+        description: "Headphones of my Samsung S10",
+        address: "Mergelyan",
+        type: "LOST",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "Do you Have issues on it",
+              answers: {
+                create: [
                   {
-                    title: "Xiaomi",
+                    title: "Yes",
                     status: false,
+                  },
+                  {
+                    title: "No",
+                    status: true,
                   },
                 ],
               },
             },
             {
-              title: "What color is your phone?",
+              title: "What color is your headphones?",
               answers: {
                 create: [
                   {
@@ -525,34 +454,335 @@ async function main() {
       },
     ],
   }
+  const createPostsType2 = {
+    create: [
+      {
+        name: "Iphone 10s",
+        description: "Iphone with Liverpool's case",
+        address: "Yerevan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "What color is your phone?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: true,
+                  },
+                  {
+                    title: "Red",
+                    status: false,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+            {
+              title: "What color is your case?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: false,
+                  },
+                  {
+                    title: "Red",
+                    status: true,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Wallet",
+        description: "Wallet with my driving license",
+        address: "Yerevan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "Size of your wallet",
+              answers: {
+                create: [
+                  {
+                    title: "Big",
+                    status: false,
+                  },
+                  {
+                    title: "Medium",
+                    status: true,
+                  },
+                  {
+                    title: "Small",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Dog",
+        description: "Pit Bull",
+        address: "Yerevan",
+        type: "LOST",
+        trusted: true,
+        category_id: 3,
+        questions: {
+          create: [
+            {
+              title: "What color is your Dog?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: true,
+                  },
+                  {
+                    title: "Brown",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Iphone 10s",
+        description: "Iphone with Liverpool's case",
+        address: "Yerevan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "What color is your phone?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: true,
+                  },
+                  {
+                    title: "Red",
+                    status: false,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+            {
+              title: "What color is your case?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: false,
+                  },
+                  {
+                    title: "Red",
+                    status: true,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Wallet",
+        description: "Wallet with my driving license",
+        address: "Yerevan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "Size of your wallet",
+              answers: {
+                create: [
+                  {
+                    title: "Big",
+                    status: false,
+                  },
+                  {
+                    title: "Medium",
+                    status: true,
+                  },
+                  {
+                    title: "Small",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Dog",
+        description: "Pit Bull",
+        address: "Yerevan",
+        type: "LOST",
+        trusted: true,
+        category_id: 3,
+        questions: {
+          create: [
+            {
+              title: "What color is your Dog?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: true,
+                  },
+                  {
+                    title: "Brown",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+  }
+
+  const createFinalePosts = {
+    create: [
+      {
+        name: "The Keys",
+        description: "Keys with Liverpool's trinket",
+        address: "Yerevan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 2,
+        questions: {
+          create: [
+            {
+              title: "What color is your trinket?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: false,
+                  },
+                  {
+                    title: "Red",
+                    status: true,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+            {
+              title: "How many keys are on it",
+              answers: {
+                create: [
+                  {
+                    title: "5",
+                    status: true,
+                  },
+                  {
+                    title: "4",
+                    status: false,
+                  },
+                  {
+                    title: "3",
+                    status: false,
+                  },
+                  {
+                    title: "2",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+    ],
+  }
 
   await prisma.category.createMany({
     data: categories,
   })
 
   await prisma.user.upsert({
-    where: { email: "artyom@gmail.com" },
+    where: { email: "anahit@gmail.com" },
     update: {},
     create: {
-      email: "brad@gmail.com",
+      email: "anahit@gmail.com",
       password: await hashPassword("qwerty12"),
-      name: "Artyom",
-      surname: "Harutunyan",
+      name: "Anahit",
+      surname: "Sargsyan",
       phone: "+37493-65-65-65",
       is_verified: true,
-      posts: createPosts,
+      is_admin: true,
+      posts: createPostsType1,
     },
   })
   await prisma.user.upsert({
-    where: { email: "ann@gmail.com" },
+    where: { email: "artyom@gmail.com" },
     update: {},
     create: {
-      email: "ann@gmail.com",
+      email: "artyom@gmail.com",
       password: await hashPassword("qwerty12"),
-      name: "Ann",
-      surname: "Brown",
+      name: "Artyom",
+      surname: "Harutunyan",
       is_verified: true,
-      posts: createPosts,
+      is_admin: true,
+      posts: createPostsType2,
     },
   })
   await prisma.user.upsert({
@@ -565,61 +795,7 @@ async function main() {
       surname: "Avetisyan",
       is_verified: true,
       is_admin: true,
-      posts: {
-        create: [
-          {
-            name: "Phone",
-            description: "Phone",
-            address: "Yerevan",
-            type: "FOUND",
-            trusted: true,
-            category_id: 4,
-            created_at: new Date(2022, 5, 7),
-          },
-          {
-            name: "Dog",
-            description: "Dog",
-            address: "Babajanyan",
-            type: "FOUND",
-            category_id: 6,
-            questions: {
-              create: [
-                {
-                  title: "What color is your dog?",
-                  answers: {
-                    create: [
-                      {
-                        title: "Black",
-                        status: true,
-                      },
-                      {
-                        title: "White",
-                        status: false,
-                      },
-                      {
-                        title: "Brown",
-                        status: false,
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-  })
-  await prisma.user.upsert({
-    where: { email: "john@gmail.com" },
-    update: {},
-    create: {
-      email: "john@gmail.com",
-      password: await hashPassword("qwerty12"),
-      name: "John",
-      surname: "Smith",
-      is_admin: true,
-      is_verified: true,
+      posts: createPostsType2,
     },
   })
   await prisma.user.upsert({
@@ -632,18 +808,7 @@ async function main() {
       surname: "Skrtel",
       is_admin: true,
       is_verified: true,
-    },
-  })
-  await prisma.user.upsert({
-    where: { email: "James@gmail.com" },
-    update: {},
-    create: {
-      email: "James@gmail.com",
-      password: await hashPassword("qwerty12"),
-      name: "James",
-      surname: "Blunt",
-      is_admin: false,
-      is_verified: true,
+      posts: createFinalePosts,
     },
   })
 
@@ -681,13 +846,6 @@ async function main() {
         text: message,
         from_id: 4,
         to_id: 3,
-      },
-    })
-    await prisma.message.create({
-      data: {
-        text: message,
-        from_id: 4,
-        to_id: 5,
       },
     })
   }
