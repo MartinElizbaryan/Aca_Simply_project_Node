@@ -151,8 +151,15 @@ export const updatePost = async (req, res, next) => {
 
 export const updateConfirmed = async (req, res, next) => {
   try {
-    const result = await db.confirmedPostDB(req.params.id, req.auth.id)
-    res.json(result)
+    // const result = await db.confirmedPostDB(req.params.id, req.auth.id)
+    const { post } = await db.getPostByIdDB(req.params.id)
+    const notificationConfirmedPost = await createNotification(
+      "confirmedPost",
+      { user_id: post.user_id, id: req.params.id },
+      false
+    )
+    sendNotification(notificationConfirmedPost)
+    res.json("result")
   } catch (error) {
     next(error)
   }

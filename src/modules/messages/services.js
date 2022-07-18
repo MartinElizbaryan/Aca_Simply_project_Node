@@ -52,8 +52,8 @@ export const sendAnswers = async (req, res, next) => {
         return {
           from_id: +req.auth.id,
           to_id: +req.body.user_id,
-          text: `${question.title} - ${answer.title} ${
-            answerFromDb.status ? "Right ANSWER" : "WRONG ANSWER"
+          text: `${question.title} - ${answer.title} | ${
+            answerFromDb.status ? "RIGHT ANSWER" : "WRONG ANSWER"
           }`,
         }
       })
@@ -64,17 +64,12 @@ export const sendAnswers = async (req, res, next) => {
       text: `Post name: ${req.body.post_title}`,
     })
 
-    console.log("--------------------------------")
-    console.log("data", data)
-    console.log("--------------------------------")
-
     const result = await createManyMessageDB(data)
 
     data.forEach((q) => {
       eventHandleSend(q)
     })
 
-    console.log(data)
     res.json(result)
   } catch (error) {
     console.log(error)
