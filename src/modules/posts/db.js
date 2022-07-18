@@ -191,7 +191,7 @@ export const getPostByIdDB = async (id, userId) => {
         confirmer: true,
       },
     }
-
+    console.log(userId)
     if (userId) {
       query.include.favorites = {
         where: {
@@ -200,7 +200,7 @@ export const getPostByIdDB = async (id, userId) => {
       }
     }
 
-    const foundPost = await post.findUnique(query)
+    const foundPost = await post.findMany(query)
 
     return {
       post: foundPost,
@@ -234,7 +234,7 @@ export const updatePostViewsDB = async (id) => {
   }
 }
 
-export const getPostWithQuestionsByIdDB = async (id) => {
+export const getPostWithQuestionsByIdDB = async (id, userId) => {
   try {
     const foundPost = await post.findUnique({
       where: {
@@ -250,6 +250,11 @@ export const getPostWithQuestionsByIdDB = async (id) => {
           },
         },
         category: true,
+        favorites: {
+          where: {
+            user_id: +userId,
+          },
+        },
       },
     })
     return {

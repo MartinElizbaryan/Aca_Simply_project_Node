@@ -66,7 +66,7 @@ export const getAllConfirmedPosts = async (req, res, next) => {
 
 export const getPostWithQuestionsById = async (req, res, next) => {
   try {
-    const result = await db.getPostWithQuestionsByIdDB(req.params.id)
+    const result = await db.getPostWithQuestionsByIdDB(req.params.id, req.auth.id)
     if (!result.error && (+req.auth?.id !== result.post.user_id || !req.auth))
       await db.updatePostViewsDB(result.post.id)
     res.json(result)
