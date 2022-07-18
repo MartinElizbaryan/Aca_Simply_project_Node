@@ -10,4 +10,6 @@ export const notifications = {
   beforePostUpdate: "Your post will be updated as soon as possible",
   afterPostUpdate: "Your post has updated",
   onErrorPostUpdate: "Your post isn't updated. Something went wrong",
+
+  confirmedPost: "Your post has been confirmed",
 }
