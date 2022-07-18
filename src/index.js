@@ -42,15 +42,14 @@ export const io = new Server(server, {
 
 export const users = {}
 
-export const sendEventViaSocketIdExpectCurrent = (socketId, event, data = {}) => {
+export const sendEventViaSocketIdExceptCurrent = (socketId, event, data = {}) => {
   const userId = getIdViaSocketId(socketId)
   console.log("users", users)
-  const socketIdsExpectCurrent = users[userId].filter((sId) => {
+  const socketIdsExceptCurrent = users[userId].filter((sId) => {
     return sId !== socketId
   })
-  console.log("socketIdsExpectCurrent", socketIdsExpectCurrent)
 
-  if (socketIdsExpectCurrent.length) io.to(socketIdsExpectCurrent).emit(event, data)
+  if (socketIdsExceptCurrent.length) io.to(socketIdsExceptCurrent).emit(event, data)
 }
 
 export const sendEventViaUserId = (userId, event, data = {}) => {
@@ -70,7 +69,6 @@ export const eventHandleSend = (data) => {
 io.on("connection", (socket) => {
   socket.on("connect-success", ({ userId }) => {
     addInOnlineUsers(userId, socket.id)
-    console.log("users at start", users)
 
     socket.on("send", ({ data }) => {
       eventHandleSend(data)

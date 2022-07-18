@@ -4,7 +4,7 @@ import { generateRandom6DigitNumber } from "../../helpers/common.js"
 import { badRequestErrorCreator, notFoundErrorCreator } from "../../helpers/errors.js"
 import { generateToken, hashPassword, verifyToken, verifyUser } from "../../helpers/authHelpers.js"
 import * as db from "./db.js"
-import { sendEventViaSocketIdExpectCurrent } from "../../index.js"
+import { sendEventViaSocketIdExceptCurrent } from "../../index.js"
 
 export const signUp = async (req, res, next) => {
   try {
@@ -68,7 +68,7 @@ export const deleteRefreshToken = async (req, res, next) => {
     const { socketId } = req.body
 
     const result = await db.deleteTokenWithoutYourDB({ refreshToken, id })
-    sendEventViaSocketIdExpectCurrent(socketId, "signOut")
+    sendEventViaSocketIdExceptCurrent(socketId, "signOut")
 
     res.json(result)
   } catch (error) {
