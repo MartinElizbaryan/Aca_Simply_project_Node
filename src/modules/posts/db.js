@@ -127,6 +127,7 @@ export const getAllMyPostsDB = async (userId) => {
         user: true,
         category: true,
         images: true,
+        confirmer: true,
         favorites: {
           where: {
             user_id: +userId,
