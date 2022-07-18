@@ -8,6 +8,7 @@ export const getAllPostsDB = async ({ skip, take, type, categories, userId, sear
     const where = {
       type,
       trusted: true,
+      completed: false,
     }
 
     const query = {
