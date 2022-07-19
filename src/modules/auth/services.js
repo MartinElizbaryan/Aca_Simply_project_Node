@@ -94,7 +94,7 @@ export const forgotPassword = async (req, res, next) => {
     const code = String(generateRandom6DigitNumber())
     const result = await db.updateUserResetCodeDB(user.id, code)
     console.log(code)
-    await sendResetMail(user.email, code)
+    sendResetMail(user.email, code)
     res.json(result)
   } catch (error) {
     next(error)

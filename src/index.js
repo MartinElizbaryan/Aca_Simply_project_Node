@@ -44,7 +44,6 @@ export const users = {}
 
 export const sendEventViaSocketIdExceptCurrent = (socketId, event, data = {}) => {
   const userId = getIdViaSocketId(socketId)
-  console.log("users", users)
   const socketIdsExceptCurrent = users[userId].filter((sId) => {
     return sId !== socketId
   })
@@ -90,10 +89,7 @@ io.on("connection", (socket) => {
   })
 
   socket.on("disconnect", () => {
-    console.log("users", users)
-    console.log("disconnecttttttttt", socket.id)
     deleteSocketId(socket.id)
-    console.log("users", users)
     // All users expect me
     socket.broadcast.emit("onlineUsers", getOnlineUsersId())
   })
