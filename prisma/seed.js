@@ -194,7 +194,7 @@ async function main() {
         name: "Dog",
         description: "Haski",
         address: "Yerevan",
-        type: "LOST",
+        type: "FOUND",
         trusted: true,
         category_id: 3,
         questions: {
@@ -325,7 +325,7 @@ async function main() {
         name: "Bag",
         description: "Bag with my wallet",
         address: "Yerevan",
-        type: "FOUND",
+        type: "LOST",
         trusted: true,
         category_id: 1,
         questions: {
@@ -406,6 +406,83 @@ async function main() {
         name: "Headphones",
         description: "Headphones of my Samsung S10",
         address: "Mergelyan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "Do you Have issues on it",
+              answers: {
+                create: [
+                  {
+                    title: "Yes",
+                    status: false,
+                  },
+                  {
+                    title: "No",
+                    status: true,
+                  },
+                ],
+              },
+            },
+            {
+              title: "What color is your headphones?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: false,
+                  },
+                  {
+                    title: "Red",
+                    status: true,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Dog",
+        description: "Haski",
+        address: "Yerevan",
+        type: "LOST",
+        trusted: true,
+        category_id: 3,
+        questions: {
+          create: [
+            {
+              title: "What color is your Dog?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "Brown",
+                    status: true,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Headphones",
+        description: "Headphones of my Samsung S10",
+        address: "Mergelyan",
         type: "LOST",
         trusted: true,
         category_id: 5,
@@ -441,6 +518,191 @@ async function main() {
                   {
                     title: "Red",
                     status: true,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Samsung S21",
+        description: "Samsung S21 with a bit issues",
+        address: "Yerevan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "What is your phone's model?",
+              answers: {
+                create: [
+                  {
+                    title: "Iphone",
+                    status: false,
+                  },
+                  {
+                    title: "Samsung",
+                    status: true,
+                  },
+                  {
+                    title: "Xiaomi",
+                    status: false,
+                  },
+                ],
+              },
+            },
+            {
+              title: "What color is your phone?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: true,
+                  },
+                  {
+                    title: "Red",
+                    status: false,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Dog",
+        description: "Haski",
+        address: "Yerevan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 3,
+        questions: {
+          create: [
+            {
+              title: "What color is your Dog?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "Brown",
+                    status: true,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Headphones",
+        description: "Headphones of my Samsung S10",
+        address: "Mergelyan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "Do you Have issues on it",
+              answers: {
+                create: [
+                  {
+                    title: "Yes",
+                    status: false,
+                  },
+                  {
+                    title: "No",
+                    status: true,
+                  },
+                ],
+              },
+            },
+            {
+              title: "What color is your headphones?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: false,
+                  },
+                  {
+                    title: "Red",
+                    status: true,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Samsung S21",
+        description: "Samsung S21 with a bit issues",
+        address: "Yerevan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "What is your phone's model?",
+              answers: {
+                create: [
+                  {
+                    title: "Iphone",
+                    status: false,
+                  },
+                  {
+                    title: "Samsung",
+                    status: true,
+                  },
+                  {
+                    title: "Xiaomi",
+                    status: false,
+                  },
+                ],
+              },
+            },
+            {
+              title: "What color is your phone?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: true,
+                  },
+                  {
+                    title: "Red",
+                    status: false,
                   },
                   {
                     title: "Blue",
@@ -631,6 +893,141 @@ async function main() {
         },
       },
       {
+        name: "Headphones",
+        description: "Headphones of my Samsung S10",
+        address: "Mergelyan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "Do you Have issues on it",
+              answers: {
+                create: [
+                  {
+                    title: "Yes",
+                    status: false,
+                  },
+                  {
+                    title: "No",
+                    status: true,
+                  },
+                ],
+              },
+            },
+            {
+              title: "What color is your headphones?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: false,
+                  },
+                  {
+                    title: "Red",
+                    status: true,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Dog",
+        description: "Pit Bull",
+        address: "Yerevan",
+        type: "LOST",
+        trusted: true,
+        category_id: 3,
+        questions: {
+          create: [
+            {
+              title: "What color is your Dog?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: true,
+                  },
+                  {
+                    title: "Brown",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Iphone 10s",
+        description: "Iphone with Liverpool's case",
+        address: "Yerevan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "What color is your phone?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: true,
+                  },
+                  {
+                    title: "Red",
+                    status: false,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+            {
+              title: "What color is your case?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: false,
+                  },
+                  {
+                    title: "Red",
+                    status: true,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
         name: "Wallet",
         description: "Wallet with my driving license",
         address: "Yerevan",
@@ -653,6 +1050,141 @@ async function main() {
                   },
                   {
                     title: "Small",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Dog",
+        description: "Pit Bull",
+        address: "Yerevan",
+        type: "LOST",
+        trusted: true,
+        category_id: 3,
+        questions: {
+          create: [
+            {
+              title: "What color is your Dog?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: true,
+                  },
+                  {
+                    title: "Brown",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Iphone 10s",
+        description: "Iphone with Liverpool's case",
+        address: "Yerevan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "What color is your phone?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: true,
+                  },
+                  {
+                    title: "Red",
+                    status: false,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+            {
+              title: "What color is your case?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: false,
+                  },
+                  {
+                    title: "Red",
+                    status: true,
+                  },
+                  {
+                    title: "Blue",
+                    status: false,
+                  },
+                ],
+              },
+            },
+          ],
+        },
+      },
+      {
+        name: "Headphones",
+        description: "Headphones of my Samsung S10",
+        address: "Mergelyan",
+        type: "FOUND",
+        trusted: true,
+        category_id: 5,
+        questions: {
+          create: [
+            {
+              title: "Do you Have issues on it",
+              answers: {
+                create: [
+                  {
+                    title: "Yes",
+                    status: false,
+                  },
+                  {
+                    title: "No",
+                    status: true,
+                  },
+                ],
+              },
+            },
+            {
+              title: "What color is your headphones?",
+              answers: {
+                create: [
+                  {
+                    title: "Black",
+                    status: false,
+                  },
+                  {
+                    title: "White",
+                    status: false,
+                  },
+                  {
+                    title: "Red",
+                    status: true,
+                  },
+                  {
+                    title: "Blue",
                     status: false,
                   },
                 ],
