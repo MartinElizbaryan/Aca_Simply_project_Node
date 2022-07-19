@@ -201,7 +201,7 @@ export const getPostByIdDB = async (id, userId) => {
       }
     }
 
-    const foundPost = await post.findMany(query)
+    const foundPost = await post.findUnique(query)
 
     return {
       post: foundPost,
