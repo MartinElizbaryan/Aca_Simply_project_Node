@@ -51,6 +51,7 @@ export const createNotification = async (type, post, needToChange = true) => {
     user_id: +post.user_id,
     post_id: +post.id || post.id,
   }
+  console.log(data)
   const { notification } = await createNotificationDB(data)
   return notification
 }

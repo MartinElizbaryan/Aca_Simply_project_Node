@@ -116,12 +116,12 @@ export const updatePost = async (req, res, next) => {
   try {
     res.json({ status: 200 })
 
-    const notificationBeforeupdate = await createNotification(
+    const notificationBeforeUpdate = await createNotification(
       "beforePostUpdate",
-      { user_id: req.auth.id },
+      { user_id: req.auth.id, id: req.params.id },
       false
     )
-    sendNotification(notificationBeforeupdate)
+    sendNotification(notificationBeforeUpdate)
 
     const { images } = req.body
     await uploadImagesToCloudinary(images)
@@ -130,7 +130,7 @@ export const updatePost = async (req, res, next) => {
     if (result.error) {
       const notificationOnErrorUpdate = await createNotification(
         "onErrorPostUpdate",
-        { user_id: req.auth.id },
+        { user_id: req.auth.id, id: req.params.id },
         false
       )
       sendNotification(notificationOnErrorUpdate)
@@ -139,7 +139,7 @@ export const updatePost = async (req, res, next) => {
     const notificationAfterUpdate = await createNotification(
       "afterPostUpdate",
       {
-        ...res.body,
+        id: req.params.id,
         user_id: req.auth.id,
       },
       false
