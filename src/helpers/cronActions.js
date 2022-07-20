@@ -1,4 +1,4 @@
-import { findOldPostsDB } from "../modules/posts/db.js"
+import { deleteOldPostsDB, findOldPostsDB } from "../modules/posts/db.js"
 import { createNotification, sendNotification } from "./common.js"
 
 export const sendNotificationBeforePostDeletion = async () => {
@@ -12,7 +12,9 @@ export const sendNotificationBeforePostDeletion = async () => {
 export const deleteOldPostsAndSendNotification = async () => {
   const posts30DaysOld = await findOldPostsDB(30)
 
-  // await deleteOldPostsDB(30)
+  const { error } = await deleteOldPostsDB(30)
+
+  if (error) return
 
   for (const post of posts30DaysOld) {
     const notification = await createNotification("afterPostDeletion", {
