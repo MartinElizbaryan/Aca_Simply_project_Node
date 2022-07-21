@@ -10,17 +10,18 @@ import { contactRoutes } from "../modules/contact/routes.js"
 import { faqRoutes } from "../modules/faq/routes.js"
 import { notificationsRoutes } from "../modules/notifications/routes.js"
 import auth from "../middlewares/auth.middleware.js"
+import admin from "../middlewares/admin.middleware.js"
 
 const router = Router()
 
-router.use("/users", usersRoutes)
+router.use("/users", auth, usersRoutes)
 router.use("/auth", authRoutes)
 router.use("/posts", postsRoutes)
-router.use("/messages", messagesRoutes)
+router.use("/messages", auth, messagesRoutes)
 router.use("/notifications", auth, notificationsRoutes)
 router.use("/categories", categoriesRoutes)
-router.use("/favorites", favoritesRoutes)
-router.use("/admin", adminRoutes)
+router.use("/favorites", auth, favoritesRoutes)
+router.use("/admin", auth, admin, adminRoutes)
 router.use("/contact", contactRoutes)
 router.use("/faq", faqRoutes)
 
